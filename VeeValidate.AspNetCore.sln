@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27428.2037
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{FFE26567-BD8C-4707-923E-5D8532C4DC5C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{DC863194-AAA2-44C3-B3A0-5E69ACB99BEF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{5B4D3E71-3C14-4980-9E7D-C614F1C4280C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VeeValidate.AspNetCore", "src\VeeValidate.AspNetCore\VeeValidate.AspNetCore.csproj", "{EC0ECF3A-379D-4D54-BBE6-7D6B18DBC114}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EC0ECF3A-379D-4D54-BBE6-7D6B18DBC114}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC0ECF3A-379D-4D54-BBE6-7D6B18DBC114}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC0ECF3A-379D-4D54-BBE6-7D6B18DBC114}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC0ECF3A-379D-4D54-BBE6-7D6B18DBC114}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{EC0ECF3A-379D-4D54-BBE6-7D6B18DBC114} = {FFE26567-BD8C-4707-923E-5D8532C4DC5C}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E761CCEA-19A5-4609-98CC-46B9085E1670}
+	EndGlobalSection
+EndGlobal
