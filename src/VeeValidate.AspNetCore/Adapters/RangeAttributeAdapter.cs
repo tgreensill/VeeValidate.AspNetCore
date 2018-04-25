@@ -1,54 +1,46 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
-using Microsoft.Extensions.Localization;
 using System.Globalization;
 
 namespace VeeValidate.AspNetCore.Adapters
 {
-    public class RangeAttributeAdapter : VeeAdapterBase<RangeAttribute>
+    public class RangeAttributeAdapter : VeeAttributeAdapter<RangeAttribute>
     {
         private readonly string _max;
         private readonly string _min;
         private readonly VeeValidateOptions _options;
 
-        public RangeAttributeAdapter(RangeAttribute attribute, IStringLocalizer stringLocalizer, VeeValidateOptions options) : base(attribute, stringLocalizer, options)
+        public RangeAttributeAdapter(RangeAttribute attribute, VeeValidateOptions options) : base(attribute)
+        {
+            // Validate a randomly selected number.
+            //attribute.IsValid(3);
+
+            _options = options;
+        }
+
+        public override void AddValidationRules(ClientModelValidationContext context)
         {
             // This will trigger the conversion of Attribute.Minimum and Attribute.Maximum.
             // This is needed, because the attribute is stateful and will convert from a string like
             // "100m" to the decimal value 100.
-            
-            // Validate a randomly selected number.
-            attribute.IsValid(3);
+            var max = Convert.ToString(Attribute.Maximum, CultureInfo.CurrentUICulture);
+            var min = Convert.ToString(Attribute.Minimum, CultureInfo.CurrentUICulture);
 
-            _max = Convert.ToString(Attribute.Maximum, CultureInfo.CurrentUICulture);
-            _min = Convert.ToString(Attribute.Minimum, CultureInfo.CurrentUICulture);
-            _options = options;
-        }
-
-        public override void AddValidation(ClientModelValidationContext context)
-        {
-            if (context == null)
-            {
-                throw new ArgumentNullException(nameof(context));
-            }
-            
             if (Attribute.OperandType == typeof(DateTime) || context.ModelMetadata.ModelType == typeof(DateTime))
             {
-                MergeVeeValidateAttribute(context, $"date_format:{_options.DateTimeFormat}");
-                //MergeVeeValidateAttribute(context, $"before:{Attribute.Maximum}"); // max - 1
-                //MergeVeeValidateAttribute(context, $"after:{Attribute.Minimum}"); // min + 1
+                if (DateTime.TryParse(min, out var minDate) && DateTime.TryParse(max, out var maxDate))
+                {                    
+                    // TODO - Date Format
+                    MergeRule(context.Attributes, $"date_format:'{_options.DateTimeFormat}'"); // TODO - make this work with globalization
+                    MergeRule(context.Attributes, $"date_between:{minDate.ToShortDateString()},{maxDate.ToShortDateString()},true");                    
+                }
             }
             else
             {
-                MergeVeeValidateAttribute(context, $"max_value:{Attribute.Maximum}");
-                MergeVeeValidateAttribute(context, $"min_value:{Attribute.Minimum}");
+                MergeRule(context.Attributes, $"max_value:{max}");
+                MergeRule(context.Attributes, $"min_value:{min}");
             }
-        }
-
-        public override string GetErrorMessage(ModelValidationContextBase validationContext)
-        {
-            return GetErrorMessage(validationContext, Attribute.Minimum, Attribute.Maximum);
         }
     }
 }

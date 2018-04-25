@@ -1,0 +1,32 @@
+﻿@page
+@model ExamplesModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div id="app">
+    <fieldset>
+        <legend>[Required]</legend>
+        <div class="input-field">
+            <label asp-for="Input.Required"></label>
+            <input asp-for="Input.Required" />
+            <span asp-validation-for="Input.Required"></span>
+        </div>
+    </fieldset>    
+    <fieldset>
+        <legend>[CreditCard]</legend>
+        <div class="input-field">
+            <input asp-for="Input.CreditCard" />
+            <label asp-for="Input.CreditCard"></label>            
+            <span asp-validation-for="Input.CreditCard"></span>
+        </div>
+    </fieldset>
+</div>
+
+@section Scripts{
+    <script>
+        new Vue({
+            el: "#app"
+        })
+    </script>
+}

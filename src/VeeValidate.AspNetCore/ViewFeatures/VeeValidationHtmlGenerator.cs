@@ -23,7 +23,11 @@ namespace VeeValidate.AspNetCore.ViewFeatures
             _options = options;
         }
 
-        //TODO - public override TagBuilder GenerateValidationSummary()
+        // TODO
+        //public override TagBuilder GenerateValidationSummary(ViewContext viewContext, bool excludePropertyErrors, string message, string headerTag, object htmlAttributes)
+        //{
+        //    return base.GenerateValidationSummary(viewContext, excludePropertyErrors, message, headerTag, htmlAttributes);
+        //}
 
         public override TagBuilder GenerateValidationMessage(
            ViewContext viewContext,

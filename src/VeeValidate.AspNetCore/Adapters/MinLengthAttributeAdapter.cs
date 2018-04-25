@@ -5,25 +5,15 @@ using System.ComponentModel.DataAnnotations;
 
 namespace VeeValidate.AspNetCore.Adapters
 {
-    public class MinLengthAttributeAdapter : VeeAdapterBase<MinLengthAttribute>
+    public class MinLengthAttributeAdapter : VeeAttributeAdapter<MinLengthAttribute>
     {
-        public MinLengthAttributeAdapter(MinLengthAttribute attribute, IStringLocalizer stringLocalizer, VeeValidateOptions options) : base(attribute, stringLocalizer, options)
+        public MinLengthAttributeAdapter(MinLengthAttribute attribute) : base(attribute)
         {
         }
 
-        public override void AddValidation(ClientModelValidationContext context)
+        public override void AddValidationRules(ClientModelValidationContext context)
         {
-            if (context == null)
-            {
-                throw new ArgumentNullException(nameof(context));
-            }
-
-            MergeVeeValidateAttribute(context, $"min:{Attribute.Length}");
-        }
-
-        public override string GetErrorMessage(ModelValidationContextBase validationContext)
-        {
-            return GetErrorMessage(validationContext, Attribute.Length);
+            MergeRule(context.Attributes, $"min:{Attribute.Length}");
         }
     }
 }

@@ -1,0 +1,33 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div>
+    <div>
+        Usage:
+        Startup.cs
+        public void ConfigureServices(IServiceCollection services)
+        {
+        services.AddVeeValidation();
+        services.AddMvc();
+        }
+        Options
+        <a asp-page="Examples">Examples</a>
+    </div>
+    <div>
+        Attribute
+        [Required]
+        [Compare]
+        [Range]
+        [EmailAddress]
+        [Url]
+        [CreditCard]
+    </div>
+    <div>
+        Type Validation
+        int
+        datetime
+    </div>
+</div>

@@ -5,3 +5,9 @@
 /.vs
 /src/VeeValidate.AspNetCore/bin/Debug/netstandard2.0
 /src/VeeValidate.AspNetCore/obj
+/samples/VeeValidate.AspNetCore.Sample/bin/Debug/netcoreapp2.0
+/samples/VeeValidate.AspNetCore.Sample/node_modules
+/samples/VeeValidate.AspNetCore.Sample/obj
+/test/VeeValidate.AspNetCore.Tests/bin/Debug
+/test/VeeValidate.AspNetCore.Tests/obj
+/packages

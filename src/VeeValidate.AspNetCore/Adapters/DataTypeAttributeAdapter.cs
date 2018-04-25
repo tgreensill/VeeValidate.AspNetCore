@@ -1,32 +1,21 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
-using Microsoft.Extensions.Localization;
 
 namespace VeeValidate.AspNetCore.Adapters
 {
-    public class DataTypeAttributeAdapter : VeeAdapterBase<DataTypeAttribute>
+    public class DataTypeAttributeAdapter : VeeAttributeAdapter<DataTypeAttribute>
     {
         private readonly string _rule;
 
-        public DataTypeAttributeAdapter(DataTypeAttribute attribute, string rule, IStringLocalizer stringLocalizer, VeeValidateOptions options) : base(attribute, stringLocalizer, options)
+        public DataTypeAttributeAdapter(DataTypeAttribute attribute, string rule) : base(attribute)
         {
             _rule = rule;
         }
 
-        public override void AddValidation(ClientModelValidationContext context)
+        public override void AddValidationRules(ClientModelValidationContext context)
         {
-            if (context == null)
-            {
-                throw new ArgumentNullException(nameof(context));
-            }
-
-            MergeVeeValidateAttribute(context, _rule);            
+            MergeRule(context.Attributes, _rule);
         }
 
-        public override string GetErrorMessage(ModelValidationContextBase validationContext)
-        {
-            return GetErrorMessage(validationContext, Attribute.GetDataTypeName());
-        }
     }
 }

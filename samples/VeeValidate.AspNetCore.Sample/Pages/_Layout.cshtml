@@ -1,0 +1,30 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - VeeValidate.AspNetCore.Sample</title>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css" />
+    <link rel="stylesheet" href="~/css/site.css"/>
+</head>
+<body>
+    <div>
+        <img width="150" alt="VeeValidate Logo" src="~/images/vee-validate.svg"/>
+    </div>
+
+    <div class="container">
+        @RenderBody()
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.16/vue.js"
+            integrity="sha256-CMMTrj5gGwOAXBeFi7kNokqowkzbeL8ydAJy39ewjkQ="
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vee-validate@latest/dist/vee-validate.js"></script>
+    <script>
+        Vue.use(VeeValidate);
+    </script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

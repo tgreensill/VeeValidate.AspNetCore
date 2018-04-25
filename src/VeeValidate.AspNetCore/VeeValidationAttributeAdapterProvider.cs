@@ -28,39 +28,39 @@ namespace VeeValidate.AspNetCore
 
             if (type == typeof(RegularExpressionAttribute))
             {
-                adapter = new RegularExpressionAttributeAdapter((RegularExpressionAttribute)attribute, stringLocalizer, _options);
+                adapter = new RegularExpressionAttributeAdapter((RegularExpressionAttribute)attribute);
             }
             else if (type == typeof(MaxLengthAttribute))
             {
-                adapter = new MaxLengthAttributeAdapter((MaxLengthAttribute)attribute, stringLocalizer, _options);
+                adapter = new MaxLengthAttributeAdapter((MaxLengthAttribute)attribute);
             }
             else if (type == typeof(RequiredAttribute))
             {
-                adapter = new RequiredAttributeAdapter((RequiredAttribute)attribute, stringLocalizer, _options);
+                adapter = new RequiredAttributeAdapter((RequiredAttribute)attribute);
             }            
             else if (type == typeof(CompareAttribute))
             {
-                adapter = new CompareAttributeAdapter((CompareAttribute)attribute, stringLocalizer, _options);
+                adapter = new CompareAttributeAdapter((CompareAttribute)attribute);
             }
             else if (type == typeof(MinLengthAttribute))
             {
-                adapter = new MinLengthAttributeAdapter((MinLengthAttribute)attribute, stringLocalizer, _options);
+                adapter = new MinLengthAttributeAdapter((MinLengthAttribute)attribute);
             }
             else if (type == typeof(CreditCardAttribute))
             {
-                adapter = new DataTypeAttributeAdapter((DataTypeAttribute)attribute, "credit_card:true", stringLocalizer, _options);
+                adapter = new DataTypeAttributeAdapter((DataTypeAttribute)attribute, "credit_card:true");
             }
             else if (type == typeof(StringLengthAttribute))
             {
-                adapter = new StringLengthAttributeAdapter((StringLengthAttribute)attribute, stringLocalizer, _options);
+                adapter = new StringLengthAttributeAdapter((StringLengthAttribute)attribute);
             }
             else if (type == typeof(RangeAttribute))
             {
-                adapter = new RangeAttributeAdapter((RangeAttribute)attribute, stringLocalizer, _options);
+                adapter = new RangeAttributeAdapter((RangeAttribute)attribute, _options);
             }
             else if (type == typeof(EmailAddressAttribute))
             {
-                adapter = new DataTypeAttributeAdapter((DataTypeAttribute)attribute, "email:true", stringLocalizer, _options);
+                adapter = new DataTypeAttributeAdapter((DataTypeAttribute)attribute, "email:true");
             }
             //else if (type == typeof(PhoneAttribute))
             //{
@@ -68,7 +68,7 @@ namespace VeeValidate.AspNetCore
             //}
             else if (type == typeof(UrlAttribute))
             {
-                adapter = new DataTypeAttributeAdapter((DataTypeAttribute)attribute, $"url:{_options.RequireProtocolForUrls}", stringLocalizer, _options);
+                adapter = new DataTypeAttributeAdapter((DataTypeAttribute)attribute, $"url:true");
             }
             //else if (type == typeof(FileExtensionsAttribute))
             //{
