@@ -8,26 +8,34 @@
     <div>
         Usage:
         Startup.cs
-        public void ConfigureServices(IServiceCollection services)
-        {
-        services.AddVeeValidation();
-        services.AddMvc();
-        }
+
+        <code>
+            public void ConfigureServices(IServiceCollection services)
+            {
+                services.AddVeeValidation();
+                services.AddMvc();
+            }
+        </code>
+
         Options
-        <a asp-page="Examples">Examples</a>
+        <table>
+            <thead>
+                <tr>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <a asp-page="Attributes">Attribute Examples</a>
+        <a>Data Type Examples</a>
+        <a>Data Type Examples</a>
     </div>
-    <div>
-        Attribute
-        [Required]
-        [Compare]
-        [Range]
-        [EmailAddress]
-        [Url]
-        [CreditCard]
-    </div>
-    <div>
-        Type Validation
-        int
-        datetime
-    </div>
+    
 </div>

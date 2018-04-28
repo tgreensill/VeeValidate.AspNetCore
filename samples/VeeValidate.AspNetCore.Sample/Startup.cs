@@ -1,7 +1,9 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System.Globalization;
 
 namespace VeeValidate.AspNetCore.Sample
 {
@@ -16,7 +18,9 @@ namespace VeeValidate.AspNetCore.Sample
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddVeeValidation();                
+            // TODO - Add Localization 
+            //services.AddLocalization();
+            services.AddVeeValidation(options => options.DateFormat = "DD/MM/YYYY");                
             services.AddMvc();
         }
 
@@ -32,6 +36,25 @@ namespace VeeValidate.AspNetCore.Sample
                 app.UseExceptionHandler("/Error");
             }
 
+            // TODO - Localization
+            //var supportedCultures = new[]
+            //{
+            //    new CultureInfo("en-US"),
+            //    new CultureInfo("en-GB"),
+            //    new CultureInfo("en-NZ"),
+            //    new CultureInfo("en"),                
+            //    new CultureInfo("pt-BR"),
+            //    new CultureInfo("pt"),
+            //};
+
+            //app.UseRequestLocalization(new RequestLocalizationOptions
+            //{
+            //    DefaultRequestCulture = new RequestCulture("en-NZ"),
+            //    // Formatting numbers, dates, etc.
+            //    SupportedCultures = supportedCultures,
+            //    // UI strings that we have localized.
+            //    SupportedUICultures = supportedCultures
+            //});
             app.UseStaticFiles();
 
             app.UseMvc();

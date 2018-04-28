@@ -1,0 +1,154 @@
+﻿@page
+@model AttributesModel
+@{
+    ViewData["Title"] = "Attributes Example";
+}
+<h1>Validation Attributes</h1>
+<p></p>
+<ul>
+    <li>
+        <a href="#compare-attribute">[Compare]</a>
+    </li>
+    <li>
+        <a href="#credit-card-attribute">[CreditCard]</a>
+    </li>
+    <li>
+        <a href="#email-address-attribute">[EmailAddress]</a>
+    </li>
+    <li>
+        <a href="#file-extensions-attribute">[FileExtensions]</a>
+    </li>
+    <li>
+        <a href="#range-attribute">[Range]</a>
+    </li>
+    <li>
+        <a href="#regex-attribute">[RegularExpression]</a>
+    </li>
+    <li>
+        <a href="#required-attribute">[Required]</a>
+    </li>
+    <li>
+        <a href="#max-length-attribute">[MaxLength]</a>
+    </li>
+    <li>
+        <a href="#min-length-attribute">[MinLength]</a>
+    </li>
+    <li>
+        <a href="#string-length-attribute">[StringLength]</a>
+    </li>
+    <li>
+        <a href="#url-attribute">[Url]</a>
+    </li>
+</ul>
+
+<div id="app">
+    <div>
+        <h2 id="compare-attribute">[Compare]</h2>
+        <div class="input-field">
+            <label asp-for="Compare"></label>
+            <input asp-for="Compare" placeholder="Enter a value" v-model="Compare" />
+            <input asp-for="CompareTo" placeholder="Confirm a value" v-model="CompareTo" />
+            <span asp-validation-for="Compare"></span>
+        </div>
+    </div>
+    <div>
+        <h2 id="credit-card-attribute">[CreditCard]</h2>
+        <div class="input-field">
+            <label asp-for="CreditCard"></label>
+            <input asp-for="CreditCard" />
+            <span asp-validation-for="CreditCard"></span>
+        </div>
+    </div>
+    <div>
+        <h2 id="email-address-attribute">[EmailAddress]</h2>
+        <div class="input-field">
+            <label asp-for="EmailAddress"></label>
+            <input asp-for="EmailAddress" />
+            <span asp-validation-for="EmailAddress"></span>
+        </div>
+    </div>
+    <div>
+        <h2 id="file-extensions-attribute">[FileExtensions]</h2>
+        <div class="input-field">
+            <label asp-for="FileExtensions"></label>
+            <input asp-for="FileExtensions" type="file" />
+            <span asp-validation-for="FileExtensions"></span>
+        </div>
+    </div>
+    <div>
+        <h2 id="range-attribute">[Range]</h2>
+        <div class="input-field">
+            <label asp-for="Range"></label>
+            <input asp-for="Range" />
+            <span asp-validation-for="Range"></span>
+        </div>
+        <div class="input-field">
+            <label asp-for="DateRange"></label>
+            <input asp-for="DateRange" type="text" />
+            <span asp-validation-for="DateRange"></span>
+        </div>
+    </div>
+    <div>
+        <h2 id="regex-attribute">[RegularExpression]</h2>
+        <div class="input-field">
+            <label asp-for="Regex"></label>
+            <input asp-for="Regex" />
+            <span asp-validation-for="Regex"></span>
+        </div>
+    </div>
+    <div>
+        <h2 id="required-attribute">[Required]</h2>
+        <div class="input-field">
+            <label asp-for="Required"></label>
+            <input asp-for="Required" />
+            <span asp-validation-for="Required"></span>
+        </div>
+    </div>
+    <div>
+        <h2 id="max-length-attribute">[MaxLength]</h2>
+        <div class="input-field">
+            <label asp-for="MaxLength"></label>
+            <input asp-for="MaxLength" />
+            <span asp-validation-for="MaxLength"></span>
+        </div>
+    </div>
+    <div>
+        <h2 id="min-length-attribute">[MinLength]</h2>
+        <div class="input-field">
+            <label asp-for="MinLength"></label>
+            <input asp-for="MinLength" />
+            <span asp-validation-for="MinLength"></span>
+        </div>
+    </div>
+    <div>
+        <h2 id="string-length-attribute">[StringLength]</h2>
+        <div class="input-field">
+            <label asp-for="StringLength"></label>
+            <input asp-for="StringLength" />
+            <span asp-validation-for="StringLength"></span>
+        </div>
+    </div>
+    <div>
+        <h2 id="url-attribute">[Url]</h2>
+        <div class="input-field">
+            <label asp-for="Url"></label>
+            <input asp-for="Url" />
+            <span asp-validation-for="Url"></span>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        var elem = document.querySelector('.datepicker');
+        var instance = M.Datepicker.init(elem);
+
+        new Vue({
+            el: "#app",
+            data: {
+                Compare: null,
+                CompareTo: null,
+            }
+        })
+    </script>
+}

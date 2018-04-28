@@ -7,20 +7,15 @@ namespace VeeValidate.AspNetCore.Adapters
 {
     public class RangeAttributeAdapter : VeeAttributeAdapter<RangeAttribute>
     {
-        private readonly string _max;
-        private readonly string _min;
-        private readonly VeeValidateOptions _options;
+        private readonly string _dateFormat;
 
-        public RangeAttributeAdapter(RangeAttribute attribute, VeeValidateOptions options) : base(attribute)
+        public RangeAttributeAdapter(RangeAttribute attribute, string dateFormat) : base(attribute)
         {
-            // Validate a randomly selected number.
-            //attribute.IsValid(3);
-
-            _options = options;
+            _dateFormat = dateFormat;
         }
 
         public override void AddValidationRules(ClientModelValidationContext context)
-        {
+        {            
             // This will trigger the conversion of Attribute.Minimum and Attribute.Maximum.
             // This is needed, because the attribute is stateful and will convert from a string like
             // "100m" to the decimal value 100.
@@ -30,10 +25,11 @@ namespace VeeValidate.AspNetCore.Adapters
             if (Attribute.OperandType == typeof(DateTime) || context.ModelMetadata.ModelType == typeof(DateTime))
             {
                 if (DateTime.TryParse(min, out var minDate) && DateTime.TryParse(max, out var maxDate))
-                {                    
-                    // TODO - Date Format
-                    MergeRule(context.Attributes, $"date_format:'{_options.DateTimeFormat}'"); // TODO - make this work with globalization
-                    MergeRule(context.Attributes, $"date_between:{minDate.ToShortDateString()},{maxDate.ToShortDateString()},true");                    
+                {
+                    var normalisedDateFormat = _dateFormat.Replace('D', 'd').Replace('Y', 'y');
+
+                    MergeRule(context.Attributes, $"date_format:'{_dateFormat}'"); 
+                    MergeRule(context.Attributes, $"date_between:['{minDate.ToString(normalisedDateFormat)}','{maxDate.ToString(normalisedDateFormat)}','day']");                    
                 }
             }
             else

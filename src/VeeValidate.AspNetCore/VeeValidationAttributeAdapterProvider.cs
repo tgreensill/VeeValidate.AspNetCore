@@ -6,6 +6,8 @@ using VeeValidate.AspNetCore.Adapters;
 
 namespace VeeValidate.AspNetCore
 {
+    // TODO - Make sure modelstate error messages still generate
+    // TODO - Phone validator - not supported out of the box, Numeric validator
     public class VeeValidationAttributeAdapterProvider : IValidationAttributeAdapterProvider
     {
         private readonly VeeValidateOptions _options;
@@ -56,7 +58,7 @@ namespace VeeValidate.AspNetCore
             }
             else if (type == typeof(RangeAttribute))
             {
-                adapter = new RangeAttributeAdapter((RangeAttribute)attribute, _options);
+                adapter = new RangeAttributeAdapter((RangeAttribute)attribute, _options.DateFormat);
             }
             else if (type == typeof(EmailAddressAttribute))
             {
@@ -68,12 +70,12 @@ namespace VeeValidate.AspNetCore
             //}
             else if (type == typeof(UrlAttribute))
             {
-                adapter = new DataTypeAttributeAdapter((DataTypeAttribute)attribute, $"url:true");
+                adapter = new DataTypeAttributeAdapter((DataTypeAttribute)attribute, $"url:[true,{_options.RequireUrlProtocol.ToString().ToLower()}]");
             }
-            //else if (type == typeof(FileExtensionsAttribute))
-            //{
-            //    adapter = new FileExtensionsAttributeAdapter((FileExtensionsAttribute)attribute, stringLocalizer);
-            //}            
+            else if (type == typeof(FileExtensionsAttribute))
+            {
+                adapter = new FileExtensionsAttributeAdapter((FileExtensionsAttribute)attribute);
+            }
             else
             {
                 adapter = null;

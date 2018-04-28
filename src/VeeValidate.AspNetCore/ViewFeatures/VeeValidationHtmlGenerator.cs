@@ -23,11 +23,33 @@ namespace VeeValidate.AspNetCore.ViewFeatures
             _options = options;
         }
 
-        // TODO
-        //public override TagBuilder GenerateValidationSummary(ViewContext viewContext, bool excludePropertyErrors, string message, string headerTag, object htmlAttributes)
-        //{
-        //    return base.GenerateValidationSummary(viewContext, excludePropertyErrors, message, headerTag, htmlAttributes);
-        //}
+        public override TagBuilder GenerateValidationSummary(
+            ViewContext viewContext, 
+            bool excludePropertyErrors, 
+            string message, 
+            string headerTag, 
+            object htmlAttributes)
+        {
+            if (viewContext == null)
+            {
+                throw new ArgumentNullException(nameof(viewContext));
+            }
+
+            var tagBuilder = new TagBuilder("div");
+            tagBuilder.MergeAttributes(GetHtmlAttributeDictionaryOrNull(htmlAttributes));
+            tagBuilder.AddCssClass(_options.ValidationSummaryCssClassName);
+
+            // TODO - Filter out errors that are in the fieldbag when set to true
+            //if (excludePropertyErrors)
+            //{}
+            //else
+
+            tagBuilder.MergeAttribute("v-show", $"{_options.ErrorBagName}.any()");
+            tagBuilder.InnerHtml.SetHtmlContent(new HtmlString($"<ul><li v-for=\"error in {_options.ErrorBagName}.all()\">{{{{error}}}}</li></ul>"));
+            
+
+            return tagBuilder;
+        }
 
         public override TagBuilder GenerateValidationMessage(
            ViewContext viewContext,

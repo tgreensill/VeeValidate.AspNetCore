@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - VeeValidate.AspNetCore.Sample</title>
+    <title>@ViewData["Title"] - Vee Validate with Asp Net Core</title>
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css" />
@@ -12,16 +12,18 @@
 <body>
     <div>
         <img width="150" alt="VeeValidate Logo" src="~/images/vee-validate.svg"/>
+        <img width="150" alt="Dot Net Core Logo" src="~/images/net-core.png" />
     </div>
 
     <div class="container">
         @RenderBody()
     </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.16/vue.js"
             integrity="sha256-CMMTrj5gGwOAXBeFi7kNokqowkzbeL8ydAJy39ewjkQ="
             crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vee-validate@latest/dist/vee-validate.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vee-validate/2.0.8/vee-validate.min.js"></script>
     <script>
         Vue.use(VeeValidate);
     </script>

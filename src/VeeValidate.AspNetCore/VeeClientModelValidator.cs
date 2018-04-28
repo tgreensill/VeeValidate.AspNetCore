@@ -17,6 +17,7 @@ namespace VeeValidate.AspNetCore
                 throw new ArgumentNullException(nameof(context));
             }
 
+            // TODO - User aliases rather than display name when localization is enabled
             // Set display name in data-vv-as attribute for better validation messages
             MergeAttribute(context.Attributes, "data-vv-as", context.ModelMetadata.GetDisplayName());
 
