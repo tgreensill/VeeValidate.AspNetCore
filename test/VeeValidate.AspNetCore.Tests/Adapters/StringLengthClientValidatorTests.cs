@@ -6,14 +6,14 @@ using Xunit;
 
 namespace VeeValidate.AspNetCore.Tests.Adapters
 {
-    public class StringLengthAttributeAdapterTests
+    public class StringLengthClientValidatorTests
     {
         [Fact]
         public void AddValidation_adds_validation_rule()
         {
             // Arrange
             var attribute = new StringLengthAttribute(10);            
-            var adapter = new StringLengthAttributeAdapter(attribute);
+            var adapter = new StringLengthClientValidator(attribute);
 
             var context = new ClientModelValidationContextBuilder()
                 .WithModel(attribute)
@@ -34,7 +34,7 @@ namespace VeeValidate.AspNetCore.Tests.Adapters
             // Arrange
             var attribute = new StringLengthAttribute(10);
             attribute.MinimumLength = 3;
-            var adapter = new StringLengthAttributeAdapter(attribute);
+            var adapter = new StringLengthClientValidator(attribute);
 
             var context = new ClientModelValidationContextBuilder()
                 .WithModel(attribute)

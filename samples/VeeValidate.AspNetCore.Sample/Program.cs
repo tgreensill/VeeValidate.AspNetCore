@@ -12,6 +12,7 @@ namespace VeeValidate.AspNetCore.Sample
 
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
+                .CaptureStartupErrors(true)
                 .UseStartup<Startup>()
                 .Build();
     }

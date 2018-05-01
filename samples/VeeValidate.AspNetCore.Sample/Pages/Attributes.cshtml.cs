@@ -47,6 +47,10 @@ namespace VeeValidate.AspNetCore.Sample.Pages
         [FileExtensions(Extensions = "jpg,png,gif")]
         public string FileExtensions { get; set; }
 
+        public int? Numeric { get; set; }
+
+        public decimal? Decimal { get; set; }
+
         public void OnGet()
         {
         }

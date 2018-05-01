@@ -7,14 +7,10 @@ body {
     background-color: #fff;
 }
 
-fieldset {
-    border: none;
-    padding-left: 0;
-    padding-right: 0;
+[v-cloak] {
+    display:none !important;
 }
-legend{
-    font-size:1.5em;
-}
+
 a {
     color: #00d1b2;
     cursor: pointer;

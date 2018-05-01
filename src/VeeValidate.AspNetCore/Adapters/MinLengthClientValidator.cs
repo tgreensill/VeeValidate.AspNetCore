@@ -3,9 +3,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace VeeValidate.AspNetCore.Adapters
 {
-    public class MinLengthAttributeAdapter : VeeAttributeAdapter<MinLengthAttribute>
+    public class MinLengthClientValidator : VeeAttributeClientValidator<MinLengthAttribute>
     {
-        public MinLengthAttributeAdapter(MinLengthAttribute attribute) : base(attribute)
+        public MinLengthClientValidator(MinLengthAttribute attribute) : base(attribute)
         {
         }
                 

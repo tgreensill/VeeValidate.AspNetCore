@@ -10,13 +10,13 @@ using Xunit;
 
 namespace VeeValidate.AspNetCore.Tests
 {
-    public class VeeValidationAttributeAdapterProviderTests
+    public class VeeAttributeAdapterProviderTests
     {
         private readonly IValidationAttributeAdapterProvider _provider;
 
-        public VeeValidationAttributeAdapterProviderTests()
+        public VeeAttributeAdapterProviderTests()
         {
-            _provider = new VeeValidationAttributeAdapterProvider(new VeeValidateOptions());
+            _provider = new VeeAttributeAdapterProvider(new VeeValidateOptions());
         }
 
         [Theory]
@@ -35,11 +35,11 @@ namespace VeeValidate.AspNetCore.Tests
         public static IEnumerable<object[]> GetAttributeAdapterCases =>
             new List<object[]>
             {
-                new object[] { new RequiredAttribute(), typeof(RequiredAttributeAdapter) },
-                new object[] { new CompareAttribute("test"), typeof(CompareAttributeAdapter) },
-                new object[] { new RangeAttribute(1, 2), typeof(RangeAttributeAdapter) },
-                new object[] { new EmailAddressAttribute(), typeof(DataTypeAttributeAdapter) },
-                new object[] { new CreditCardAttribute(), typeof(DataTypeAttributeAdapter) }
+                new object[] { new RequiredAttribute(), typeof(RequiredClientValidator) },
+                new object[] { new CompareAttribute("test"), typeof(CompareClientValidator) },
+                new object[] { new RangeAttribute(1, 2), typeof(RangeClientValidator) },
+                new object[] { new EmailAddressAttribute(), typeof(DataTypeClientValidator) },
+                new object[] { new CreditCardAttribute(), typeof(DataTypeClientValidator) }
             };
     }
 }

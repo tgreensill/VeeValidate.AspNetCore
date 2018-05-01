@@ -7,14 +7,14 @@ using Xunit;
 
 namespace VeeValidate.AspNetCore.Tests.Adapters
 {
-    public class RangeAttributeAdapterTests
+    public class RangeClientValidatorTests
     {
         [Fact]
         public void AddValidation_adds_min_and_max_rules()
         {
             // Arrange
             var attribute = new RangeAttribute(2, 99);
-            var adapter = new RangeAttributeAdapter(attribute, "");
+            var adapter = new RangeClientValidator(attribute, "");
 
             var context = new ClientModelValidationContextBuilder()
                 .WithModel(attribute)
@@ -34,7 +34,7 @@ namespace VeeValidate.AspNetCore.Tests.Adapters
         {
             // Arrange
             var attribute = new RangeAttribute(typeof(DateTime), "2000-01-15", "2020-06-03");
-            var adapter = new RangeAttributeAdapter(attribute, "DD/MM/YYYY");
+            var adapter = new RangeClientValidator(attribute, "DD/MM/YYYY");
 
             var context = new ClientModelValidationContextBuilder()
                 .WithModel(attribute)

@@ -3,15 +3,15 @@ using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace VeeValidate.AspNetCore.Adapters
 {
-    public class CompareAttributeAdapter : VeeAttributeAdapter<CompareAttribute>
+    public class RequiredClientValidator : VeeAttributeClientValidator<RequiredAttribute>
     {
-        public CompareAttributeAdapter(CompareAttribute attribute) : base(attribute)
+        public RequiredClientValidator(RequiredAttribute attribute) : base(attribute)
         {
         }
 
         public override void AddValidationRules(ClientModelValidationContext context)
-        {
-            MergeRule(context.Attributes, $"confirmed:{Attribute.OtherProperty}");
+        {                        
+            MergeRule(context.Attributes, "required:true");
         }
     }
 }

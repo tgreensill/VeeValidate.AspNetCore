@@ -6,7 +6,7 @@ using Xunit;
 
 namespace VeeValidate.AspNetCore.Tests.Adapters
 {
-    public class FileExtensionsAttributeAdapterTests
+    public class FileExtensionsClientValidatorTests
     {
         [Fact]
         public void AddValidation_adds_validation_rule()
@@ -16,7 +16,7 @@ namespace VeeValidate.AspNetCore.Tests.Adapters
             {
                 Extensions = "pdf,png,zip"
             };
-            var adapter = new FileExtensionsAttributeAdapter(attribute);
+            var adapter = new FileExtensionsClientValidator(attribute);
 
             var context = new ClientModelValidationContextBuilder()
                 .WithModel(attribute)
@@ -39,7 +39,7 @@ namespace VeeValidate.AspNetCore.Tests.Adapters
             {
                 Extensions = "pdf|png|gif"
             };
-            var adapter = new FileExtensionsAttributeAdapter(attribute);
+            var adapter = new FileExtensionsClientValidator(attribute);
 
             var context = new ClientModelValidationContextBuilder()
                 .WithModel(attribute)

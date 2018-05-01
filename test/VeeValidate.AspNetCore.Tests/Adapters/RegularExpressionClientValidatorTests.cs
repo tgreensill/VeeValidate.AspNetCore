@@ -6,14 +6,14 @@ using Xunit;
 
 namespace VeeValidate.AspNetCore.Tests.Adapters
 {
-    public class MaxLengthAttributeAdapterTests
+    public class RegularExpressionClientValidatorTests
     {
         [Fact]
         public void AddValidation_adds_validation_rule()
         {
             // Arrange
-            var attribute = new MaxLengthAttribute(50);
-            var adapter = new MaxLengthAttributeAdapter(attribute);
+            var attribute = new RegularExpressionAttribute("abc");
+            var adapter = new RegularExpressionClientValidator(attribute);
 
             var context = new ClientModelValidationContextBuilder()
                 .WithModel(attribute)
@@ -25,7 +25,7 @@ namespace VeeValidate.AspNetCore.Tests.Adapters
             // Assert
             context.Attributes.ShouldContainKey("data-vv-as");
             context.Attributes.ShouldContainKey("v-validate");
-            context.Attributes["v-validate"].ShouldBe("{max:50}");
+            context.Attributes["v-validate"].ShouldBe("{regex:abc}");
         }
     }
 }

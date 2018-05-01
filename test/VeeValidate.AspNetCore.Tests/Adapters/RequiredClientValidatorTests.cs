@@ -6,14 +6,14 @@ using Xunit;
 
 namespace VeeValidate.AspNetCore.Tests.Adapters
 {
-    public class RequiredAttributeAdapterTests
+    public class RequiredClientValidatorTests
     {        
         [Fact]
         public void AddValidation_adds_validation_rule()
         {
             // Arrange
             var attribute = new RequiredAttribute();
-            var adapter = new RequiredAttributeAdapter(attribute);
+            var adapter = new RequiredClientValidator(attribute);
 
             var context = new ClientModelValidationContextBuilder()
                 .WithModel(attribute)

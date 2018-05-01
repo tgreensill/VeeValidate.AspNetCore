@@ -14,7 +14,7 @@ namespace VeeValidate.AspNetCore.Tests.Builders
         private ModelMetadata _modelMetadata;
         private IModelMetadataProvider _modelMetadataProvider;
         private IDictionary<string,string> _attributes;
-        private ValidationAttribute _model;
+        private Type _modelType;
 
         public ClientModelValidationContextBuilder()
         {
@@ -31,7 +31,12 @@ namespace VeeValidate.AspNetCore.Tests.Builders
 
         public ClientModelValidationContextBuilder WithModel(ValidationAttribute model)
         {
-            _model = model;
+            return WithModelType(model.GetType());            
+        }
+
+        public ClientModelValidationContextBuilder WithModelType(Type modelType)
+        {
+            _modelType = modelType;
             return this;
         }
 
@@ -61,12 +66,12 @@ namespace VeeValidate.AspNetCore.Tests.Builders
 
         public ClientModelValidationContext Build()
         {
-            if (_modelMetadata == null && _model == null)
+            if (_modelMetadata == null && _modelType == null)
             {
-                throw new ArgumentNullException("ModelMetadata or Model must be set.");
+                throw new ArgumentNullException("ModelMetadata, Model, or Model Type must be set.");
             }
 
-            var modelMetadata = _modelMetadata ?? _modelMetadataProvider.GetMetadataForType(_model.GetType());
+            var modelMetadata = _modelMetadata ?? _modelMetadataProvider.GetMetadataForType(_modelType);
 
             return new ClientModelValidationContext(_actionContext, modelMetadata, _modelMetadataProvider, _attributes);
         }

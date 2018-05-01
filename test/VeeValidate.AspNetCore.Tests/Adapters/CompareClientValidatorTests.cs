@@ -6,15 +6,15 @@ using Xunit;
 
 namespace VeeValidate.AspNetCore.Tests.Adapters
 {
-    public class MinLengthAttributeAdapterTests
+    public class CompareClientValidatorTests
     {
         [Fact]
         public void AddValidation_adds_validation_rule()
         {
             // Arrange
-            var attribute = new MinLengthAttribute(10);
-            var adapter = new MinLengthAttributeAdapter(attribute);
-
+            var attribute = new CompareAttribute("PropertyName");
+            var adapter = new CompareClientValidator(attribute);
+            
             var context = new ClientModelValidationContextBuilder()
                 .WithModel(attribute)
                 .Build();
@@ -25,7 +25,7 @@ namespace VeeValidate.AspNetCore.Tests.Adapters
             // Assert
             context.Attributes.ShouldContainKey("data-vv-as");
             context.Attributes.ShouldContainKey("v-validate");
-            context.Attributes["v-validate"].ShouldBe("{min:10}");
+            context.Attributes["v-validate"].ShouldBe("{confirmed:PropertyName}");
         }
     }
 }

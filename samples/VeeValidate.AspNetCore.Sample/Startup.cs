@@ -1,9 +1,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System.Globalization;
 
 namespace VeeValidate.AspNetCore.Sample
 {
@@ -19,8 +17,8 @@ namespace VeeValidate.AspNetCore.Sample
         public void ConfigureServices(IServiceCollection services)
         {
             // TODO - Add Localization 
-            //services.AddLocalization();
-            services.AddVeeValidation(options => options.DateFormat = "DD/MM/YYYY");                
+            //services.AddLocalization(); 
+            services.AddVeeValidation(options => options.Dates.DateFormat = "DD/MM/YYYY");
             services.AddMvc();
         }
 

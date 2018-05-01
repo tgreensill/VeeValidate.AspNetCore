@@ -3,9 +3,9 @@ using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace VeeValidate.AspNetCore.Adapters
 {
-    public class RegularExpressionAttributeAdapter : VeeAttributeAdapter<RegularExpressionAttribute>
+    public class RegularExpressionClientValidator : VeeAttributeClientValidator<RegularExpressionAttribute>
     {
-        public RegularExpressionAttributeAdapter(RegularExpressionAttribute attribute) : base(attribute)
+        public RegularExpressionClientValidator(RegularExpressionAttribute attribute) : base(attribute)
         {
         }
 

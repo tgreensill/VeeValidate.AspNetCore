@@ -39,14 +39,20 @@ namespace VeeValidate.AspNetCore.ViewFeatures
             tagBuilder.MergeAttributes(GetHtmlAttributeDictionaryOrNull(htmlAttributes));
             tagBuilder.AddCssClass(_options.ValidationSummaryCssClassName);
 
-            // TODO - Filter out errors that are in the fieldbag when set to true
-            //if (excludePropertyErrors)
-            //{}
-            //else
+            // The v-cloak attribute is removed once the vue instance has been initialized on the page.
+            // It's useful for hiding elements whose visibility is controller by the vue instance until it's ready. 
+            tagBuilder.MergeAttribute("v-cloak", null);
 
+            // TODO - Filter out errors related to fields in the fieldbag when set to true
+            //if (excludePropertyErrors)
+            //{
+            //}
+            //else
+            //{
+            // The validation summary will only appear when there's an error in the error bag.
             tagBuilder.MergeAttribute("v-show", $"{_options.ErrorBagName}.any()");
             tagBuilder.InnerHtml.SetHtmlContent(new HtmlString($"<ul><li v-for=\"error in {_options.ErrorBagName}.all()\">{{{{error}}}}</li></ul>"));
-            
+            //}
 
             return tagBuilder;
         }
@@ -74,10 +80,12 @@ namespace VeeValidate.AspNetCore.ViewFeatures
 
             var tagBuilder = new TagBuilder(tag);
             tagBuilder.MergeAttributes(htmlAttributeDictionary);
+            tagBuilder.AddCssClass(_options.ValidationMessageCssClassName);
 
-            // Only the style of the span is changed according to the errors if message is null or empty.
-            // Otherwise the content and style is handled by the client-side validation.
-            tagBuilder.AddCssClass(_options.ValidationMessageCssClassName); 
+            // The v-cloak attribute is removed once the vue instance has been initialized on the page.
+            // It's useful for hiding elements whose visibility is controller by the vue instance until it's ready. 
+            tagBuilder.MergeAttribute("v-cloak", null);
+            // The span will only appear when there's an error in the error bag for the field .           
             tagBuilder.MergeAttribute("v-show", $"{_options.ErrorBagName}.has('{fullName}')");
             tagBuilder.InnerHtml.SetHtmlContent(new HtmlString($"{{{{{_options.ErrorBagName}.first('{fullName}')}}}}"));
             

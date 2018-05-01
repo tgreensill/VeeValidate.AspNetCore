@@ -5,7 +5,7 @@
   "devDependencies": {
     "vue": "2.5.16",
     "vee-validate": "2.0.6",
-    "materialize-css": "1.0.0-beta",
+    "materialize-css": "1.0.0-alpha.4",
     "axios": "0.18.0"
   }
 }

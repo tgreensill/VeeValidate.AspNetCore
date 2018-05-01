@@ -3,9 +3,9 @@ using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace VeeValidate.AspNetCore.Adapters
 {
-    public class MaxLengthAttributeAdapter : VeeAttributeAdapter<MaxLengthAttribute>
+    public class MaxLengthClientValidator : VeeAttributeClientValidator<MaxLengthAttribute>
     {
-        public MaxLengthAttributeAdapter(MaxLengthAttribute attribute) : base(attribute)
+        public MaxLengthClientValidator(MaxLengthAttribute attribute) : base(attribute)
         {
         }
 

@@ -1,31 +1,28 @@
 ﻿using Shouldly;
-using System.ComponentModel.DataAnnotations;
 using VeeValidate.AspNetCore.Adapters;
 using VeeValidate.AspNetCore.Tests.Builders;
 using Xunit;
 
 namespace VeeValidate.AspNetCore.Tests.Adapters
 {
-    public class CompareAttributeAdapterTests
+    public class NumericClientValidatorTests
     {
         [Fact]
         public void AddValidation_adds_validation_rule()
         {
             // Arrange
-            var attribute = new CompareAttribute("PropertyName");
-            var adapter = new CompareAttributeAdapter(attribute);
-            
+            var validator = new NumericClientValidator();
             var context = new ClientModelValidationContextBuilder()
-                .WithModel(attribute)
+                .WithModelType(typeof(int))
                 .Build();
 
             // Act
-            adapter.AddValidation(context);
+            validator.AddValidation(context);
 
-            // Assert
+            // Assert            
             context.Attributes.ShouldContainKey("data-vv-as");
             context.Attributes.ShouldContainKey("v-validate");
-            context.Attributes["v-validate"].ShouldBe("{confirmed:PropertyName}");
+            context.Attributes["v-validate"].ShouldBe("{numeric:true}");
         }
     }
 }

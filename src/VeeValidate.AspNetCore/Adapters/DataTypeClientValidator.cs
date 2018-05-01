@@ -3,11 +3,11 @@ using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace VeeValidate.AspNetCore.Adapters
 {
-    public class DataTypeAttributeAdapter : VeeAttributeAdapter<DataTypeAttribute>
+    public class DataTypeClientValidator : VeeAttributeClientValidator<DataTypeAttribute>
     {
         private readonly string _rule;
 
-        public DataTypeAttributeAdapter(DataTypeAttribute attribute, string rule) : base(attribute)
+        public DataTypeClientValidator(DataTypeAttribute attribute, string rule) : base(attribute)
         {
             _rule = rule;
         }
@@ -16,6 +16,5 @@ namespace VeeValidate.AspNetCore.Adapters
         {
             MergeRule(context.Attributes, _rule);
         }
-
     }
 }

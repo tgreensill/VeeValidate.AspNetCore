@@ -42,6 +42,18 @@
 </ul>
 
 <div id="app">
+    <div>        
+        <div class="input-field">
+            <label asp-for="Numeric"></label>
+            <input asp-for="Numeric" />
+            <span asp-validation-for="Numeric"></span>
+        </div>
+        <div class="input-field">
+            <label asp-for="Decimal"></label>
+            <input asp-for="Decimal" />
+            <span asp-validation-for="Decimal"></span>
+        </div>
+    </div>
     <div>
         <h2 id="compare-attribute">[Compare]</h2>
         <div class="input-field">
@@ -69,9 +81,14 @@
     </div>
     <div>
         <h2 id="file-extensions-attribute">[FileExtensions]</h2>
-        <div class="input-field">
-            <label asp-for="FileExtensions"></label>
-            <input asp-for="FileExtensions" type="file" />
+        <div class="file-field input-field">
+            <div class="btn">
+                <label asp-for="FileExtensions"></label>
+                <input asp-for="FileExtensions" type="file" />
+            </div>
+            <div class="file-path-wrapper">
+                <input class="file-path" type="text">
+            </div>
             <span asp-validation-for="FileExtensions"></span>
         </div>
     </div>
@@ -84,10 +101,10 @@
         </div>
         <div class="input-field">
             <label asp-for="DateRange"></label>
-            <input asp-for="DateRange" type="text" />
+            <input asp-for="DateRange" type="text" v-date />
             <span asp-validation-for="DateRange"></span>
         </div>
-    </div>
+    </div>    
     <div>
         <h2 id="regex-attribute">[RegularExpression]</h2>
         <div class="input-field">
@@ -140,8 +157,15 @@
 
 @section Scripts{
     <script>
-        var elem = document.querySelector('.datepicker');
-        var instance = M.Datepicker.init(elem);
+        Vue.directive('date', {
+            // When the bound element is inserted into the DOM...
+            inserted: function (el) {                
+                // Focus the element
+                M.Datepicker.init(el, {
+                    format: 'dd/mm/yyyy'
+                });                
+            }
+        })
 
         new Vue({
             el: "#app",

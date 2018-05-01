@@ -6,14 +6,14 @@ using Xunit;
 
 namespace VeeValidate.AspNetCore.Tests.Adapters
 {
-    public class RegularExpressionAttributeAdapterTests
+    public class MinLengthClientValidatorTests
     {
         [Fact]
         public void AddValidation_adds_validation_rule()
         {
             // Arrange
-            var attribute = new RegularExpressionAttribute("abc");
-            var adapter = new RegularExpressionAttributeAdapter(attribute);
+            var attribute = new MinLengthAttribute(10);
+            var adapter = new MinLengthClientValidator(attribute);
 
             var context = new ClientModelValidationContextBuilder()
                 .WithModel(attribute)
@@ -25,7 +25,7 @@ namespace VeeValidate.AspNetCore.Tests.Adapters
             // Assert
             context.Attributes.ShouldContainKey("data-vv-as");
             context.Attributes.ShouldContainKey("v-validate");
-            context.Attributes["v-validate"].ShouldBe("{regex:abc}");
+            context.Attributes["v-validate"].ShouldBe("{min:10}");
         }
     }
 }

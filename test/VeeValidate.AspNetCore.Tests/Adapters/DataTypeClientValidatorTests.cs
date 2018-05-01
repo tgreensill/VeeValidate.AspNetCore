@@ -7,14 +7,14 @@ using Xunit;
 
 namespace VeeValidate.AspNetCore.Tests.Adapters
 {
-    public class DataTypeAttributeAdapterTests
+    public class DataTypeClientValidatorTests
     {
         [Theory]
         [MemberData(nameof(AddValidationCases))]
         public void AddValidation_adds_validation_rule(DataTypeAttribute attribute, string rule)
         {
             // Arrange            
-            var adapter = new DataTypeAttributeAdapter(attribute, rule);
+            var adapter = new DataTypeClientValidator(attribute, rule);
 
             var context = new ClientModelValidationContextBuilder()
                 .WithModel(attribute)                

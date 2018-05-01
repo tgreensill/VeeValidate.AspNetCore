@@ -5,11 +5,11 @@ using System.Globalization;
 
 namespace VeeValidate.AspNetCore.Adapters
 {
-    public class RangeAttributeAdapter : VeeAttributeAdapter<RangeAttribute>
+    public class RangeClientValidator : VeeAttributeClientValidator<RangeAttribute>
     {
         private readonly string _dateFormat;
 
-        public RangeAttributeAdapter(RangeAttribute attribute, string dateFormat) : base(attribute)
+        public RangeClientValidator(RangeAttribute attribute, string dateFormat) : base(attribute)
         {
             _dateFormat = dateFormat;
         }

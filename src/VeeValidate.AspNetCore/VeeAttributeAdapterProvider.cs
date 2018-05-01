@@ -8,11 +8,12 @@ namespace VeeValidate.AspNetCore
 {
     // TODO - Make sure modelstate error messages still generate
     // TODO - Phone validator - not supported out of the box, Numeric validator
-    public class VeeValidationAttributeAdapterProvider : IValidationAttributeAdapterProvider
+    // TODO - Test localization
+    public class VeeAttributeAdapterProvider : IValidationAttributeAdapterProvider
     {
         private readonly VeeValidateOptions _options;
 
-        public VeeValidationAttributeAdapterProvider(VeeValidateOptions options)
+        public VeeAttributeAdapterProvider(VeeValidateOptions options)
         {
             _options = options;
         }
@@ -30,39 +31,39 @@ namespace VeeValidate.AspNetCore
 
             if (type == typeof(RegularExpressionAttribute))
             {
-                adapter = new RegularExpressionAttributeAdapter((RegularExpressionAttribute)attribute);
+                adapter = new RegularExpressionClientValidator((RegularExpressionAttribute)attribute);
             }
             else if (type == typeof(MaxLengthAttribute))
             {
-                adapter = new MaxLengthAttributeAdapter((MaxLengthAttribute)attribute);
+                adapter = new MaxLengthClientValidator((MaxLengthAttribute)attribute);
             }
             else if (type == typeof(RequiredAttribute))
             {
-                adapter = new RequiredAttributeAdapter((RequiredAttribute)attribute);
+                adapter = new RequiredClientValidator((RequiredAttribute)attribute);
             }            
             else if (type == typeof(CompareAttribute))
             {
-                adapter = new CompareAttributeAdapter((CompareAttribute)attribute);
+                adapter = new CompareClientValidator((CompareAttribute)attribute);
             }
             else if (type == typeof(MinLengthAttribute))
             {
-                adapter = new MinLengthAttributeAdapter((MinLengthAttribute)attribute);
+                adapter = new MinLengthClientValidator((MinLengthAttribute)attribute);
             }
             else if (type == typeof(CreditCardAttribute))
             {
-                adapter = new DataTypeAttributeAdapter((DataTypeAttribute)attribute, "credit_card:true");
+                adapter = new DataTypeClientValidator((DataTypeAttribute)attribute, "credit_card:true");
             }
             else if (type == typeof(StringLengthAttribute))
             {
-                adapter = new StringLengthAttributeAdapter((StringLengthAttribute)attribute);
+                adapter = new StringLengthClientValidator((StringLengthAttribute)attribute);
             }
             else if (type == typeof(RangeAttribute))
             {
-                adapter = new RangeAttributeAdapter((RangeAttribute)attribute, _options.DateFormat);
+                adapter = new RangeClientValidator((RangeAttribute)attribute, _options.Dates.DateFormat);
             }
             else if (type == typeof(EmailAddressAttribute))
             {
-                adapter = new DataTypeAttributeAdapter((DataTypeAttribute)attribute, "email:true");
+                adapter = new DataTypeClientValidator((DataTypeAttribute)attribute, "email:true");
             }
             //else if (type == typeof(PhoneAttribute))
             //{
@@ -70,11 +71,11 @@ namespace VeeValidate.AspNetCore
             //}
             else if (type == typeof(UrlAttribute))
             {
-                adapter = new DataTypeAttributeAdapter((DataTypeAttribute)attribute, $"url:[true,{_options.RequireUrlProtocol.ToString().ToLower()}]");
+                adapter = new DataTypeClientValidator((DataTypeAttribute)attribute, $"url:[true,{_options.Urls.RequireUrlProtocol}]".ToLower());
             }
             else if (type == typeof(FileExtensionsAttribute))
             {
-                adapter = new FileExtensionsAttributeAdapter((FileExtensionsAttribute)attribute);
+                adapter = new FileExtensionsClientValidator((FileExtensionsAttribute)attribute);
             }
             else
             {

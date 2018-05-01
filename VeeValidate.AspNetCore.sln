@@ -13,7 +13,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VeeValidate.AspNetCore", "s
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VeeValidate.AspNetCore.Tests", "test\VeeValidate.AspNetCore.Tests\VeeValidate.AspNetCore.Tests.csproj", "{56B97FEE-036D-4B34-9B44-87EC60AFB552}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VeeValidate.AspNetCore.Sample", "samples\VeeValidate.AspNetCore.Sample\VeeValidate.AspNetCore.Sample.csproj", "{FA31D9D5-FC01-4BD4-B3B8-1722706C700C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VeeValidate.AspNetCore.Sample", "samples\VeeValidate.AspNetCore.Sample\VeeValidate.AspNetCore.Sample.csproj", "{FA31D9D5-FC01-4BD4-B3B8-1722706C700C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{3C55F708-121E-45ED-BD3C-ED1EB9ECB0EC}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
