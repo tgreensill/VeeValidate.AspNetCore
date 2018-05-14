@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace VeeValidate.AspNetCore.Adapters
 {
-    public class StringLengthClientValidator : VeeAttributeClientValidator<StringLengthAttribute>
+    public class StringLengthClientValidator : VeeAttributeAdapter<StringLengthAttribute>
     {
         public StringLengthClientValidator(StringLengthAttribute attribute) : base(attribute)
         {

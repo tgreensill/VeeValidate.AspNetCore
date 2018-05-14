@@ -38,8 +38,12 @@ namespace VeeValidate.AspNetCore.Tests
                 new object[] { new RequiredAttribute(), typeof(RequiredClientValidator) },
                 new object[] { new CompareAttribute("test"), typeof(CompareClientValidator) },
                 new object[] { new RangeAttribute(1, 2), typeof(RangeClientValidator) },
-                new object[] { new EmailAddressAttribute(), typeof(DataTypeClientValidator) },
-                new object[] { new CreditCardAttribute(), typeof(DataTypeClientValidator) }
+                new object[] { new EmailAddressAttribute(), typeof(EmailAddressClientValidator) },
+                new object[] { new CreditCardAttribute(), typeof(CreditCardClientValidator) },
+                new object[] { new UrlAttribute(), typeof(UrlClientValidator) },
+                new object[] { new MaxLengthAttribute(), typeof(MaxLengthClientValidator) },
+                new object[] { new MinLengthAttribute(3), typeof(MinLengthClientValidator) },
+                new object[] { new StringLengthAttribute(6), typeof(StringLengthClientValidator) }
             };
     }
 }

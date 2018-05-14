@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace VeeValidate.AspNetCore.Adapters
 {
-    public class FileExtensionsClientValidator : VeeAttributeClientValidator<FileExtensionsAttribute>
+    public class FileExtensionsClientValidator : VeeAttributeAdapter<FileExtensionsAttribute>
     {
         public FileExtensionsClientValidator(FileExtensionsAttribute attribute) : base(attribute)
         {

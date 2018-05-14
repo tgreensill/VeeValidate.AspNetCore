@@ -29,7 +29,7 @@ namespace VeeValidate.AspNetCore
 
             var type = attribute.GetType();
 
-            if (type == typeof(RegularExpressionAttribute))
+            if (type  == typeof(RegularExpressionAttribute))
             {
                 adapter = new RegularExpressionClientValidator((RegularExpressionAttribute)attribute);
             }
@@ -51,7 +51,7 @@ namespace VeeValidate.AspNetCore
             }
             else if (type == typeof(CreditCardAttribute))
             {
-                adapter = new DataTypeClientValidator((DataTypeAttribute)attribute, "credit_card:true");
+                adapter = new CreditCardClientValidator((CreditCardAttribute)attribute);                
             }
             else if (type == typeof(StringLengthAttribute))
             {
@@ -59,11 +59,11 @@ namespace VeeValidate.AspNetCore
             }
             else if (type == typeof(RangeAttribute))
             {
-                adapter = new RangeClientValidator((RangeAttribute)attribute, _options.Dates.DateFormat);
+                adapter = new RangeClientValidator((RangeAttribute)attribute, _options.Dates.Format);
             }
             else if (type == typeof(EmailAddressAttribute))
             {
-                adapter = new DataTypeClientValidator((DataTypeAttribute)attribute, "email:true");
+                adapter = new EmailAddressClientValidator((EmailAddressAttribute)attribute);
             }
             //else if (type == typeof(PhoneAttribute))
             //{
@@ -71,7 +71,7 @@ namespace VeeValidate.AspNetCore
             //}
             else if (type == typeof(UrlAttribute))
             {
-                adapter = new DataTypeClientValidator((DataTypeAttribute)attribute, $"url:[true,{_options.Urls.RequireUrlProtocol}]".ToLower());
+                adapter = new UrlClientValidator((UrlAttribute)attribute);
             }
             else if (type == typeof(FileExtensionsAttribute))
             {

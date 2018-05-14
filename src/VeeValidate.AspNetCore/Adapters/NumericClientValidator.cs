@@ -17,4 +17,19 @@ namespace VeeValidate.AspNetCore.Adapters
             MergeRule(context.Attributes, "decimal:true");
         }
     }
+
+    public class DateTimeClientValidator : VeeClientModelValidator
+    {
+        private readonly string _dateFormat;
+
+        public DateTimeClientValidator(string dateFormat)
+        {
+            _dateFormat = dateFormat;
+        }
+
+        public override void AddValidationRules(ClientModelValidationContext context)
+        {
+            MergeRule(context.Attributes, $"date_format:'{_dateFormat}'");
+        }
+    }    
 }

@@ -1,0 +1,36 @@
+﻿[
+  // Materialize
+  {
+    "outputFileName": "wwwroot/libs/materialize-css/materialize.css",
+    "inputFiles": [
+      "node_modules/materialize-css/dist/css/materialize.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/libs/materialize-css/materialize.js",
+    "inputFiles": [
+      "node_modules/materialize-css/dist/js/materialize.js"
+    ]
+  },
+  // Vue
+  {
+    "outputFileName": "wwwroot/libs/vue/vue.js",
+    "inputFiles": [
+      "node_modules/vue/dist/vue.js"
+    ]
+  },
+  // Vee-Validate
+  {
+    "outputFileName": "wwwroot/libs/vee-validate/vee-validate.js",
+    "inputFiles": [
+      "node_modules/vee-validate/dist/vee-validate.js"
+    ]
+  },
+  // Axios
+  {
+    "outputFileName": "wwwroot/libs/axios/axios.js",
+    "inputFiles": [
+      "node_modules/axios/dist/axios.js"
+    ]
+  }
+]

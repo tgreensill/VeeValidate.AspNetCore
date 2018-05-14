@@ -10,6 +10,16 @@ namespace VeeValidate.AspNetCore
     /// </summary>
     public class VeeNumericClientModelValidatorProvider : IClientModelValidatorProvider
     {
+        private readonly VeeValidateOptions _options;
+
+        // TODO : Create dictionary Type to TypeValidator
+        // i.e. { typeof(float), new DecimalClientValidator() } ??
+
+        public VeeNumericClientModelValidatorProvider(VeeValidateOptions options)
+        {
+            _options = options;
+        }
+
         /// <inheritdoc />
         public void CreateValidators(ClientValidatorProviderContext context)
         {
@@ -60,6 +70,26 @@ namespace VeeValidate.AspNetCore
                     IsReusable = true
                 });
             }
+
+            if (typeToValidate == typeof(DateTime))
+            {
+                for (var i = 0; i < context.Results.Count; i++)
+                {
+                    var validator = context.Results[i].Validator;
+                    if (validator != null && validator is DateTimeClientValidator)
+                    {
+                        // A validator is already present. No need to add one.
+                        return;
+                    }
+                }
+                // decimals:true
+                context.Results.Add(new ClientValidatorItem
+                {
+                    Validator = new DateTimeClientValidator(_options.Dates.Format),
+                    IsReusable = true
+                });
+            }
+            
         }
     }
 }

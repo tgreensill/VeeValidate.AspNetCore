@@ -28,7 +28,7 @@ namespace VeeValidate.AspNetCore.Tests.Adapters
             // Assert            
             context.Attributes.ShouldContainKey("data-vv-as");
             context.Attributes.ShouldContainKey("v-validate");
-            context.Attributes["v-validate"].ShouldBe("{ext:[pdf,png,zip]}");
+            context.Attributes["v-validate"].ShouldBe("{ext:['pdf','png','zip']}");
         }
 
         [Fact]
@@ -51,7 +51,7 @@ namespace VeeValidate.AspNetCore.Tests.Adapters
             // Assert            
             context.Attributes.ShouldContainKey("data-vv-as");
             context.Attributes.ShouldContainKey("v-validate");
-            context.Attributes["v-validate"].ShouldBe("{ext:[pdf,png,gif]}");
+            context.Attributes["v-validate"].ShouldBe("{ext:['pdf','png','gif']}");
         }
     }
 }

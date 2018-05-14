@@ -30,7 +30,6 @@ namespace VeeValidate.AspNetCore
             services.TryAddTransient<IValidationAttributeAdapterProvider, VeeAttributeAdapterProvider>();
             services.TryAddSingleton<IHtmlGenerator, VeeValidationHtmlGenerator>();
 
-            //services.Configure<MvcViewOptions>(new MvcViewOptions { ClientModelValidatorProviders = new[] { } })
             services.TryAddEnumerable(ServiceDescriptor.Transient<IConfigureOptions<MvcViewOptions>, VeeValidateViewOptionsSetup>(s =>
             {
                 return new VeeValidateViewOptionsSetup(options);
@@ -50,7 +49,7 @@ namespace VeeValidate.AspNetCore
 
             public void Configure(MvcViewOptions options)
             {
-                options.ClientModelValidatorProviders.Add(new VeeNumericClientModelValidatorProvider());
+                options.ClientModelValidatorProviders.Add(new VeeNumericClientModelValidatorProvider(_configuration));                
             }
         }
     }

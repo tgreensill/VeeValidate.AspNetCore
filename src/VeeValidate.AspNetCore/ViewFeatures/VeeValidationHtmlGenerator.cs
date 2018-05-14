@@ -91,7 +91,7 @@ namespace VeeValidate.AspNetCore.ViewFeatures
             
             return tagBuilder;
         }
-
+        
         // Only need a dictionary if htmlAttributes is non-null. TagBuilder.MergeAttributes() is fine with null.
         private static IDictionary<string, object> GetHtmlAttributeDictionaryOrNull(object htmlAttributes)
         {

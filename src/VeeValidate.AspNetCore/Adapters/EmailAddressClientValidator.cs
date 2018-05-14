@@ -3,15 +3,15 @@ using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace VeeValidate.AspNetCore.Adapters
 {
-    public class MaxLengthClientValidator : VeeAttributeAdapter<MaxLengthAttribute>
+    public class EmailAddressClientValidator : VeeAttributeAdapter<EmailAddressAttribute>
     {
-        public MaxLengthClientValidator(MaxLengthAttribute attribute) : base(attribute)
+        public EmailAddressClientValidator(EmailAddressAttribute attribute) : base(attribute)
         {
         }
 
         public override void AddValidationRules(ClientModelValidationContext context)
         {
-            MergeRule(context.Attributes, $"max:{Attribute.Length}");
+            MergeRule(context.Attributes, "email:true");
         }
     }
 }

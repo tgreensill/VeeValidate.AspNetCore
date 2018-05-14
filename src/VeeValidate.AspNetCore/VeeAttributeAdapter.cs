@@ -5,12 +5,12 @@ using System.ComponentModel.DataAnnotations;
 
 namespace VeeValidate.AspNetCore
 {
-    public abstract class VeeAttributeClientValidator<TAttribute> : VeeClientModelValidator, IAttributeAdapter
+    public abstract class VeeAttributeAdapter<TAttribute> : VeeClientModelValidator, IAttributeAdapter
         where TAttribute : ValidationAttribute
     {
         public TAttribute Attribute { get; set; }
 
-        public VeeAttributeClientValidator(TAttribute attribute)
+        public VeeAttributeAdapter(TAttribute attribute)
         {
             Attribute = attribute;
         }

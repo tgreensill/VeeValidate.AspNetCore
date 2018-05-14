@@ -1,9 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc.ViewFeatures.Internal;
 
 namespace VeeValidate.AspNetCore.Adapters
 {
-    public class CompareClientValidator : VeeAttributeClientValidator<CompareAttribute>
+    public class CompareClientValidator : VeeAttributeAdapter<CompareAttribute>
     {
         public CompareClientValidator(CompareAttribute attribute) : base(attribute)
         {
@@ -11,7 +13,10 @@ namespace VeeValidate.AspNetCore.Adapters
 
         public override void AddValidationRules(ClientModelValidationContext context)
         {
-            MergeRule(context.Attributes, $"confirmed:{Attribute.OtherProperty}");
+            // TODO - Find a way to get the full name
+            var otherPropertyFullName = NameAndIdProvider.GetFullHtmlFieldName((ViewContext)context.ActionContext, Attribute.OtherProperty);
+            otherPropertyFullName = ((ViewContext)context.ActionContext).ViewData.TemplateInfo.GetFullHtmlFieldName(Attribute.OtherProperty);
+            MergeRule(context.Attributes, $"confirmed:{otherPropertyFullName}");
         }
     }
 }

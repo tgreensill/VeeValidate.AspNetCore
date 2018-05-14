@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace VeeValidate.AspNetCore.Adapters
 {
-    public class RegularExpressionClientValidator : VeeAttributeClientValidator<RegularExpressionAttribute>
+    public class RegularExpressionClientValidator : VeeAttributeAdapter<RegularExpressionAttribute>
     {
         public RegularExpressionClientValidator(RegularExpressionAttribute attribute) : base(attribute)
         {

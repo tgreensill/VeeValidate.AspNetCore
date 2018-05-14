@@ -34,6 +34,9 @@
         <a href="#min-length-attribute">[MinLength]</a>
     </li>
     <li>
+        <a style="text-decoration: line-through">[Phone]</a>
+    </li>
+    <li>
         <a href="#string-length-attribute">[StringLength]</a>
     </li>
     <li>
@@ -42,136 +45,131 @@
 </ul>
 
 <div id="app">
-    <div>        
-        <div class="input-field">
-            <label asp-for="Numeric"></label>
-            <input asp-for="Numeric" />
-            <span asp-validation-for="Numeric"></span>
-        </div>
-        <div class="input-field">
-            <label asp-for="Decimal"></label>
-            <input asp-for="Decimal" />
-            <span asp-validation-for="Decimal"></span>
-        </div>
-    </div>
+    <div asp-validation-summary="All"></div>
     <div>
         <h2 id="compare-attribute">[Compare]</h2>
         <div class="input-field">
-            <label asp-for="Compare"></label>
-            <input asp-for="Compare" placeholder="Enter a value" v-model="Compare" />
-            <input asp-for="CompareTo" placeholder="Confirm a value" v-model="CompareTo" />
-            <span asp-validation-for="Compare"></span>
+            <input asp-for="Input.Compare" placeholder="Enter a value" v-model="Input.Compare" />
+            <label asp-for="Input.Compare"></label>
+            <input asp-for="Input.CompareTo" placeholder="Confirm a value" v-model="Input.CompareTo" />
+            <span asp-validation-for="Input.Compare"></span>
         </div>
     </div>
     <div>
         <h2 id="credit-card-attribute">[CreditCard]</h2>
         <div class="input-field">
-            <label asp-for="CreditCard"></label>
-            <input asp-for="CreditCard" />
-            <span asp-validation-for="CreditCard"></span>
+            <input asp-for="Input.CreditCard" />
+            <label asp-for="Input.CreditCard"></label>            
+            <span asp-validation-for="Input.CreditCard"></span>
         </div>
     </div>
     <div>
         <h2 id="email-address-attribute">[EmailAddress]</h2>
         <div class="input-field">
-            <label asp-for="EmailAddress"></label>
-            <input asp-for="EmailAddress" />
-            <span asp-validation-for="EmailAddress"></span>
+            <input asp-for="Input.EmailAddress" />
+            <label asp-for="Input.EmailAddress"></label>            
+            <span asp-validation-for="Input.EmailAddress"></span>
         </div>
     </div>
     <div>
         <h2 id="file-extensions-attribute">[FileExtensions]</h2>
         <div class="file-field input-field">
             <div class="btn">
-                <label asp-for="FileExtensions"></label>
-                <input asp-for="FileExtensions" type="file" />
+                <input asp-for="Input.FileExtensions" type="file" />
+                <label asp-for="Input.FileExtensions"></label>
             </div>
             <div class="file-path-wrapper">
                 <input class="file-path" type="text">
             </div>
-            <span asp-validation-for="FileExtensions"></span>
+            <span asp-validation-for="Input.FileExtensions"></span>
         </div>
     </div>
     <div>
         <h2 id="range-attribute">[Range]</h2>
         <div class="input-field">
-            <label asp-for="Range"></label>
-            <input asp-for="Range" />
-            <span asp-validation-for="Range"></span>
+            <input asp-for="Input.Range" />
+            <label asp-for="Input.Range"></label>            
+            <span asp-validation-for="Input.Range"></span>
         </div>
         <div class="input-field">
-            <label asp-for="DateRange"></label>
-            <input asp-for="DateRange" type="text" v-date />
-            <span asp-validation-for="DateRange"></span>
+            <input asp-for="Input.DateRange" v-date />
+            <label asp-for="Input.DateRange"></label>
+            <span asp-validation-for="Input.DateRange"></span>
         </div>
     </div>    
     <div>
         <h2 id="regex-attribute">[RegularExpression]</h2>
         <div class="input-field">
-            <label asp-for="Regex"></label>
-            <input asp-for="Regex" />
-            <span asp-validation-for="Regex"></span>
+            <input asp-for="Input.Regex" />
+            <label asp-for="Input.Regex"></label>            
+            <span asp-validation-for="Input.Regex"></span>
         </div>
     </div>
     <div>
         <h2 id="required-attribute">[Required]</h2>
         <div class="input-field">
-            <label asp-for="Required"></label>
-            <input asp-for="Required" />
-            <span asp-validation-for="Required"></span>
+            <input asp-for="Input.Required" />
+            <label asp-for="Input.Required"></label>            
+            <span asp-validation-for="Input.Required"></span>
         </div>
     </div>
     <div>
         <h2 id="max-length-attribute">[MaxLength]</h2>
         <div class="input-field">
-            <label asp-for="MaxLength"></label>
-            <input asp-for="MaxLength" />
-            <span asp-validation-for="MaxLength"></span>
+            <input asp-for="Input.MaxLength" />
+            <label asp-for="Input.MaxLength"></label>            
+            <span asp-validation-for="Input.MaxLength"></span>
         </div>
     </div>
     <div>
         <h2 id="min-length-attribute">[MinLength]</h2>
         <div class="input-field">
-            <label asp-for="MinLength"></label>
-            <input asp-for="MinLength" />
-            <span asp-validation-for="MinLength"></span>
+            <input asp-for="Input.MinLength" />
+            <label asp-for="Input.MinLength"></label>            
+            <span asp-validation-for="Input.MinLength"></span>
         </div>
     </div>
     <div>
         <h2 id="string-length-attribute">[StringLength]</h2>
         <div class="input-field">
-            <label asp-for="StringLength"></label>
-            <input asp-for="StringLength" />
-            <span asp-validation-for="StringLength"></span>
+            <input asp-for="Input.StringLength" />
+            <label asp-for="Input.StringLength"></label>            
+            <span asp-validation-for="Input.StringLength"></span>
         </div>
     </div>
     <div>
         <h2 id="url-attribute">[Url]</h2>
         <div class="input-field">
-            <label asp-for="Url"></label>
-            <input asp-for="Url" />
-            <span asp-validation-for="Url"></span>
+            <input asp-for="Input.Url" />
+            <label asp-for="Input.Url"></label>            
+            <span asp-validation-for="Input.Url"></span>
         </div>
     </div>
 </div>
 
 @section Scripts{
     <script>
-        Vue.directive('date', {
-            // When the bound element is inserted into the DOM...
-            inserted: function (el) {                
-                // Focus the element
-                M.Datepicker.init(el, {
-                    format: 'dd/mm/yyyy'
-                });                
+        Vue.directive('date', {            
+            inserted: function (el) { 
+                // If not touch enabled browser that supports date inputs.
+                if (!Modernizr.touch || !Modernizr.inputtypes.date) {
+                    // Change the type to text to prevent native date control from appearing.
+                    el.type = 'text';
+                    // Initialise the Materliaze datepicker control.
+                    M.Datepicker.init(el, {
+                        format: 'dd/mm/yyyy'
+                    }); 
+                }
             }
         })
 
         new Vue({
             el: "#app",
             data: {
-                Compare: null,
-                CompareTo: null,
+                Input: {
+                    Compare: null,
+                    CompareTo: null
+                }
             }
         })
     </script>

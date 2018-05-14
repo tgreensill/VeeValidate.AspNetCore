@@ -4,19 +4,16 @@ using System.Globalization;
 namespace VeeValidate.AspNetCore
 {
     public class VeeValidateOptions
-    {        
-        // TODO - Change to an action to allow globalization        
+    {       
         public string ErrorBagName { get; set; } = "errors";
-        public string ValidationMessageCssClassName { get; set; } = HtmlHelper.ValidationMessageCssClassName;
         public string ValidationInputCssClassName { get; set; } = HtmlHelper.ValidationInputCssClassName;
+        public string ValidationMessageCssClassName { get; set; } = HtmlHelper.ValidationMessageCssClassName;        
         public string ValidationSummaryCssClassName { get; set; } = HtmlHelper.ValidationSummaryCssClassName;
         public DateValidationOptions Dates { get; set; } = new DateValidationOptions();
-        public UrlValidationOptions Urls { get; set; } = new UrlValidationOptions();
-    }
-
-    public class UrlValidationOptions
-    {
-        public bool RequireUrlProtocol { get; set; } = true;
+        //public bool DisableHtml5FormValidation { get; set; } = true;
+        // TODO - Add action feature for adding attributes to fields that are being validated
+        //      - i.e. options.Something = attributes => attributes.Add("v-errors");
+        //      - i.e. options.Something = attributes => attributes.Add(":class={error:true}");
     }
 
     public class DateValidationOptions
@@ -24,6 +21,6 @@ namespace VeeValidate.AspNetCore
         /// <summary>
         /// Date format in date-fns format, see https://date-fns.org/v2.0.0-alpha.7/docs/format
         /// </summary>
-        public string DateFormat { get; set; } = CultureInfo.CurrentUICulture.DateTimeFormat.ShortDatePattern.ToUpper();
+        public string Format { get; set; } = CultureInfo.CurrentUICulture.DateTimeFormat.ShortDatePattern.ToUpper();
     }
 }

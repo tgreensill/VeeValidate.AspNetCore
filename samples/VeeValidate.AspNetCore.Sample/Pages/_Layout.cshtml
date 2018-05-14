@@ -5,25 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Vee Validate with Asp Net Core</title>
 
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-alpha.4/css/materialize.min.css" />
-    <link rel="stylesheet" href="~/css/site.css"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />    
+    <link rel="stylesheet" href="~/libs/materialize-css/materialize.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
     <div>
-        <img width="150" alt="VeeValidate Logo" src="~/images/vee-validate.svg"/>
-        <img width="150" alt="Dot Net Core Logo" src="~/images/net-core.png" />
+        <a asp-page="/Index">
+            <img width="150" alt="VeeValidate Logo" src="~/images/vee-validate.svg" />
+            <img width="150" alt="Dot Net Core Logo" src="~/images/net-core.png" />
+        </a>
     </div>
 
     <div class="container">
         @RenderBody()
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-alpha.4/js/materialize.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.16/vue.js"
-            integrity="sha256-CMMTrj5gGwOAXBeFi7kNokqowkzbeL8ydAJy39ewjkQ="
-            crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/vee-validate/2.0.8/vee-validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+    <script src="~/libs/materialize-css/materialize.js"></script>
+    <script src="~/libs/vue/vue.js"></script>
+    <script src="~/libs/vee-validate/vee-validate.js"></script>
     <script>
         Vue.use(VeeValidate);
     </script>

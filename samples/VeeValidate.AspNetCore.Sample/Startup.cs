@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 
 namespace VeeValidate.AspNetCore.Sample
 {
@@ -16,10 +17,36 @@ namespace VeeValidate.AspNetCore.Sample
 
         public void ConfigureServices(IServiceCollection services)
         {
-            // TODO - Add Localization 
-            //services.AddLocalization(); 
-            services.AddVeeValidation(options => options.Dates.DateFormat = "DD/MM/YYYY");
+            // Add Vee Validation
+            services.AddVeeValidation(options => options.Dates.Format = "DD/MM/YYYY");
+
+            //https://andrewlock.net/adding-localisation-to-an-asp-net-core-application/
+            //// Add Localization
+            //services.Configure<RequestLocalizationOptions>(opts => {
+            //    var supportedCultures = new CultureInfo[]
+            //    {
+            //        new CultureInfo("en-GB"),
+            //        new CultureInfo("en-US"),
+            //        new CultureInfo("en"),
+            //        new CultureInfo("pt-BR"),
+            //        new CultureInfo("pt"),
+            //    };
+
+            //    opts.DefaultRequestCulture = new RequestCulture("en-GB");
+            //    // Formatting numbers, dates, etc.
+            //    opts.SupportedCultures = supportedCultures;
+            //    // UI strings that we have localized.
+            //    opts.SupportedUICultures = supportedCultures;
+            //});
+            //services.AddLocalization(opts => {
+            //    opts.ResourcesPath = "Resources"; }
+            //);
+
             services.AddMvc();
+                //.AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix, opts => {
+                //    opts.ResourcesPath = "Resources";
+                //})
+                //.AddDataAnnotationsLocalization();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -34,27 +61,12 @@ namespace VeeValidate.AspNetCore.Sample
                 app.UseExceptionHandler("/Error");
             }
 
-            // TODO - Localization
-            //var supportedCultures = new[]
-            //{
-            //    new CultureInfo("en-US"),
-            //    new CultureInfo("en-GB"),
-            //    new CultureInfo("en-NZ"),
-            //    new CultureInfo("en"),                
-            //    new CultureInfo("pt-BR"),
-            //    new CultureInfo("pt"),
-            //};
-
-            //app.UseRequestLocalization(new RequestLocalizationOptions
-            //{
-            //    DefaultRequestCulture = new RequestCulture("en-NZ"),
-            //    // Formatting numbers, dates, etc.
-            //    SupportedCultures = supportedCultures,
-            //    // UI strings that we have localized.
-            //    SupportedUICultures = supportedCultures
-            //});
             app.UseStaticFiles();
 
+            // Add Localization Middleware
+            var options = app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>();
+            app.UseRequestLocalization(options.Value);
+            
             app.UseMvc();
         }
     }

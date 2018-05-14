@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace VeeValidate.AspNetCore.Adapters
 {
-    public class RequiredClientValidator : VeeAttributeClientValidator<RequiredAttribute>
+    public class RequiredClientValidator : VeeAttributeAdapter<RequiredAttribute>
     {
         public RequiredClientValidator(RequiredAttribute attribute) : base(attribute)
         {

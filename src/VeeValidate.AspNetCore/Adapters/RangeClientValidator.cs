@@ -5,7 +5,7 @@ using System.Globalization;
 
 namespace VeeValidate.AspNetCore.Adapters
 {
-    public class RangeClientValidator : VeeAttributeClientValidator<RangeAttribute>
+    public class RangeClientValidator : VeeAttributeAdapter<RangeAttribute>
     {
         private readonly string _dateFormat;
 
@@ -27,8 +27,7 @@ namespace VeeValidate.AspNetCore.Adapters
                 if (DateTime.TryParse(min, out var minDate) && DateTime.TryParse(max, out var maxDate))
                 {
                     var normalisedDateFormat = _dateFormat.Replace('D', 'd').Replace('Y', 'y');
-
-                    MergeRule(context.Attributes, $"date_format:'{_dateFormat}'"); 
+                    
                     MergeRule(context.Attributes, $"date_between:['{minDate.ToString(normalisedDateFormat)}','{maxDate.ToString(normalisedDateFormat)}','day']");                    
                 }
             }
