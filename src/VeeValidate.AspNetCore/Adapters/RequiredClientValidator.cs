@@ -11,7 +11,7 @@ namespace VeeValidate.AspNetCore.Adapters
 
         public override void AddValidationRules(ClientModelValidationContext context)
         {                        
-            MergeRule(context.Attributes, "required:true");
+            MergeValidationAttribute(context.Attributes, "required:true");
         }
     }
 }

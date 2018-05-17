@@ -12,7 +12,6 @@ namespace VeeValidate.AspNetCore
 {
     public static class VeeValidateExtensions
     {
-
         /// <summary>
         /// Wire up dependency injection for Vee Validation.
         /// </summary>
@@ -28,7 +27,7 @@ namespace VeeValidate.AspNetCore
 
             services.TryAddSingleton(options);
             services.TryAddTransient<IValidationAttributeAdapterProvider, VeeAttributeAdapterProvider>();
-            services.TryAddSingleton<IHtmlGenerator, VeeValidationHtmlGenerator>();
+            services.TryAddSingleton<IHtmlGenerator, VeeValidateHtmlGenerator>();
 
             services.TryAddEnumerable(ServiceDescriptor.Transient<IConfigureOptions<MvcViewOptions>, VeeValidateViewOptionsSetup>(s =>
             {

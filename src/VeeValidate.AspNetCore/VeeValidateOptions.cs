@@ -6,14 +6,10 @@ namespace VeeValidate.AspNetCore
     public class VeeValidateOptions
     {       
         public string ErrorBagName { get; set; } = "errors";
-        public string ValidationInputCssClassName { get; set; } = HtmlHelper.ValidationInputCssClassName;
+        //public string ValidationInputCssClassName { get; set; } = HtmlHelper.ValidationInputCssClassName;
         public string ValidationMessageCssClassName { get; set; } = HtmlHelper.ValidationMessageCssClassName;        
         public string ValidationSummaryCssClassName { get; set; } = HtmlHelper.ValidationSummaryCssClassName;
         public DateValidationOptions Dates { get; set; } = new DateValidationOptions();
-        //public bool DisableHtml5FormValidation { get; set; } = true;
-        // TODO - Add action feature for adding attributes to fields that are being validated
-        //      - i.e. options.Something = attributes => attributes.Add("v-errors");
-        //      - i.e. options.Something = attributes => attributes.Add(":class={error:true}");
     }
 
     public class DateValidationOptions

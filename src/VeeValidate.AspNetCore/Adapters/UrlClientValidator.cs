@@ -12,7 +12,7 @@ namespace VeeValidate.AspNetCore.Adapters
         public override void AddValidationRules(ClientModelValidationContext context)
         {
             // AspNetCore modelstate validation requires the Url protocol to be included
-            MergeRule(context.Attributes, $"url:[true,true]");
+            MergeValidationAttribute(context.Attributes, $"url:[true,true]");
         }
     }
 }

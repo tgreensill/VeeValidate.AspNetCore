@@ -16,7 +16,7 @@ namespace VeeValidate.AspNetCore.Adapters
             // TODO - Find a way to get the full name
             var otherPropertyFullName = NameAndIdProvider.GetFullHtmlFieldName((ViewContext)context.ActionContext, Attribute.OtherProperty);
             otherPropertyFullName = ((ViewContext)context.ActionContext).ViewData.TemplateInfo.GetFullHtmlFieldName(Attribute.OtherProperty);
-            MergeRule(context.Attributes, $"confirmed:{otherPropertyFullName}");
+            MergeValidationAttribute(context.Attributes, $"confirmed:{otherPropertyFullName}");
         }
     }
 }

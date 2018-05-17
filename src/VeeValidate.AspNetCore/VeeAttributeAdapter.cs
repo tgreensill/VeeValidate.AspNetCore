@@ -10,7 +10,7 @@ namespace VeeValidate.AspNetCore
     {
         public TAttribute Attribute { get; set; }
 
-        public VeeAttributeAdapter(TAttribute attribute)
+        protected VeeAttributeAdapter(TAttribute attribute)
         {
             Attribute = attribute;
         }

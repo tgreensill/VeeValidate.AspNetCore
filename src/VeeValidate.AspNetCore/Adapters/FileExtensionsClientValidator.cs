@@ -19,7 +19,7 @@ namespace VeeValidate.AspNetCore.Adapters
                     .Select(x => $"'{x}'");
 
                 // Replace any pipe separators with commas
-                MergeRule(context.Attributes, $"ext:[{string.Join(",", extensions)}]");
+                MergeValidationAttribute(context.Attributes, $"ext:[{string.Join(",", extensions)}]");
             }
             
         }

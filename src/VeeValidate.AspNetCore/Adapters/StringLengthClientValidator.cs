@@ -13,12 +13,12 @@ namespace VeeValidate.AspNetCore.Adapters
         {
             if (Attribute.MaximumLength != int.MaxValue)
             {
-                MergeRule(context.Attributes, $"max:{Attribute.MaximumLength}");
+                MergeValidationAttribute(context.Attributes, $"max:{Attribute.MaximumLength}");
             }
 
             if (Attribute.MinimumLength != 0)
             {
-                MergeRule(context.Attributes, $"min:{Attribute.MinimumLength}");                
+                MergeValidationAttribute(context.Attributes, $"min:{Attribute.MinimumLength}");                
             }
         }
     }

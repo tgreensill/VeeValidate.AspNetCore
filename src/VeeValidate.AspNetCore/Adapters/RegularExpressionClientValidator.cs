@@ -11,8 +11,8 @@ namespace VeeValidate.AspNetCore.Adapters
 
         public override void AddValidationRules(ClientModelValidationContext context)
         {
-            // TODO - Escape backslashes when appropriate
-            MergeRule(context.Attributes, $"regex:{Attribute.Pattern}");
+            // TODO - Add / to the start and / to the end when appropriate
+            MergeValidationAttribute(context.Attributes, $"regex:{Attribute.Pattern}");
         }
     }
 }

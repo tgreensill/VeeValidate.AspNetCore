@@ -28,13 +28,13 @@ namespace VeeValidate.AspNetCore.Adapters
                 {
                     var normalisedDateFormat = _dateFormat.Replace('D', 'd').Replace('Y', 'y');
                     
-                    MergeRule(context.Attributes, $"date_between:['{minDate.ToString(normalisedDateFormat)}','{maxDate.ToString(normalisedDateFormat)}','day']");                    
+                    MergeValidationAttribute(context.Attributes, $"date_between:['{minDate.ToString(normalisedDateFormat)}','{maxDate.ToString(normalisedDateFormat)}','day']");                    
                 }
             }
             else
             {
-                MergeRule(context.Attributes, $"max_value:{max}");
-                MergeRule(context.Attributes, $"min_value:{min}");
+                MergeValidationAttribute(context.Attributes, $"max_value:{max}");
+                MergeValidationAttribute(context.Attributes, $"min_value:{min}");
             }
         }
     }

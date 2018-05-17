@@ -6,7 +6,7 @@ namespace VeeValidate.AspNetCore.Adapters
     {
         public override void AddValidationRules(ClientModelValidationContext context)
         {
-            MergeRule(context.Attributes, "numeric:true");            
+            MergeValidationAttribute(context.Attributes, "numeric:true");            
         }
     }
 
@@ -14,7 +14,7 @@ namespace VeeValidate.AspNetCore.Adapters
     {
         public override void AddValidationRules(ClientModelValidationContext context)
         {
-            MergeRule(context.Attributes, "decimal:true");
+            MergeValidationAttribute(context.Attributes, "decimal:true");
         }
     }
 
@@ -29,7 +29,7 @@ namespace VeeValidate.AspNetCore.Adapters
 
         public override void AddValidationRules(ClientModelValidationContext context)
         {
-            MergeRule(context.Attributes, $"date_format:'{_dateFormat}'");
+            MergeValidationAttribute(context.Attributes, $"date_format:'{_dateFormat}'");
         }
     }    
 }

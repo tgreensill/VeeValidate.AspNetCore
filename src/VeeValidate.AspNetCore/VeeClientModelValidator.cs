@@ -17,23 +17,10 @@ namespace VeeValidate.AspNetCore
                 throw new ArgumentNullException(nameof(context));
             }
 
-            // Set display name in data-vv-as attribute for better validation messages
-            MergeAttribute(context.Attributes, "data-vv-as", context.ModelMetadata.GetDisplayName());
             AddValidationRules(context);
         }
 
-        protected bool MergeAttribute(IDictionary<string, string> attributes, string key, string value)
-        {
-            if (attributes.ContainsKey(key))
-            {
-                return false;
-            }
-
-            attributes.Add(key, value);
-            return true;
-        }
-
-        protected static void MergeRule(IDictionary<string, string> attributes, string rule)
+        protected static void MergeValidationAttribute(IDictionary<string, string> attributes, string rule)
         {
             if (attributes.TryGetValue(VeeValidateAttributeName, out var value))
             {

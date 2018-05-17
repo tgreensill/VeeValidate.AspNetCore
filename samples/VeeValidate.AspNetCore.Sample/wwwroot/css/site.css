@@ -42,21 +42,25 @@ code {
     color: #d32f2f;
 }
 
+/*.input-validation-error {
+    border-color: #d32f2f;
+}*/
+
 .validation-summary-errors {
     background-color: #ff3860;
-    color:white;
-    padding:7px 15px;
+    color: white;
+    padding: 7px 15px;
 }
 
 /*input[aria-required=true] {    
 }*/
     .input-field input[aria-required=true] + label::after {
-        content: '*';
-        display:inline !important;
+        content: '*' !important;
     }
 
-/*input[aria-invalid=true] {    
-}*/
+input[aria-invalid=true] {
+    border-color: #d32f2f !important;
+}
     input[aria-invalid=true] + label {
         color: #d32f2f !important;
     }

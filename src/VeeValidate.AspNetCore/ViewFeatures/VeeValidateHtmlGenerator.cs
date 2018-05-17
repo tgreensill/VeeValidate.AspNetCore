@@ -13,11 +13,11 @@ using Microsoft.Extensions.Options;
 
 namespace VeeValidate.AspNetCore.ViewFeatures
 {
-    public class VeeValidationHtmlGenerator : DefaultHtmlGenerator
+    public class VeeValidateHtmlGenerator : DefaultHtmlGenerator
     {
         private readonly VeeValidateOptions _options;
 
-        public VeeValidationHtmlGenerator(IAntiforgery antiforgery, IOptions<MvcViewOptions> optionsAccessor, IModelMetadataProvider metadataProvider, IUrlHelperFactory urlHelperFactory, HtmlEncoder htmlEncoder, ValidationHtmlAttributeProvider validationAttributeProvider, VeeValidateOptions options)
+        public VeeValidateHtmlGenerator(IAntiforgery antiforgery, IOptions<MvcViewOptions> optionsAccessor, IModelMetadataProvider metadataProvider, IUrlHelperFactory urlHelperFactory, HtmlEncoder htmlEncoder, ValidationHtmlAttributeProvider validationAttributeProvider, VeeValidateOptions options)
             : base(antiforgery, optionsAccessor, metadataProvider, urlHelperFactory, htmlEncoder, validationAttributeProvider)        
         {
             _options = options;
@@ -92,7 +92,20 @@ namespace VeeValidate.AspNetCore.ViewFeatures
             return tagBuilder;
         }
         
-        // Only need a dictionary if htmlAttributes is non-null. TagBuilder.MergeAttributes() is fine with null.
+        protected override void AddValidationAttributes(ViewContext viewContext, TagBuilder tagBuilder, ModelExplorer modelExplorer, string expression)
+        {
+            // Add any client side validation attributes.
+            base.AddValidationAttributes(viewContext, tagBuilder, modelExplorer, expression);
+            
+            if (tagBuilder.Attributes.ContainsKey("v-validate"))
+            {
+                // Set data-vv-as attribute to give clean error description.
+                tagBuilder.MergeAttribute("data-vv-as", modelExplorer.Metadata.GetDisplayName());
+                // Add a class binding to toggle the input error class when the field is in an invalid state.
+                //tagBuilder.MergeVeeBindAttribute("class", $"{{'{_options.ValidationInputCssClassName}': {_options.ErrorBagName}.has('{tagBuilder.Attributes["name"]}') }}");
+            }
+        }
+        
         private static IDictionary<string, object> GetHtmlAttributeDictionaryOrNull(object htmlAttributes)
         {
             IDictionary<string, object> htmlAttributeDictionary = null;
