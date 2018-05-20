@@ -5,6 +5,21 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace VeeValidate.AspNetCore.Sample.Pages
 {
+    [Route("api/[controller]")]
+    public class AttributesController : Controller
+    {
+        [HttpPost]
+        public IActionResult OnPost([FromBody]AttributesModel.InputModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            return Ok();
+        }
+    }
+
     public class AttributesModel : PageModel
     { 
         [BindProperty]
@@ -12,15 +27,9 @@ namespace VeeValidate.AspNetCore.Sample.Pages
 
         public void OnGet()
         {
+            Input = new InputModel();
         }
-
-        public void OnPost()
-        {
-            // TODO - Show modelstate errors returned from the server
-            //      - Use tooltips to display errors? data-position="bottom" data-tooltip="I am a tooltip"  or v-tooltip or v-error            
-            var x = ModelState.IsValid;
-        }
-
+       
         public class InputModel
         {
             [Required]
@@ -47,21 +56,26 @@ namespace VeeValidate.AspNetCore.Sample.Pages
             [Display(Name = "Date Range")]
             public DateTime? DateRange { get; set; }
 
+            [Display(Name="Compare To")]
             public string CompareTo { get; set; }
 
             [Compare(nameof(CompareTo))]
             public string Compare { get; set; }            
 
             [MinLength(3)]
+            [Display(Name = "Min Length")]
             public string MinLength { get; set; }
 
             [MaxLength(6)]
+            [Display(Name = "Max Length")]
             public string MaxLength { get; set; }
 
             [StringLength(6, MinimumLength = 3)]
+            [Display(Name = "String Length")]
             public string StringLength { get; set; }
 
             [FileExtensions(Extensions = "jpg,png,gif")]
+            [Display(Name = "File Extensions")]
             public string FileExtensions { get; set; }
         }
     }

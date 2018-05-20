@@ -42,9 +42,15 @@ code {
     color: #d32f2f;
 }
 
-/*.input-validation-error {
+.input-validation-error {
     border-color: #d32f2f;
-}*/
+}
+    .input-validation-error + label {
+        color: #d32f2f !important;
+    }
+    .input-validation-error + label::after {
+        content: '*' !important;
+    }
 
 .validation-summary-errors {
     background-color: #ff3860;
@@ -54,13 +60,9 @@ code {
 
 /*input[aria-required=true] {    
 }*/
-    .input-field input[aria-required=true] + label::after {
-        content: '*' !important;
-    }
-
-input[aria-invalid=true] {
-    border-color: #d32f2f !important;
+    
+/*input[aria-invalid=true] {
 }
     input[aria-invalid=true] + label {
-        color: #d32f2f !important;
     }
+*/

@@ -43,16 +43,17 @@ namespace VeeValidate.AspNetCore.ViewFeatures
             // It's useful for hiding elements whose visibility is controller by the vue instance until it's ready. 
             tagBuilder.MergeAttribute("v-cloak", null);
 
-            // TODO - Filter out errors related to fields in the fieldbag when set to true
-            //if (excludePropertyErrors)
-            //{
-            //}
-            //else
-            //{
-            // The validation summary will only appear when there's an error in the error bag.
-            tagBuilder.MergeAttribute("v-show", $"{_options.ErrorBagName}.any()");
-            tagBuilder.InnerHtml.SetHtmlContent(new HtmlString($"<ul><li v-for=\"error in {_options.ErrorBagName}.all()\">{{{{error}}}}</li></ul>"));
-            //}
+            if (excludePropertyErrors)
+            {
+                tagBuilder.MergeAttribute("v-show", "validationSummaryErrors && validationSummaryErrors.length > 0");
+                tagBuilder.InnerHtml.SetHtmlContent(new HtmlString($"<ul><li v-for=\"error in validationSummaryErrors\">{{{{error}}}}</li></ul>"));
+            }
+            else
+            {
+                // The validation summary will only appear when there's an error in the error bag.
+                tagBuilder.MergeAttribute("v-show", $"{_options.ErrorBagName}.any()");
+                tagBuilder.InnerHtml.SetHtmlContent(new HtmlString($"<ul><li v-for=\"error in {_options.ErrorBagName}.all()\">{{{{error}}}}</li></ul>"));
+            }
 
             return tagBuilder;
         }
@@ -90,20 +91,6 @@ namespace VeeValidate.AspNetCore.ViewFeatures
             tagBuilder.InnerHtml.SetHtmlContent(new HtmlString($"{{{{{_options.ErrorBagName}.first('{fullName}')}}}}"));
             
             return tagBuilder;
-        }
-        
-        protected override void AddValidationAttributes(ViewContext viewContext, TagBuilder tagBuilder, ModelExplorer modelExplorer, string expression)
-        {
-            // Add any client side validation attributes.
-            base.AddValidationAttributes(viewContext, tagBuilder, modelExplorer, expression);
-            
-            if (tagBuilder.Attributes.ContainsKey("v-validate"))
-            {
-                // Set data-vv-as attribute to give clean error description.
-                tagBuilder.MergeAttribute("data-vv-as", modelExplorer.Metadata.GetDisplayName());
-                // Add a class binding to toggle the input error class when the field is in an invalid state.
-                //tagBuilder.MergeVeeBindAttribute("class", $"{{'{_options.ValidationInputCssClassName}': {_options.ErrorBagName}.has('{tagBuilder.Attributes["name"]}') }}");
-            }
         }
         
         private static IDictionary<string, object> GetHtmlAttributeDictionaryOrNull(object htmlAttributes)

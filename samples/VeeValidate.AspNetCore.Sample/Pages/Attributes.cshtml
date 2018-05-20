@@ -1,4 +1,5 @@
 ﻿@page
+@inject VeeValidate.AspNetCore.VeeValidateSnippets VeeValidateSnippets
 @model AttributesModel
 @{
     ViewData["Title"] = "Attributes Example";
@@ -45,120 +46,131 @@
 </ul>
 
 <div id="app">
-    <div asp-validation-summary="All"></div>
-    <div>
-        <h2 id="compare-attribute">[Compare]</h2>
-        <div class="input-field">
-            <input asp-for="Input.Compare" placeholder="Enter a value" v-model="Input.Compare" />
-            <label asp-for="Input.Compare"></label>
-            <input asp-for="Input.CompareTo" placeholder="Confirm a value" v-model="Input.CompareTo" />
-            <span asp-validation-for="Input.Compare"></span>
-        </div>
-    </div>
-    <div>
-        <h2 id="credit-card-attribute">[CreditCard]</h2>
-        <div class="input-field">
-            <input asp-for="Input.CreditCard" />
-            <label asp-for="Input.CreditCard"></label>            
-            <span asp-validation-for="Input.CreditCard"></span>
-        </div>
-    </div>
-    <div>
-        <h2 id="email-address-attribute">[EmailAddress]</h2>
-        <div class="input-field">
-            <input asp-for="Input.EmailAddress" />
-            <label asp-for="Input.EmailAddress"></label>            
-            <span asp-validation-for="Input.EmailAddress"></span>
-        </div>
-    </div>
-    <div>
-        <h2 id="file-extensions-attribute">[FileExtensions]</h2>
-        <div class="file-field input-field">
-            <div class="btn">
-                <input asp-for="Input.FileExtensions" type="file" />
-                <label asp-for="Input.FileExtensions"></label>
+    <div asp-validation-summary="ModelOnly"></div>
+
+    <form asp-page="Attribute" method="post" v-on:submit.prevent="submit">
+        <div>
+            <h2 id="compare-attribute">[Compare]</h2>
+            <div class="input-field">
+                <input asp-for="Input.Compare" data-val-equalto-other="Input.CompareTo" placeholder="Enter a value"/>
+                <label asp-for="Input.Compare"></label>
+                <input asp-for="Input.CompareTo" placeholder="Confirm a value" v-model="Input.CompareTo"/>
+                <span asp-validation-for="Input.Compare"></span>
             </div>
-            <div class="file-path-wrapper">
-                <input class="file-path" type="text">
+        </div>
+        <div>
+            <h2 id="credit-card-attribute">[CreditCard]</h2>
+            <div class="input-field">
+                <input asp-for="Input.CreditCard"/>
+                <label asp-for="Input.CreditCard"></label>
+                <span asp-validation-for="Input.CreditCard"></span>
             </div>
-            <span asp-validation-for="Input.FileExtensions"></span>
         </div>
-    </div>
-    <div>
-        <h2 id="range-attribute">[Range]</h2>
-        <div class="input-field">
-            <input asp-for="Input.Range" />
-            <label asp-for="Input.Range"></label>            
-            <span asp-validation-for="Input.Range"></span>
+        <div>
+            <h2 id="email-address-attribute">[EmailAddress]</h2>
+            <div class="input-field">
+                <input asp-for="Input.EmailAddress"/>
+                <label asp-for="Input.EmailAddress"></label>
+                <span asp-validation-for="Input.EmailAddress"></span>
+            </div>
         </div>
-        <div class="input-field">
-            <input asp-for="Input.DateRange" v-date />
-            <label asp-for="Input.DateRange"></label>
-            <span asp-validation-for="Input.DateRange"></span>
+        <div>
+            <h2 id="file-extensions-attribute">[FileExtensions]</h2>
+            <div class="file-field input-field">
+                <div class="btn">
+                    <input asp-for="Input.FileExtensions" type="file"/>
+                    <label asp-for="Input.FileExtensions"></label>
+                </div>
+                <div class="file-path-wrapper">
+                    <input class="file-path" type="text">
+                </div>
+                <span asp-validation-for="Input.FileExtensions"></span>
+            </div>
         </div>
-    </div>    
-    <div>
-        <h2 id="regex-attribute">[RegularExpression]</h2>
-        <div class="input-field">
-            <input asp-for="Input.Regex" />
-            <label asp-for="Input.Regex"></label>            
-            <span asp-validation-for="Input.Regex"></span>
+        <div>
+            <h2 id="range-attribute">[Range]</h2>
+            <div class="input-field">
+                <input asp-for="Input.Range"/>
+                <label asp-for="Input.Range"></label>
+                <span asp-validation-for="Input.Range"></span>
+            </div>
+            <div class="input-field">
+                <input asp-for="Input.DateRange" v-date/>
+                <label asp-for="Input.DateRange"></label>
+                <span asp-validation-for="Input.DateRange"></span>
+            </div>
         </div>
-    </div>
-    <div>
-        <h2 id="required-attribute">[Required]</h2>
-        <div class="input-field">
-            <input asp-for="Input.Required" />
-            <label asp-for="Input.Required"></label>            
-            <span asp-validation-for="Input.Required"></span>
+        <div>
+            <h2 id="regex-attribute">[RegularExpression]</h2>
+            <div class="input-field">
+                <input asp-for="Input.Regex"/>
+                <label asp-for="Input.Regex"></label>
+                <span asp-validation-for="Input.Regex"></span>
+            </div>
         </div>
-    </div>
-    <div>
-        <h2 id="max-length-attribute">[MaxLength]</h2>
-        <div class="input-field">
-            <input asp-for="Input.MaxLength" />
-            <label asp-for="Input.MaxLength"></label>            
-            <span asp-validation-for="Input.MaxLength"></span>
+        <div>
+            <h2 id="required-attribute">[Required]</h2>
+            <div class="input-field">
+                <input asp-for="Input.Required"/>
+                <label asp-for="Input.Required"></label>
+                <span asp-validation-for="Input.Required"></span>
+            </div>
         </div>
-    </div>
-    <div>
-        <h2 id="min-length-attribute">[MinLength]</h2>
-        <div class="input-field">
-            <input asp-for="Input.MinLength" />
-            <label asp-for="Input.MinLength"></label>            
-            <span asp-validation-for="Input.MinLength"></span>
+        <div>
+            <h2 id="max-length-attribute">[MaxLength]</h2>
+            <div class="input-field">
+                <input asp-for="Input.MaxLength"/>
+                <label asp-for="Input.MaxLength"></label>
+                <span asp-validation-for="Input.MaxLength"></span>
+            </div>
         </div>
-    </div>
-    <div>
-        <h2 id="string-length-attribute">[StringLength]</h2>
-        <div class="input-field">
-            <input asp-for="Input.StringLength" />
-            <label asp-for="Input.StringLength"></label>            
-            <span asp-validation-for="Input.StringLength"></span>
+        <div>
+            <h2 id="min-length-attribute">[MinLength]</h2>
+            <div class="input-field">
+                <input asp-for="Input.MinLength"/>
+                <label asp-for="Input.MinLength"></label>
+                <span asp-validation-for="Input.MinLength"></span>
+            </div>
         </div>
-    </div>
-    <div>
-        <h2 id="url-attribute">[Url]</h2>
-        <div class="input-field">
-            <input asp-for="Input.Url" />
-            <label asp-for="Input.Url"></label>            
-            <span asp-validation-for="Input.Url"></span>
+        <div>
+            <h2 id="string-length-attribute">[StringLength]</h2>
+            <div class="input-field">
+                <input asp-for="Input.StringLength"/>
+                <label asp-for="Input.StringLength"></label>
+                <span asp-validation-for="Input.StringLength"></span>
+            </div>
         </div>
-    </div>
+        <div>
+            <h2 id="url-attribute">[Url]</h2>
+            <div class="input-field">
+                <input asp-for="Input.Url"/>
+                <label asp-for="Input.Url"></label>
+                <span asp-validation-for="Input.Url"></span>
+            </div>
+        </div>
+        <input type="submit" value="Submit"/>
+    </form>
 </div>
 
 @section Scripts{
+    @Html.Raw(VeeValidateSnippets.ValidationSummaryMixin)
     <script>
-        Vue.directive('date', {            
-            inserted: function (el) { 
+        Vue.directive('date', {
+            bind: function (el, binding, vnode) {
+                el.addEventListener('change', function() {
+                    vnode.context.$emit('input');
+                });
+            },
+            inserted: function (el) {
                 // If not touch enabled browser that supports date inputs.
                 if (!Modernizr.touch || !Modernizr.inputtypes.date) {
                     // Change the type to text to prevent native date control from appearing.
                     el.type = 'text';
                     // Initialise the Materliaze datepicker control.
-                    M.Datepicker.init(el, {
-                        format: 'dd/mm/yyyy'
-                    }); 
+                    M.Datepicker.init(el,
+                        {
+                            format: 'dd/mm/yyyy'
+                        });
                 }
             }
         })
@@ -169,6 +181,27 @@
                 Input: {
                     Compare: null,
                     CompareTo: null
+                }
+            },
+            methods: {
+                submit: function () {
+                    var self = this;
+                    axios.post('/api/Attributes', this.Input)
+                        .then(function (response) {
+                            console.log(response);
+                        })
+                        .catch(function (error) {
+                            if (error.response.status === 400) {
+                                self.errors.clear();
+                                for (var key in error.response.data) {
+                                    if (error.response.data.hasOwnProperty(key)) {
+                                        self.errors.add(key, error.response.data[key][0]);
+                                    }
+                                }
+                                return;
+                            }
+                            alert("an unhandled error occurred!");
+                        });
                 }
             }
         })
