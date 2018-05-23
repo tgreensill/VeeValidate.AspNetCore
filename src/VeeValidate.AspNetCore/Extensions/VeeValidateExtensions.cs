@@ -25,18 +25,22 @@ namespace VeeValidate.AspNetCore
 
             services.TryAddSingleton(options);
             services.TryAddSingleton<VeeValidateSnippets>();
-            services.TryAddSingleton<IHtmlGenerator, VeeValidateHtmlGenerator>();
             services.TryAddSingleton<ValidationHtmlAttributeProvider, VeeValidateHtmlAttributeProvider>();
 
+            // Conditional services
+            if (options.ReplaceValidationTagHelpers)
+            {
+                services.TryAddSingleton<IHtmlGenerator, VeeValidateHtmlGenerator>();
+            }
+                
             // Add adapters
+            services.AddTransient<IHtmlValidationAttributeAdapter, ModelTypeAdapter>();
             services.AddTransient<IHtmlValidationAttributeAdapter, CompareAttributeAdapter>();
             services.AddTransient<IHtmlValidationAttributeAdapter, CreditCardAttributeAdapter>();
-            services.AddTransient<IHtmlValidationAttributeAdapter, DateAttributeAdapter>();
             services.AddTransient<IHtmlValidationAttributeAdapter, EmailAddressAttributeAdapter>();
             services.AddTransient<IHtmlValidationAttributeAdapter, FileExtensionsAttributeAdapter>();
             services.AddTransient<IHtmlValidationAttributeAdapter, MaxLengthAttributeAdapter>();
             services.AddTransient<IHtmlValidationAttributeAdapter, MinLengthAttributeAdapter>();
-            services.AddTransient<IHtmlValidationAttributeAdapter, NumberAttributeAdapter>();
             services.AddTransient<IHtmlValidationAttributeAdapter, RangeMaxAttributeAdapter>();
             services.AddTransient<IHtmlValidationAttributeAdapter, RangeMinAttributeAdapter>();
             services.AddTransient<IHtmlValidationAttributeAdapter, RegularExpressionAttributeAdapter>();

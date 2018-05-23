@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json.Serialization;
 
 namespace VeeValidate.AspNetCore.Sample
 {
@@ -18,7 +19,8 @@ namespace VeeValidate.AspNetCore.Sample
         {
             // Add Vee Validation before MVC
             services.AddVeeValidation(options => options.Dates.Format = "DD/MM/YYYY");
-            services.AddMvc();
+            services.AddMvc()
+                .AddJsonOptions(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver()); ;
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

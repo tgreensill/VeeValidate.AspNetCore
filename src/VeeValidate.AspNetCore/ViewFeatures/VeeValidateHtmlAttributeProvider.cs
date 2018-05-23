@@ -57,10 +57,9 @@ namespace VeeValidate.AspNetCore.ViewFeatures
                     }
 
                     // Add a class binding to toggle the input error class when the field is in an invalid state.
-                    VueHtmlAttributeHelper.MergeBindAttribute(
-                        attributes, 
-                        "class", 
-                        $"{{'{_options.ValidationInputCssClassName}': {_options.ErrorBagName}.has('{(attributes.ContainsKey("data-vv-name") ? attributes["data-vv-name"] : attributes["name"])}') }}");
+                    VueHtmlAttributeHelper.MergeClassAttribute(
+                        attributes,
+                        $"{{'{_options.ValidationInputCssClassName}': {_options.ErrorBagName}.has('{(attributes.ContainsKey("data-vv-name") ? attributes["data-vv-name"] : attributes["name"])}')}}");
                 }
             }
         }
@@ -70,33 +69,24 @@ namespace VeeValidate.AspNetCore.ViewFeatures
             ICollection<string> rules = new Collection<string>();
             
             // Convert the default validation attributes to vee validate attributes
-            var validationAttributes = attributes.Where(x => x.Key.StartsWith("data-val"));
+            var validationAttributes = attributes.Where(x => x.Key.StartsWith("data-val")).ToArray();
             foreach (var attribute in validationAttributes)
             {
                 if (_adapters.TryGetValue(attribute.Key, out var handler))
                 {
-                    rules.Add(handler(attribute.Value, modelExplorer.Metadata));
+                    var rule = handler(attribute.Value, modelExplorer.Metadata);
+                    if (!string.IsNullOrEmpty(rule))
+                    {
+                        rules.Add(rule);
+                    }
                 }
 
                 // Remove the default validation attribute
-                attributes.Remove(attribute);
+                attributes.Remove(attribute.Key);
             }
 
-            // Get any existing rules declared in the markup.
-            if (attributes.TryGetValue("v-validate", out var existingRules))
-            {
-                if (existingRules.StartsWith("'"))
-                {
-                    throw new Exception("v-validate attributes must be declared in object format.");
-                }
-
-                existingRules = existingRules.TrimStart('{').TrimEnd('}');
-            }
-            
-            // TODO - Merge existing rules with rules
-
-            // Use the object format for the rules.
-            attributes["v-validate"] = "{" + string.Join(",", rules) + "}";
+            // Merge the rules (including rules declared in the markup) into a single attribute.
+            VueHtmlAttributeHelper.MergeVeeValidateAttributes(attributes, rules);
         }
     }
 }

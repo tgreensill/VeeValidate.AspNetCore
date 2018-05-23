@@ -38,10 +38,34 @@ namespace VeeValidate.AspNetCore.Tests.Adapters
             var metadata = new EmptyModelMetadataProvider().GetMetadataForType(typeof(DateTime));
 
             // Act
-            var result = adapter.GetVeeValidateRule("01/03/2016", metadata);
+            var result = adapter.GetVeeValidateRule("03/01/2016", metadata);
 
             // Assert
             result.ShouldBe("after:['01/03/2016',true]");
+        }
+
+        [Theory]
+        [InlineData("2016-03-01")]
+        [InlineData("03/01/2016")]
+        [InlineData("Mar 01 2016")]
+        public void AddValidation_adds_before_validation_rule(string date)
+        {
+            // Arrange
+            var options = new VeeValidateOptions
+            {
+                Dates = new DateValidationOptions
+                {
+                    Format = "DD/MM/YYYY"
+                }
+            };
+            var adapter = new RangeMaxAttributeAdapter(options);
+            var metadata = new EmptyModelMetadataProvider().GetMetadataForType(typeof(DateTime));
+            
+            // Act
+            var result = adapter.GetVeeValidateRule(date, metadata);
+
+            // Assert
+            result.ShouldBe("before:['01/03/2016',true]");
         }
     }
 }

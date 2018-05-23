@@ -30,15 +30,18 @@ namespace VeeValidate.AspNetCore.Tests.Adapters
             result.ShouldBe("max_value:'10'");
         }
 
-        [Fact]
-        public void AddValidation_adds_before_validation_rule()
+        [Theory]
+        [InlineData("2016-03-01")]
+        [InlineData("03/01/2016")]
+        [InlineData("Mar 01 2016")]
+        public void AddValidation_adds_before_validation_rule(string date)
         {
             // Arrange
             var adapter = new RangeMaxAttributeAdapter(_options);
             var metadata = new EmptyModelMetadataProvider().GetMetadataForType(typeof(DateTime));
-
+            
             // Act
-            var result = adapter.GetVeeValidateRule("01/03/2016", metadata);
+            var result = adapter.GetVeeValidateRule(date, metadata);
 
             // Assert
             result.ShouldBe("before:['01/03/2016',true]");
