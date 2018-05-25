@@ -44,12 +44,11 @@ namespace VeeValidate.AspNetCore.Sample.Pages
         [Range(typeof(DateTime), "2018/12/01", "2018/12/31")]
         [Display(Name = "Date Range")]
         public DateTime? DateRange { get; set; }
-
-        [Display(Name = "Compare To")]
-        public string CompareTo { get; set; }
-
-        [Compare(nameof(CompareTo))]
+        
         public string Compare { get; set; }
+
+        [Compare(nameof(Compare))]
+        public string Confirm { get; set; }
 
         [MinLength(3)]
         [Display(Name = "Min Length")]

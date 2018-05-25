@@ -16,7 +16,7 @@ namespace VeeValidate.AspNetCore.Tests.Adapters
             var result = adapter.GetVeeValidateRule("*.PropertyName", null);
 
             // Assert
-            result.ShouldBe("confirmed:PropertyName");
+            result.ShouldBe("confirmed:'PropertyName'");
         }
     }
 }

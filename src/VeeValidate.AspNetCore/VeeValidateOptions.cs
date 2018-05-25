@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc.ViewFeatures;
+﻿using System;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using System.Globalization;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace VeeValidate.AspNetCore
 {
@@ -34,10 +36,16 @@ namespace VeeValidate.AspNetCore
         public string ValidationSummaryCssClassName { get; set; }
 
         /// <summary>
-        /// If set to true, the asp-message-for and asp-validation-summary tag helpers will be overridden.
+        /// If set to true, the asp-message-for and asp-validation-summary tag helper behaviour will be overridden to only show VeeValidate errors.
         /// Uses true by default
         /// </summary>
-        public bool ReplaceValidationTagHelpers { get; set; }
+        public bool UseVeeValidateHtmlGenerator { get; set; }
+
+        /// <summary>
+        /// Function to indicate when the default validation attributes should be replaced with VeeValidate rules.
+        /// Always returns true by default.
+        /// </summary>
+        public Func<ViewContext, bool> ReplaceHtmlAttributes { get; set; }
 
         public DateValidationOptions Dates { get; set; } 
 
@@ -51,7 +59,8 @@ namespace VeeValidate.AspNetCore
             ValidationInputCssClassName = HtmlHelper.ValidationInputCssClassName;
             ValidationMessageCssClassName = HtmlHelper.ValidationMessageCssClassName;
             ValidationSummaryCssClassName = HtmlHelper.ValidationSummaryCssClassName;
-            ReplaceValidationTagHelpers = true;
+            UseVeeValidateHtmlGenerator = true;
+            ReplaceHtmlAttributes = (context) => true;
             Dates = new DateValidationOptions();
         }
     }

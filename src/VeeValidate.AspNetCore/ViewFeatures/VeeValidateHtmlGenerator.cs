@@ -46,7 +46,7 @@ namespace VeeValidate.AspNetCore.ViewFeatures
             if (excludePropertyErrors)
             {
                 tagBuilder.MergeAttribute("v-show", "validationSummaryErrors && validationSummaryErrors.length > 0");
-                tagBuilder.InnerHtml.SetHtmlContent(new HtmlString($"<ul><li v-for=\"error in validationSummaryErrors\">{{{{error}}}}</li></ul>"));
+                tagBuilder.InnerHtml.SetHtmlContent(new HtmlString("<ul><li v-for=\"error in validationSummaryErrors\">{{error}}</li></ul>"));
             }
             else
             {

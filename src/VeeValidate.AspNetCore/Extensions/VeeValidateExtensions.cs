@@ -28,7 +28,7 @@ namespace VeeValidate.AspNetCore
             services.TryAddSingleton<ValidationHtmlAttributeProvider, VeeValidateHtmlAttributeProvider>();
 
             // Conditional services
-            if (options.ReplaceValidationTagHelpers)
+            if (options.UseVeeValidateHtmlGenerator)
             {
                 services.TryAddSingleton<IHtmlGenerator, VeeValidateHtmlGenerator>();
             }

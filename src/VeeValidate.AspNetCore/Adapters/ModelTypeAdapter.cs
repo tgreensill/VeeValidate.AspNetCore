@@ -10,13 +10,15 @@ namespace VeeValidate.AspNetCore.Adapters
     public class ModelTypeAdapter : IHtmlValidationAttributeAdapter
     {
         private readonly VeeValidateOptions _options;
-
+        
         public ModelTypeAdapter(VeeValidateOptions options)
         {
             _options = options;
         }
 
-        public string[] Keys => new[] { "data-val" };
+        // Use a special key that is not associated with any jQuery validation rules.
+        public string[] Keys => new[] { "data-type" };
+
         public string GetVeeValidateRule(string value, ModelMetadata metadata)
         {
             var typeToValidate = metadata.UnderlyingOrModelType;

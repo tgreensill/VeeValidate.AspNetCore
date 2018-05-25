@@ -9,7 +9,7 @@ namespace VeeValidate.AspNetCore.Adapters
         public string GetVeeValidateRule(string value, ModelMetadata metadata)
         {
             // Trim the leading "*." added for jquery.
-            return $"confirmed:{value.Replace("*.","")}";
+            return $"confirmed:'{value.Replace("*.","")}'";
         }
     }
 }

@@ -46,22 +46,23 @@
 </ul>
 
 <div id="app">
-    <div asp-validation-summary="ModelOnly"></div>
-
-    <form asp-page="Attribute" method="post" novalidate="novalidate" v-on:submit.prevent="submit">
+    <form novalidate="novalidate" v-on:submit.prevent="submit">
         <div>
             <h2 id="compare-attribute">[Compare]</h2>
             <div class="input-field">
-                <input asp-for="Compare" placeholder="Enter a value" v-model="Compare"/>
+                <input asp-for="Compare" />
                 <label asp-for="Compare"></label>
-                <input asp-for="CompareTo" placeholder="Confirm a value" v-model="CompareTo"/>
                 <span asp-validation-for="Compare"></span>
+            </div>
+            <div class="input-field">
+                <input asp-for="Confirm" placeholder="Confirm a value" />
+                <span asp-validation-for="Confirm"></span>
             </div>
         </div>
         <div>
             <h2 id="credit-card-attribute">[CreditCard]</h2>
             <div class="input-field">
-                <input asp-for="CreditCard" v-model="CreditCard"/>
+                <input asp-for="CreditCard" />
                 <label asp-for="CreditCard"></label>
                 <span asp-validation-for="CreditCard"></span>
             </div>
@@ -69,7 +70,7 @@
         <div>
             <h2 id="email-address-attribute">[EmailAddress]</h2>
             <div class="input-field">
-                <input asp-for="EmailAddress" v-model="EmailAddress"/>
+                <input asp-for="EmailAddress" />
                 <label asp-for="EmailAddress"></label>
                 <span asp-validation-for="EmailAddress"></span>
             </div>
@@ -90,12 +91,12 @@
         <div>
             <h2 id="range-attribute">[Range]</h2>
             <div class="input-field">
-                <input asp-for="Range" v-model="Range"/>
+                <input asp-for="Range" />
                 <label asp-for="Range"></label>
                 <span asp-validation-for="Range"></span>
             </div>
             <div class="input-field">
-                <input asp-for="DateRange" v-model="DateRange" v-date />
+                <input asp-for="DateRange" v-date />
                 <label asp-for="DateRange"></label>
                 <span asp-validation-for="DateRange"></span>
             </div>
@@ -103,7 +104,7 @@
         <div>
             <h2 id="regex-attribute">[RegularExpression]</h2>
             <div class="input-field">
-                <input asp-for="Regex" v-model="Regex"/>
+                <input asp-for="Regex" />
                 <label asp-for="Regex"></label>
                 <span asp-validation-for="Regex"></span>
             </div>
@@ -111,7 +112,7 @@
         <div>
             <h2 id="required-attribute">[Required]</h2>
             <div class="input-field">
-                <input asp-for="Required" v-model="Required"/>
+                <input asp-for="Required" />
                 <label asp-for="Required"></label>
                 <span asp-validation-for="Required"></span>
             </div>
@@ -119,7 +120,7 @@
         <div>
             <h2 id="max-length-attribute">[MaxLength]</h2>
             <div class="input-field">
-                <input asp-for="MaxLength" v-model="MaxLength"/>
+                <input asp-for="MaxLength" />
                 <label asp-for="MaxLength"></label>
                 <span asp-validation-for="MaxLength"></span>
             </div>
@@ -127,7 +128,7 @@
         <div>
             <h2 id="min-length-attribute">[MinLength]</h2>
             <div class="input-field">
-                <input asp-for="MinLength" v-model="MinLength"/>
+                <input asp-for="MinLength" />
                 <label asp-for="MinLength"></label>
                 <span asp-validation-for="MinLength"></span>
             </div>
@@ -135,7 +136,7 @@
         <div>
             <h2 id="string-length-attribute">[StringLength]</h2>
             <div class="input-field">
-                <input asp-for="StringLength" v-model="StringLength"/>
+                <input asp-for="StringLength" />
                 <label asp-for="StringLength"></label>
                 <span asp-validation-for="StringLength"></span>
             </div>
@@ -143,17 +144,16 @@
         <div>
             <h2 id="url-attribute">[Url]</h2>
             <div class="input-field">
-                <input asp-for="Url" v-model="Url"/>
+                <input asp-for="Url" />
                 <label asp-for="Url"></label>
                 <span asp-validation-for="Url"></span>
             </div>
         </div>
-        <input type="submit" value="Submit"/>
+        <button type="submit" class="btn waves-effect" v-bind:class="{disabled: errors.any()}">Submit</button>
     </form>
 </div>
 
 @section Scripts{
-    @Html.Raw(VeeValidateSnippets.ValidationSummaryMixin)
     <script>
         Vue.directive('date', {
             bind: function (el, binding, vnode) {
@@ -167,6 +167,7 @@
                 if (!Modernizr.touch || !Modernizr.inputtypes.date) {
                     // Change the type to text to prevent native date control from appearing.
                     el.type = 'text';
+                    el.setAttribute("data-vv-validate-on", "change");
                     // Initialise the Materliaze datepicker control.
                     M.Datepicker.init(el,
                         {
@@ -180,25 +181,14 @@
 
         new Vue({
             el: "#app",
-            data: @Json.Serialize(new AttributesModel()),
             methods: {
-                submit: function() {
-                    var self = this;
-                    axios.post('/api/Attributes', this.$data)
-                        .then(function(response) {
-                            alert("the form is validd unhandled error occurred!");
+                submit: function () {
+                    this.$validator.validateAll()
+                        .then(function() {
+                            M.toast({ html: 'Passed Validation', class: 'error' });
                         })
-                        .catch(function(error) {
-                            if (error.response.status === 400) {
-                                self.errors.clear();
-                                for (var key in error.response.data) {
-                                    if (error.response.data.hasOwnProperty(key)) {
-                                        self.errors.add(key, error.response.data[key][0]);
-                                    }
-                                }
-                                return;
-                            }
-                            alert("an unhandled error occurred!");
+                        .catch(function() {
+                            M.toast({ html: 'Validation Failed!', classes: 'error' });
                         });
                 }
             }

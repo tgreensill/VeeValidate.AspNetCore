@@ -25,26 +25,40 @@ Reference Vue JS, VeeValidate, and a polyfill for promises if you plan on suppor
 
 ### Options
 
-| Name                          | Description                | Default Value |
-|:------------------------------|:---------------------------|:--------------|
-| ErrorBagName                  | Vee Validate ErrorBag Name | "errors"      |
-| FieldBagName                  | Vee Validate FieldBag Name | "fields"      |
-| ReplaceValidationTagHelpers   | Replaces the asp-message-for and asp-validation-summary tag helpers | true |
-| ValidationMessageCssClassName | Css class added to field validation messages | HtmlHelper.ValidationMessageCssClassName ("field-validation-error") |
-| ValidationSummaryCssClassName | Css class added to the validation summary | HtmlHelper.ValidationSummaryCssClassName ("validation-summary-errors") |
-| ValidationInputCssClassName   | Css class added to invalid fields | HtmlHelper.ValidationInputCssClassName ("input-validation-error") |
-| Dates.Format                  | Expected date format in [date-fns](https://date-fns.org/v2.0.0-alpha.7/docs/format) format | CurrentCulture.DateTimeFormat.ShortDatePattern |
+| Name                          | Description                                   | Default Value |
+|:------------------------------|:----------------------------------------------|:--------------|
+| ErrorBagName                  | Vee Validate ErrorBag Name.                   | "errors"      |
+| FieldBagName                  | Vee Validate FieldBag Name.                   | "fields"      |
+| UseVeeValidateHtmlGenerator   | The VeeValidateHtmlGenerator will only show VeeValidate messages the asp-message-for and asp-validation-summary tag helpers. | true |
+| ReplaceHtmlAttributes         | Function indicating when to replace the validation attributes. Useful if only using VeeValidate in parts of your app based on a condition, i.e. a ViewData value is set to true. | (context) => true |
+| ValidationMessageCssClassName | Css class added to field validation messages. | HtmlHelper.ValidationMessageCssClassName ("field-validation-error") |
+| ValidationSummaryCssClassName | Css class added to the validation summary.    | HtmlHelper.ValidationSummaryCssClassName ("validation-summary-errors") |
+| ValidationInputCssClassName   | Css class added to invalid fields.            | HtmlHelper.ValidationInputCssClassName ("input-validation-error") |
+| Dates.Format                  | Expected date format in [date-fns](https://date-fns.org/v2.0.0-alpha.7/docs/format) format. | CurrentCulture.DateTimeFormat.ShortDatePattern |
 
 ### Rules
 The table below shows the default validation attributes created by .NET and the v-validate replacements:
 
-| Default Validation Attribute                   | Vee Validate Rule             | Notes |
-|:-----------------------------------------------|:------------------------------|:------|
-| data-val-equalto-other="*.OtherPropertyName" | confirmed:&#123;OtherPropertyName&#125; | The OtherPropertyName must exist in the vue $data |
-| data-val-creditcard="ErrorMessage"           | credit_card:true             |       |
-| data-val-email="ErrorMessage"                | email:true                    |       |
+| Default Validation Attribute                 | Vee Validate Rule             |
+|:---------------------------------------------|:------------------------------|
+| data-val-equalto-other="*.OtherPropertyName" | confirmed:'OtherPropertyName' |
+| data-val-creditcard="ErrorMessage"           | credit_card:true              |
+| data-val-email="ErrorMessage"                | email:true                    |
+| data-val-fileextensions-extensions="png,gif" | ext:['png','gif']             |
+| data-val-maxlength-max="6"                   | max:6                         |
+| data-val-length-max="6"                      | max:6                         |
+| data-val-minlength-min="2"                   | min:2                         |
+| data-val-length-min="2"                      | min:2                         |
+| data-val-range-max="20"                      | max_value:'20'                |
+| data-val-range-max="01/01/2018"              | before:['01/01/2018',true]    |
+| data-val-range-min="2"                       | min_value:'20'                |
+| data-val-range-min="01/01/2018"              | after:['01/01/2018',true]     |
+| data-val-regex-pattern="[a-zA-Z]"            | regex:/[a-zA-Z]/              |
+| data-val-required="true"                     | required:true                 |
+| data-val-url="ErrorMessage"                  | url:[true,true]               |
 
-In addition to the above
+In addition to the default validation attributes, the following VeeValidate rules are added based on the data type of the field being validated:
+
 | Property Type | Vee Validate Rule |
 |:--------------|:-----------------:|
 | int           | numeric:true      |
@@ -54,22 +68,35 @@ In addition to the above
 | double        | decimal:true      |
 | decimal       | decimal:true      |
 | datetime      | date_format:'&#123;Options.Dates.Format&#125;'|
-
-> NOTE: Type validation can be buggy when working with HTML5 types. The quick workaround is to set the type attribute to "text".
+> NOTES: The type rule validation can be overriden by registering an IHtmlValidationAttributeAdapter for the "data-type" key./
+Type validation can be buggy when working with HTML5 types. You can disable HTML5 validation by adding the novalidate attribute to the form element.
 
 ### Overrides
 #### Html Attributes
+Any rules specified in HTML will take priority over the generated rules. 
+>NOTE: Rules need to be declared in object format, i.e. &#123;required:true&#125; if there are any generated rules.
 
 #### IHtmlValidationAttributeAdapter
+Existing attribute conversion can be overridden by implementing a custom IHtmlValidationAttributeAdapter with the same key as the provider you want to override (the jQuery validation attribute name).
+The provider will need to be registered before adding the Vee-Validation services.
+```csharp
+public void ConfigureServices(IServiceCollection services)
+{
+    services.AddTransient<IHtmlValidationAttributeAdapter, CustomAttributeAdapter>();
+    services.AddVeeValidation();
+    services.AddMvc();
+}
+```
 
 ### Tag Helpers
 By default, the asp-message-for and asp-validation-summary tag helpers will be overridden to only show VeeValidate errors.
-If the asp-validation-summary value is set to "ModelOnly" you'll also need to include the VeeValidateSnippets.ValidationSummaryMixin (after vee-validate.js reference).
 
 #### Examples
 ```html
 <span asp-message-for="Property"></span>
+<div asp-validation-summary="All"></div>
 ```
+If the asp-validation-summary value is set to "ModelOnly" you'll also need to include the VeeValidateSnippets.ValidationSummaryMixin (after vee-validate.js reference).
 ```html
 @Html.Raw(VeeValidateSnippets.ValidationSummaryMixin)
 <div asp-validation-summary="ModelOnly"></div>

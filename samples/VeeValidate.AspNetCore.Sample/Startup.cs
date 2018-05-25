@@ -18,7 +18,11 @@ namespace VeeValidate.AspNetCore.Sample
         public void ConfigureServices(IServiceCollection services)
         {
             // Add Vee Validation before MVC
-            services.AddVeeValidation(options => options.Dates.Format = "DD/MM/YYYY");
+            services.AddVeeValidation(options =>
+            {
+                options.Dates.Format = "DD/MM/YYYY";
+                options.ValidationInputCssClassName = "invalid";
+            });
             services.AddMvc()
                 .AddJsonOptions(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver()); ;
         }

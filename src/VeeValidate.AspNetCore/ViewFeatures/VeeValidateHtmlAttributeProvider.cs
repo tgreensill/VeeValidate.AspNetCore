@@ -43,16 +43,24 @@ namespace VeeValidate.AspNetCore.ViewFeatures
         public override void AddValidationAttributes(ViewContext viewContext, ModelExplorer modelExplorer, IDictionary<string, string> attributes)
         {
             base.AddValidationAttributes(viewContext, modelExplorer, attributes);
-            
-            if (attributes.TryGetValue("data-val", out string validate))
-            {
-                if (validate == "true")
-                {
-                    AddVeeValidateAttribute(modelExplorer, attributes);
 
+            // Check whether attributes should be replaced.
+            if (_options.ReplaceHtmlAttributes(viewContext))
+            {
+                if (attributes.TryGetValue("data-val", out string validate))
+                {
+                    if (validate == "true")
+                    {
+                        AddVeeValidateAttribute(modelExplorer, attributes);
+                    }
+                }
+
+                // If there are any validation rules, adding by either the adapters or inline.
+                if (attributes.ContainsKey("v-validate"))
+                {
+                    // Set data-vv-as attribute to give clean error description if not already set.
                     if (!attributes.ContainsKey("data-vv-as"))
                     {
-                        // Set data-vv-as attribute to give clean error description.
                         attributes["data-vv-as"] = modelExplorer.Metadata.GetDisplayName();
                     }
 
@@ -67,7 +75,17 @@ namespace VeeValidate.AspNetCore.ViewFeatures
         private void AddVeeValidateAttribute(ModelExplorer modelExplorer, IDictionary<string, string> attributes)
         {
             ICollection<string> rules = new Collection<string>();
-            
+
+            // Get the model type adapter and add any attributes related to data type
+            if (_adapters.TryGetValue("data-type", out var typeAdapter))
+            {
+                var rule = typeAdapter(null, modelExplorer.Metadata);
+                if (!string.IsNullOrEmpty(rule))
+                {
+                    rules.Add(rule);
+                }
+            }
+
             // Convert the default validation attributes to vee validate attributes
             var validationAttributes = attributes.Where(x => x.Key.StartsWith("data-val")).ToArray();
             foreach (var attribute in validationAttributes)
