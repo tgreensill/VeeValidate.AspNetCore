@@ -1,6 +1,6 @@
 ﻿using Shouldly;
+using System.Collections.Generic;
 using VeeValidate.AspNetCore.Adapters;
-
 using Xunit;
 
 namespace VeeValidate.AspNetCore.Tests.Adapters
@@ -8,16 +8,18 @@ namespace VeeValidate.AspNetCore.Tests.Adapters
     public class EmailAddressAttributeAdapterTests
     {
         [Fact]        
-        public void AddValidation_adds_validation_rule()
+        public void AddVeeValidateRules_adds_email_rule()
         {
             // Arrange            
             var adapter = new EmailAddressAttributeAdapter();
-            
+            var rules = new Dictionary<string, string>();
+
             // Act
-            var result = adapter.GetVeeValidateRule("", null);
+            adapter.AddVeeValidateRules("", null, rules);
 
             // Assert
-            result.ShouldBe("email:true");
+            rules.Keys.ShouldContain("email");
+            rules["email"].ShouldBe("true");
         }
     }
 }

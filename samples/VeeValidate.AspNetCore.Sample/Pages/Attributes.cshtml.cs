@@ -62,7 +62,7 @@ namespace VeeValidate.AspNetCore.Sample.Pages
         [Display(Name = "String Length")]
         public string StringLength { get; set; }
 
-        [FileExtensions(Extensions = "jpg,png,gif")]
+        [FileExtensions(Extensions = "txt,pdf")]
         [Display(Name = "File Extensions")]
         public string FileExtensions { get; set; }
     }

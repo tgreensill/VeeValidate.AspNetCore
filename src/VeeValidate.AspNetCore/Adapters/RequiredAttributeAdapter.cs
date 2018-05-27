@@ -1,14 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
+﻿using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace VeeValidate.AspNetCore.Adapters
 {
     public class RequiredAttributeAdapter : IHtmlValidationAttributeAdapter
     {
-        public string[] Keys => new [] { "data-val-required" };
+        public string[] Attributes => new [] { "data-val-required" };
 
-        public string GetVeeValidateRule(string value, ModelMetadata metadata)
+        public void AddVeeValidateRules(string value, ModelMetadata metadata, IDictionary<string, string> rules)
         {
-            return "required:true";
+            rules.Merge("required", "true");
         }
     }
 }

@@ -1,17 +1,18 @@
-﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
+﻿using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace VeeValidate.AspNetCore.Adapters
 {
     public class MinLengthAttributeAdapter : IHtmlValidationAttributeAdapter
     {
-        public string[] Keys => new []
+        public string[] Attributes => new []
         {
             "data-val-minlength-min", "data-val-length-min" 
         };
 
-        public string GetVeeValidateRule(string value, ModelMetadata metadata)
+        public void AddVeeValidateRules(string value, ModelMetadata metadata, IDictionary<string, string> rules)
         {
-            return $"min:{value}";
+            rules.Merge("min", value);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Shouldly;
+using System.Collections.Generic;
 using VeeValidate.AspNetCore.Adapters;
 using Xunit;
 
@@ -6,17 +7,21 @@ namespace VeeValidate.AspNetCore.Tests.Adapters
 {
     public class RegularExpressionAttributeAdapterTests
     {
-        [Fact]
-        public void AddValidation_adds_validation_rule()
+        [Theory]
+        [InlineData("[a-zA-Z]")]
+        [InlineData("/[a-zA-Z]/")]
+        public void AddVeeValidateRules_adds_regex_rule(string value)
         {
             // Arrange
             var adapter = new RegularExpressionAttributeAdapter();
+            var rules = new Dictionary<string, string>();
 
             // Act
-            var result = adapter.GetVeeValidateRule("[a-zA-Z]", null);
+            adapter.AddVeeValidateRules(value, null, rules);
 
             // Assert
-            result.ShouldBe("regex:/[a-zA-Z]/");
+            rules.Keys.ShouldContain("regex");
+            rules["regex"].ShouldBe("/[a-zA-Z]/");
         }
     }
 }

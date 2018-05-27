@@ -1,13 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
+﻿using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace VeeValidate.AspNetCore.Adapters
 {
     public class EmailAddressAttributeAdapter : IHtmlValidationAttributeAdapter
     {
-        public string[] Keys => new [] { "data-val-email" };
-        public string GetVeeValidateRule(string value, ModelMetadata metadata)
+        public string[] Attributes => new [] { "data-val-email" };
+
+        public void AddVeeValidateRules(string value, ModelMetadata metadata, IDictionary<string, string> rules)
         {
-            return "email:true";
+            rules.Merge("email", "true");
         }
     }
 }

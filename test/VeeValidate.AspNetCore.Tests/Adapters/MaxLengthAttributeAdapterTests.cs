@@ -1,4 +1,5 @@
 ﻿using Shouldly;
+using System.Collections.Generic;
 using VeeValidate.AspNetCore.Adapters;
 using Xunit;
 
@@ -7,16 +8,18 @@ namespace VeeValidate.AspNetCore.Tests.Adapters
     public class MaxLengthAttributeAdapterTests
     {
         [Fact]
-        public void AddValidation_adds_validation_rule()
+        public void AddVeeValidateRules_adds_max_rule()
         {
             // Arrange
             var adapter = new MaxLengthAttributeAdapter();
-            
+            var rules = new Dictionary<string, string>();
+
             // Act
-            var result = adapter.GetVeeValidateRule("50", null);
+            adapter.AddVeeValidateRules("50", null, rules);
 
             // Assert
-            result.ShouldBe("max:50");
+            rules.Keys.ShouldContain("max");
+            rules["max"].ShouldBe("50");
         }
     }
 }

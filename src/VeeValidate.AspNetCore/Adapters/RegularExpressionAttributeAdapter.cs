@@ -1,14 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
+﻿using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace VeeValidate.AspNetCore.Adapters
 {
     public class RegularExpressionAttributeAdapter : IHtmlValidationAttributeAdapter
     {
-        public string[] Keys => new [] { "data-val-regex-pattern" };
+        public string[] Attributes => new [] { "data-val-regex-pattern" };
 
-        public string GetVeeValidateRule(string value, ModelMetadata metadata)
+        public void AddVeeValidateRules(string value, ModelMetadata metadata, IDictionary<string, string> rules)
         {
-            return $"regex:/{value.Trim('/')}/";
+            rules.Merge("regex", $"/{value.Trim('/')}/");
         }
     }
 }

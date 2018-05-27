@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Shouldly;
 using VeeValidate.AspNetCore.Adapters;
@@ -17,55 +18,37 @@ namespace VeeValidate.AspNetCore.Tests.Adapters
         };
 
         [Fact]
-        public void AddValidation_adds_min_value_validation_rule()
+        public void AddVeeValidateRules_adds_min_value_rule()
         {
             // Arrange
             var adapter = new RangeMinAttributeAdapter(_options);
             var metadata = new EmptyModelMetadataProvider().GetMetadataForType(typeof(int));
+            var rules = new Dictionary<string, string>();
 
             // Act
-            var result = adapter.GetVeeValidateRule("10", metadata);
+            adapter.AddVeeValidateRules("10", metadata, rules);
 
             // Assert
-            result.ShouldBe("min_value:'10'");
+            rules.Keys.ShouldContain("min_value");
+            rules["min_value"].ShouldBe("'10'");
         }
 
         [Fact]
-        public void AddValidation_adds_after_validation_rule()
+        public void AddVeeValidateRules_adds_after_rule_and_date_format_for_date_types()
         {
             // Arrange
             var adapter = new RangeMinAttributeAdapter(_options);
             var metadata = new EmptyModelMetadataProvider().GetMetadataForType(typeof(DateTime));
+            var rules = new Dictionary<string, string>();
 
             // Act
-            var result = adapter.GetVeeValidateRule("03/01/2016", metadata);
+            adapter.AddVeeValidateRules("03/01/2016", metadata, rules);
 
             // Assert
-            result.ShouldBe("after:['01/03/2016',true]");
-        }
-
-        [Theory]
-        [InlineData("2016-03-01")]
-        [InlineData("03/01/2016")]
-        [InlineData("Mar 01 2016")]
-        public void AddValidation_adds_before_validation_rule(string date)
-        {
-            // Arrange
-            var options = new VeeValidateOptions
-            {
-                Dates = new DateValidationOptions
-                {
-                    Format = "DD/MM/YYYY"
-                }
-            };
-            var adapter = new RangeMaxAttributeAdapter(options);
-            var metadata = new EmptyModelMetadataProvider().GetMetadataForType(typeof(DateTime));
-            
-            // Act
-            var result = adapter.GetVeeValidateRule(date, metadata);
-
-            // Assert
-            result.ShouldBe("before:['01/03/2016',true]");
+            rules.Keys.ShouldContain("after");
+            rules["after"].ShouldBe("['01/03/2016',true]");
+            rules.Keys.ShouldContain("date_format");
+            rules["date_format"].ShouldBe("'DD/MM/YYYY'");
         }
     }
 }

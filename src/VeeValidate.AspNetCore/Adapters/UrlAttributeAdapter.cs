@@ -1,14 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
+﻿using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace VeeValidate.AspNetCore.Adapters
 {
     public class UrlAttributeAdapter : IHtmlValidationAttributeAdapter
     {
-        public string[] Keys => new [] { "data-val-url" };
+        public string[] Attributes => new [] { "data-val-url" };
 
-        public string GetVeeValidateRule(string value, ModelMetadata metadata)
+        public void AddVeeValidateRules(string value, ModelMetadata metadata, IDictionary<string, string> rules)
         {
-            return "url:[true,true]";
+            rules.Merge("url", "[true,true]");
         }
     }
 }

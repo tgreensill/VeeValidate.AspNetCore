@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace VeeValidate.AspNetCore
 {
@@ -15,24 +16,26 @@ namespace VeeValidate.AspNetCore
             MergeClassOrStylesAttribute(attributes, "styles", attributeValue);
         }
 
-        public static void MergeVeeValidateAttributes(IDictionary<string, string> attributes, ICollection<string> validationRules)
+        public static void MergeVeeValidateAttributes(IDictionary<string, string> attributes, IDictionary<string, string> validationRules)
         {
+            var rules = string.Join(",", validationRules.Select(x => $"{x.Key}:{x.Value}"));
+
             // Get any existing rules declared in the markup.
             if (attributes.TryGetValue("v-validate", out var existingRules))
             {
                 // Prevent users declaring inline validation rules using the shorthand string format.
-                if (existingRules.StartsWith("'"))
+                if (!existingRules.StartsWith("{"))
                 {
                     throw new Exception("v-validate attributes must be declared in object format.");
                 }
 
                 // TODO - Filter out any validation rules that are already in the existing rules...
-                attributes["v-validate"] = "{" + existingRules.TrimStart('{').TrimEnd('}') + "," + string.Join(",", validationRules) + "}";
+                attributes["v-validate"] = "{" + existingRules.TrimStart('{').TrimEnd('}') + "," + rules + "}";
                 return;
             }
 
             // Use the object format for the rules as this is the safe format for regex rules.
-            attributes["v-validate"] = "{" + string.Join(",", validationRules) + "}";
+            attributes["v-validate"] = "{" + rules + "}";
         }
 
         #region { Private }

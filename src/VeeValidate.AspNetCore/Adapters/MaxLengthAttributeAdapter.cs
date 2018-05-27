@@ -1,16 +1,18 @@
-﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
+﻿using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace VeeValidate.AspNetCore.Adapters
 {
     public class MaxLengthAttributeAdapter : IHtmlValidationAttributeAdapter
     {
-        public string[] Keys => new []
+        public string[] Attributes => new []
         {
             "data-val-maxlength-max", "data-val-length-max"
         };
-        public string GetVeeValidateRule(string value, ModelMetadata metadata)
+
+        public void AddVeeValidateRules(string value, ModelMetadata metadata, IDictionary<string, string> rules)
         {
-            return $"max:{value}";
+            rules.Merge("max", value);
         }
     }
 }

@@ -41,12 +41,6 @@ namespace VeeValidate.AspNetCore
         /// </summary>
         public bool UseVeeValidateHtmlGenerator { get; set; }
 
-        /// <summary>
-        /// Function to indicate when the default validation attributes should be replaced with VeeValidate rules.
-        /// Always returns true by default.
-        /// </summary>
-        public Func<ViewContext, bool> ReplaceHtmlAttributes { get; set; }
-
         public DateValidationOptions Dates { get; set; } 
 
         public VeeValidateOptions()
@@ -60,7 +54,6 @@ namespace VeeValidate.AspNetCore
             ValidationMessageCssClassName = HtmlHelper.ValidationMessageCssClassName;
             ValidationSummaryCssClassName = HtmlHelper.ValidationSummaryCssClassName;
             UseVeeValidateHtmlGenerator = true;
-            ReplaceHtmlAttributes = (context) => true;
             Dates = new DateValidationOptions();
         }
     }

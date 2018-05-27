@@ -15,26 +15,40 @@ namespace VeeValidate.AspNetCore.ViewFeatures
     public class VeeValidateHtmlAttributeProvider : DefaultValidationHtmlAttributeProvider
     {
         private readonly VeeValidateOptions _options;
-        private readonly IDictionary<string, Func<string, ModelMetadata, string>> _adapters = new ConcurrentDictionary<string, Func<string, ModelMetadata, string>>();
+        private readonly IDictionary<string, Action<string, ModelMetadata, IDictionary<string, string>>> _adapters = new ConcurrentDictionary<string, Action<string, ModelMetadata, IDictionary<string,string>>>();
+        private readonly IDictionary<string, Action<string, ModelMetadata, IDictionary<string, string>>> _inputTypeAdapters = new ConcurrentDictionary<string, Action<string, ModelMetadata, IDictionary<string, string>>>();
 
         public VeeValidateHtmlAttributeProvider(
             IOptions<MvcViewOptions> optionsAccessor, 
             IModelMetadataProvider metadataProvider, 
             ClientValidatorCache clientValidatorCache, 
             VeeValidateOptions options,
-            IEnumerable<IHtmlValidationAttributeAdapter> adapters) : base(optionsAccessor, metadataProvider, clientValidatorCache)
+            IEnumerable<IHtmlValidationAttributeAdapter> adapters,
+            IEnumerable<IHtmlInputTypeAttributeAdapter> inputTypeAdapters) : base(optionsAccessor, metadataProvider, clientValidatorCache)
         {
             _options = options;
 
             // Convert the list of adapters into a dictionary of keys and functions.
             foreach (var adapter in adapters)
             {
-                foreach (var key in adapter.Keys)
+                foreach (var key in adapter.Attributes)
                 {
                     // Only add one handler per key.
                     if (!_adapters.ContainsKey(key))
                     {
-                        _adapters.Add(key, adapter.GetVeeValidateRule);
+                        _adapters.Add(key, adapter.AddVeeValidateRules);
+                    }
+                }
+            }
+
+            foreach (var adapter in inputTypeAdapters)
+            {
+                foreach (var key in adapter.InputTypes)
+                {
+                    // Only add one handler per key.
+                    if (!_inputTypeAdapters.ContainsKey(key))
+                    {
+                        _inputTypeAdapters.Add(key, adapter.AddVeeValidateRules);
                     }
                 }
             }
@@ -43,68 +57,62 @@ namespace VeeValidate.AspNetCore.ViewFeatures
         public override void AddValidationAttributes(ViewContext viewContext, ModelExplorer modelExplorer, IDictionary<string, string> attributes)
         {
             base.AddValidationAttributes(viewContext, modelExplorer, attributes);
+            
+            AddVeeValidateAttribute(modelExplorer, attributes);                
 
-            // Check whether attributes should be replaced.
-            if (_options.ReplaceHtmlAttributes(viewContext))
+            // If there are any validation rules, added by either the adapters or inline via the html.
+            if (attributes.ContainsKey("v-validate"))
             {
-                if (attributes.TryGetValue("data-val", out string validate))
+                // Set data-vv-as attribute to give clean error description if not already set.
+                if (!attributes.ContainsKey("data-vv-as"))
                 {
-                    if (validate == "true")
-                    {
-                        AddVeeValidateAttribute(modelExplorer, attributes);
-                    }
+                    attributes["data-vv-as"] = modelExplorer.Metadata.GetDisplayName();
                 }
 
-                // If there are any validation rules, adding by either the adapters or inline.
-                if (attributes.ContainsKey("v-validate"))
-                {
-                    // Set data-vv-as attribute to give clean error description if not already set.
-                    if (!attributes.ContainsKey("data-vv-as"))
-                    {
-                        attributes["data-vv-as"] = modelExplorer.Metadata.GetDisplayName();
-                    }
-
-                    // Add a class binding to toggle the input error class when the field is in an invalid state.
-                    VueHtmlAttributeHelper.MergeClassAttribute(
-                        attributes,
-                        $"{{'{_options.ValidationInputCssClassName}': {_options.ErrorBagName}.has('{(attributes.ContainsKey("data-vv-name") ? attributes["data-vv-name"] : attributes["name"])}')}}");
-                }
+                // Add a class binding to toggle the input error class when the field is in an invalid state.
+                VueHtmlAttributeHelper.MergeClassAttribute(
+                    attributes,
+                    $"{{'{_options.ValidationInputCssClassName}': {_options.ErrorBagName}.has('{(attributes.ContainsKey("data-vv-name") ? attributes["data-vv-name"] : attributes["name"])}')}}");
             }
         }
 
         private void AddVeeValidateAttribute(ModelExplorer modelExplorer, IDictionary<string, string> attributes)
         {
-            ICollection<string> rules = new Collection<string>();
+            IDictionary<string, string> rules = new Dictionary<string, string>();
 
-            // Get the model type adapter and add any attributes related to data type
-            if (_adapters.TryGetValue("data-type", out var typeAdapter))
+            if (attributes.TryGetValue("data-val", out string validate))
             {
-                var rule = typeAdapter(null, modelExplorer.Metadata);
-                if (!string.IsNullOrEmpty(rule))
+                if (validate == "true")
                 {
-                    rules.Add(rule);
+                    // Convert the default validation attributes to vee validate attributes
+                    var validationAttributes = attributes.Where(x => x.Key.StartsWith("data-val")).ToArray();
+                    foreach (var attribute in validationAttributes)
+                    {
+                        if (_adapters.TryGetValue(attribute.Key, out var handler))
+                        {
+                            handler(attribute.Value, modelExplorer.Metadata, rules);
+                        }
+
+                        // Remove the default validation attribute
+                        attributes.Remove(attribute.Key);
+                    }
                 }
             }
 
-            // Convert the default validation attributes to vee validate attributes
-            var validationAttributes = attributes.Where(x => x.Key.StartsWith("data-val")).ToArray();
-            foreach (var attribute in validationAttributes)
+            // Add any input type specific rules that weren't already added. 
+            if (attributes.TryGetValue("type", out string type))
             {
-                if (_adapters.TryGetValue(attribute.Key, out var handler))
+                if (type != "text")
                 {
-                    var rule = handler(attribute.Value, modelExplorer.Metadata);
-                    if (!string.IsNullOrEmpty(rule))
+                    if (_inputTypeAdapters.TryGetValue(type, out var handler))
                     {
-                        rules.Add(rule);
+                        handler(type, modelExplorer.Metadata, rules);
                     }
                 }
-
-                // Remove the default validation attribute
-                attributes.Remove(attribute.Key);
             }
 
             // Merge the rules (including rules declared in the markup) into a single attribute.
             VueHtmlAttributeHelper.MergeVeeValidateAttributes(attributes, rules);
-        }
+        }        
     }
 }

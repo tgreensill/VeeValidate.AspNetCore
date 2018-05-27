@@ -3,6 +3,7 @@ using Shouldly;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using VeeValidate.AspNetCore.Adapters;
 using Xunit;
+using System.Collections.Generic;
 
 namespace VeeValidate.AspNetCore.Tests.Adapters
 {
@@ -17,34 +18,40 @@ namespace VeeValidate.AspNetCore.Tests.Adapters
         };
 
         [Fact]
-        public void AddValidation_adds_max_value_validation_rule()
+        public void AddVeeValidateRules_adds_max_value_rule()
         {
             // Arrange
             var adapter = new RangeMaxAttributeAdapter(_options);
             var metadata = new EmptyModelMetadataProvider().GetMetadataForType(typeof(int));
+            var rules = new Dictionary<string, string>();
 
             // Act
-            var result = adapter.GetVeeValidateRule("10", metadata);
+            adapter.AddVeeValidateRules("10", metadata, rules);
 
             // Assert
-            result.ShouldBe("max_value:'10'");
+            rules.Keys.ShouldContain("max_value");
+            rules["max_value"].ShouldBe("'10'");
         }
 
         [Theory]
         [InlineData("2016-03-01")]
         [InlineData("03/01/2016")]
         [InlineData("Mar 01 2016")]
-        public void AddValidation_adds_before_validation_rule(string date)
+        public void AddVeeValidateRules_adds_before_and_date_format_rule_for_date_types(string date)
         {
             // Arrange
             var adapter = new RangeMaxAttributeAdapter(_options);
             var metadata = new EmptyModelMetadataProvider().GetMetadataForType(typeof(DateTime));
-            
+            var rules = new Dictionary<string, string>();
+
             // Act
-            var result = adapter.GetVeeValidateRule(date, metadata);
+            adapter.AddVeeValidateRules(date, metadata, rules);
 
             // Assert
-            result.ShouldBe("before:['01/03/2016',true]");
+            rules.Keys.ShouldContain("before");
+            rules["before"].ShouldBe("['01/03/2016',true]");
+            rules.Keys.ShouldContain("date_format");
+            rules["date_format"].ShouldBe("'DD/MM/YYYY'");
         }
     }
 }

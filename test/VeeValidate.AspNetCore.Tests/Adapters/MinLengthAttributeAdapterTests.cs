@@ -1,4 +1,5 @@
 ﻿using Shouldly;
+using System.Collections.Generic;
 using VeeValidate.AspNetCore.Adapters;
 using Xunit;
 
@@ -7,16 +8,18 @@ namespace VeeValidate.AspNetCore.Tests.Adapters
     public class MinLengthAttributeAdapterTests
     {
         [Fact]
-        public void AddValidation_adds_validation_rule()
+        public void AddVeeValidateRules_adds_min_rule()
         {
             // Arrange
             var adapter = new MinLengthAttributeAdapter();
-            
+            var rules = new Dictionary<string, string>();
+
             // Act
-            var result = adapter.GetVeeValidateRule("10", null);
+            adapter.AddVeeValidateRules("10", null, rules);
 
             // Assert
-            result.ShouldBe("min:10");
+            rules.Keys.ShouldContain("min");
+            rules["min"].ShouldBe("10");
         }
     }
 }

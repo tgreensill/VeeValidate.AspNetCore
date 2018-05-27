@@ -1,4 +1,5 @@
 ﻿using Shouldly;
+using System.Collections.Generic;
 using VeeValidate.AspNetCore.Adapters;
 using Xunit;
 
@@ -7,16 +8,18 @@ namespace VeeValidate.AspNetCore.Tests.Adapters
     public class RequiredAttributeAdapterTests
     {        
         [Fact]
-        public void AddValidation_adds_validation_rule()
+        public void AddVeeValidateRules_adds_required_rule()
         {
             // Arrange
             var adapter = new RequiredAttributeAdapter();
-            
-            // Act
-            var result = adapter.GetVeeValidateRule("true", null);
+            var rules = new Dictionary<string, string>();
 
-            // Assert            
-            result.ShouldBe("required:true");
+            // Act
+            adapter.AddVeeValidateRules("", null, rules);
+
+            // Assert
+            rules.Keys.ShouldContain("required");
+            rules["required"].ShouldBe("true");
         }
     }
 }

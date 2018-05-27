@@ -46,6 +46,7 @@
 </ul>
 
 <div id="app">
+    <div asp-validation-summary="All"></div>
     <form novalidate="novalidate" v-on:submit.prevent="submit">
         <div>
             <h2 id="compare-attribute">[Compare]</h2>
@@ -79,7 +80,7 @@
             <h2 id="file-extensions-attribute">[FileExtensions]</h2>
             <div class="file-field input-field">
                 <div class="btn">
-                    <input asp-for="FileExtensions" type="file" />
+                    <input asp-for="FileExtensions" />
                     <label asp-for="FileExtensions"></label>
                 </div>
                 <div class="file-path-wrapper">
@@ -91,7 +92,7 @@
         <div>
             <h2 id="range-attribute">[Range]</h2>
             <div class="input-field">
-                <input asp-for="Range" />
+                <input asp-for="Range" type="text" />
                 <label asp-for="Range"></label>
                 <span asp-validation-for="Range"></span>
             </div>
@@ -154,31 +155,8 @@
 </div>
 
 @section Scripts{
+    <script src="~/js/directives/date.js"></script>
     <script>
-        Vue.directive('date', {
-            bind: function (el, binding, vnode) {
-                // Notify vue instance when the value changes
-                el.addEventListener('change', function () {
-                    vnode.context.$emit("change");
-                });
-            },
-            inserted: function(el) {
-                // If not touch enabled browser that supports date inputs.
-                if (!Modernizr.touch || !Modernizr.inputtypes.date) {
-                    // Change the type to text to prevent native date control from appearing.
-                    el.type = 'text';
-                    el.setAttribute("data-vv-validate-on", "change");
-                    // Initialise the Materliaze datepicker control.
-                    M.Datepicker.init(el,
-                        {
-                            format: 'dd/mm/yyyy',
-                            setDefaultDate: true,
-                            autoClose: true
-                        });
-                }
-            }
-        })
-
         new Vue({
             el: "#app",
             methods: {

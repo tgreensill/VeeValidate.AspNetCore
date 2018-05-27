@@ -30,7 +30,6 @@ Reference Vue JS, VeeValidate, and a polyfill for promises if you plan on suppor
 | ErrorBagName                  | Vee Validate ErrorBag Name.                   | "errors"      |
 | FieldBagName                  | Vee Validate FieldBag Name.                   | "fields"      |
 | UseVeeValidateHtmlGenerator   | The VeeValidateHtmlGenerator will only show VeeValidate messages the asp-message-for and asp-validation-summary tag helpers. | true |
-| ReplaceHtmlAttributes         | Function indicating when to replace the validation attributes. Useful if only using VeeValidate in parts of your app based on a condition, i.e. a ViewData value is set to true. | (context) => true |
 | ValidationMessageCssClassName | Css class added to field validation messages. | HtmlHelper.ValidationMessageCssClassName ("field-validation-error") |
 | ValidationSummaryCssClassName | Css class added to the validation summary.    | HtmlHelper.ValidationSummaryCssClassName ("validation-summary-errors") |
 | ValidationInputCssClassName   | Css class added to invalid fields.            | HtmlHelper.ValidationInputCssClassName ("input-validation-error") |
@@ -56,20 +55,13 @@ The table below shows the default validation attributes created by .NET and the 
 | data-val-regex-pattern="[a-zA-Z]"            | regex:/[a-zA-Z]/              |
 | data-val-required="true"                     | required:true                 |
 | data-val-url="ErrorMessage"                  | url:[true,true]               |
+| data-val-number="ErrorMessage"               | numeric:true                  |
+| data-val-number="ErrorMessage"               | decimal:true                  |
+| data-val-date="ErrorMessage"                 | date_format:'&#123;Options.Dates.Format&#125;' |
 
-In addition to the default validation attributes, the following VeeValidate rules are added based on the data type of the field being validated:
-
-| Property Type | Vee Validate Rule |
-|:--------------|:-----------------:|
-| int           | numeric:true      |
-| short         | numeric:true      |
-| long          | numeric:true      |
-| float         | decimal:true      |
-| double        | decimal:true      |
-| decimal       | decimal:true      |
-| datetime      | date_format:'&#123;Options.Dates.Format&#125;'|
-> NOTES: The type rule validation can be overriden by registering an IHtmlValidationAttributeAdapter for the "data-type" key./
-Type validation can be buggy when working with HTML5 types. You can disable HTML5 validation by adding the novalidate attribute to the form element.
+> NOTE: The data-val-number and data-val-date attributes are only added if the input type is text. /
+> The data-val-number rule will be converted to the 'decimal' rule if the field type is double, float, or decimal. The 'numeric' rule will be used for all other field types. /
+> The date_format rule will be added regardless of whether the data-val-date attribute is present IF there are any date related rules on the field, i.e. 'before' or 'after'.
 
 ### Overrides
 #### Html Attributes

@@ -64,33 +64,38 @@ namespace VeeValidate.AspNetCore.Tests
             attributes.Values.FirstOrDefault().ShouldBe("[classObject,anotherClassObject]");
         }
 
-        [Theory]
-        [InlineData("required:true")]
-        [InlineData("required:true", "email:true")]
-        public static void VeeValidateAttribute_adds_attribute(params string[] rules)
+        [Fact]        
+        public static void MergeVeeValidateAttributes_adds_attribute()
         {
             // Arrange
             var attributes = new Dictionary<string, string>();
-            
+            var rules = new Dictionary<string, string> {
+                { "email", "true" },
+                { "required", "true" }
+            };
+
             // Act
-            VueHtmlAttributeHelper.MergeVeeValidateAttributes(attributes, rules.ToList());
+            VueHtmlAttributeHelper.MergeVeeValidateAttributes(attributes, rules);
 
             // Assert
             attributes.Keys.FirstOrDefault().ShouldBe("v-validate");
-            attributes.Values.FirstOrDefault().ShouldBe("{" + string.Join(",", rules) + "}");
+            attributes.Values.FirstOrDefault().ShouldBe("{email:true,required:true}");
         }
 
         [Fact]
-        public static void VeeValidateAttribute_concatenates_existing_rules()
+        public static void MergeVeeValidateAttributes_concatenates_existing_rules()
         {
             // Arrange
             var attributes = new Dictionary<string, string>
             {
-                {"v-validate", "required:true"}
+                { "v-validate", "{required:true}" }
+            };
+            var rules = new Dictionary<string, string> {
+                { "email", "true" }
             };
 
             // Act
-            VueHtmlAttributeHelper.MergeVeeValidateAttributes(attributes, new List<string> { "email:true" });
+            VueHtmlAttributeHelper.MergeVeeValidateAttributes(attributes, rules);
 
             // Assert
             attributes.Keys.FirstOrDefault().ShouldBe("v-validate");
@@ -98,19 +103,22 @@ namespace VeeValidate.AspNetCore.Tests
         }
 
         [Fact]
-        public static void VeeValidateAttribute_throws_when_validation_rules_in_string_format()
+        public static void MergeVeeValidateAttributes_throws_when_validation_rules_in_string_format()
         {
             // Arrange
             var attributes = new Dictionary<string, string>
             {
                 { "v-validate", "'required|email'"}
             };
+            var rules = new Dictionary<string, string> {
+                { "credit_card", "true" }
+            };
 
             // Act
-            
+
             // Assert
             Should.Throw<Exception>(() =>
-                VueHtmlAttributeHelper.MergeVeeValidateAttributes(attributes, new List<string>{ "credit_card:true" }));
+                VueHtmlAttributeHelper.MergeVeeValidateAttributes(attributes, rules));
         }
     }
 }
