@@ -1,8 +1,9 @@
 ﻿Vue.directive('date', {
     bind: function (el, binding, vnode) {        
         el.addEventListener('change', function () {
-            // Give focus to the textbox to ensure validation fires immediately.
+            // Hack to get validation firing immediately in IE.
             el.focus();
+            el.blur();
         });
     },
     inserted: function (el, binding, vnode) {

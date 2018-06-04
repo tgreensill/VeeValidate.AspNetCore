@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Newtonsoft.Json.Serialization;
+
 
 namespace VeeValidate.AspNetCore.Sample
 {
@@ -22,9 +22,9 @@ namespace VeeValidate.AspNetCore.Sample
             {
                 options.Dates.Format = "DD/MM/YYYY";
                 options.ValidationInputCssClassName = "invalid";
+                options.ValidationMessageCssClassName = "red-text";
             });
-            services.AddMvc()
-                .AddJsonOptions(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver()); ;
+            services.AddMvc();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

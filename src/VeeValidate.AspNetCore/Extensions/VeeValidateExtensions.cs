@@ -2,7 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using System;
-using VeeValidate.AspNetCore.Adapters;
+using Microsoft.AspNetCore.Mvc.DataAnnotations;
 using VeeValidate.AspNetCore.ViewFeatures;
 
 // ReSharper disable CheckNamespace
@@ -10,12 +10,6 @@ namespace VeeValidate.AspNetCore
 {
     public static class VeeValidateExtensions
     {
-        /// <summary>
-        /// Wire up dependency injection for Vee Validation.
-        /// </summary>
-        /// <param name="services"></param>
-        /// <param name="optionsExpression"></param>
-        /// <returns></returns>
         public static IServiceCollection AddVeeValidation(this IServiceCollection services, Action<VeeValidateOptions> optionsExpression = null)
         {
             var expr = optionsExpression ?? delegate { };
@@ -25,33 +19,12 @@ namespace VeeValidate.AspNetCore
 
             services.TryAddSingleton(options);
             services.TryAddSingleton<VeeValidateSnippets>();
-            services.TryAddSingleton<ValidationHtmlAttributeProvider, VeeValidateHtmlAttributeProvider>();
-
-            // Conditional services
-            if (options.UseVeeValidateHtmlGenerator)
+            services.TryAddTransient<IValidationAttributeAdapterProvider, VeeValidateAttributeAdapterProvider>();
+            
+            if (options.OverrideValidationTagHelpers)
             {
                 services.TryAddSingleton<IHtmlGenerator, VeeValidateHtmlGenerator>();
             }
-
-            // Add input type adapters
-            services.AddTransient<IHtmlInputTypeAttributeAdapter, DateAttributeAdapter>();
-            services.AddTransient<IHtmlInputTypeAttributeAdapter, FileExtensionsAttributeAdapter>();
-            services.AddTransient<IHtmlInputTypeAttributeAdapter, NumberAttributeAdapter>();
-
-            // Add attribute adapters            
-            services.AddTransient<IHtmlValidationAttributeAdapter, CompareAttributeAdapter>();
-            services.AddTransient<IHtmlValidationAttributeAdapter, CreditCardAttributeAdapter>();
-            services.AddTransient<IHtmlValidationAttributeAdapter, DateAttributeAdapter>();
-            services.AddTransient<IHtmlValidationAttributeAdapter, EmailAddressAttributeAdapter>();
-            services.AddTransient<IHtmlValidationAttributeAdapter, FileExtensionsAttributeAdapter>();            
-            services.AddTransient<IHtmlValidationAttributeAdapter, MaxLengthAttributeAdapter>();
-            services.AddTransient<IHtmlValidationAttributeAdapter, MinLengthAttributeAdapter>();
-            services.AddTransient<IHtmlValidationAttributeAdapter, NumberAttributeAdapter>();
-            services.AddTransient<IHtmlValidationAttributeAdapter, RangeMaxAttributeAdapter>();
-            services.AddTransient<IHtmlValidationAttributeAdapter, RangeMinAttributeAdapter>();
-            services.AddTransient<IHtmlValidationAttributeAdapter, RegularExpressionAttributeAdapter>();
-            services.AddTransient<IHtmlValidationAttributeAdapter, RequiredAttributeAdapter>();
-            services.AddTransient<IHtmlValidationAttributeAdapter, UrlAttributeAdapter>();
 
             return services;
         }

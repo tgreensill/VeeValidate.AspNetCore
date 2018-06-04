@@ -38,10 +38,6 @@ code {
     white-space:pre;
 }
 
-.field-validation-error {
-    color: #d32f2f;
-}
-
 .validation-summary-errors {
     background-color: #ff3860;
     color: white;

@@ -1,7 +1,5 @@
-﻿using System;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
+﻿using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using System.Globalization;
-using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace VeeValidate.AspNetCore
 {
@@ -34,26 +32,24 @@ namespace VeeValidate.AspNetCore
         /// Uses "validation-summary-errors" by default.
         /// </summary>
         public string ValidationSummaryCssClassName { get; set; }
-
+        
         /// <summary>
-        /// If set to true, the asp-message-for and asp-validation-summary tag helper behaviour will be overridden to only show VeeValidate errors.
-        /// Uses true by default
+        /// Override the default behaviour of the asp-validation-for and asp-validation-summary tag helpers.
+        /// Uses true by default.
         /// </summary>
-        public bool UseVeeValidateHtmlGenerator { get; set; }
+        public bool OverrideValidationTagHelpers { get; set; }
 
         public DateValidationOptions Dates { get; set; } 
 
         public VeeValidateOptions()
         {
-            // TODO - Flag for specifying whether to camel case property names??
-            
             // Set default values.
             ErrorBagName = "errors";
             FieldBagName = "fields";
             ValidationInputCssClassName = HtmlHelper.ValidationInputCssClassName;
             ValidationMessageCssClassName = HtmlHelper.ValidationMessageCssClassName;
             ValidationSummaryCssClassName = HtmlHelper.ValidationSummaryCssClassName;
-            UseVeeValidateHtmlGenerator = true;
+            OverrideValidationTagHelpers = true;
             Dates = new DateValidationOptions();
         }
     }

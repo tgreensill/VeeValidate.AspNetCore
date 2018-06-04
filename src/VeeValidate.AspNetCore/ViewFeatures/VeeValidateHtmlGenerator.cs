@@ -87,7 +87,7 @@ namespace VeeValidate.AspNetCore.ViewFeatures
             // It's useful for hiding elements whose visibility is controller by the vue instance until it's ready. 
             tagBuilder.MergeAttribute("v-cloak", null);
             // The span will only appear when there's an error in the error bag for the field .           
-            tagBuilder.MergeAttribute("v-show", $"{_options.ErrorBagName}.has('{fullName}')");
+            tagBuilder.MergeAttribute("v-show",  $"{_options.ErrorBagName}.has('{fullName}')");
             tagBuilder.InnerHtml.SetHtmlContent(new HtmlString($"{{{{{_options.ErrorBagName}.first('{fullName}')}}}}"));
             
             return tagBuilder;
