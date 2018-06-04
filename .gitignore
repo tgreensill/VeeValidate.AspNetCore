@@ -11,3 +11,12 @@
 /test/VeeValidate.AspNetCore.Tests/bin/Debug
 /test/VeeValidate.AspNetCore.Tests/obj
 /packages
+/samples/VeeValidate.AspNetCore.FluentValidation.Sample/obj
+/samples/VeeValidate.AspNetCore.FluentValidation.Sample/node_modules
+/samples/VeeValidate.AspNetCore.FluentValidation.Sample/bin/Debug/netcoreapp2.0
+/samples/VeeValidate.AspNetCore.FluentValidation.Sample/wwwroot/libs
+*.user
+/src/VeeValidate.AspNetCore.FluentValidation/bin/Debug/netstandard2.0
+/src/VeeValidate.AspNetCore.FluentValidation/obj
+/test/VeeValidate.AspNetCore.FluentValidation.Tests/bin/Debug/netcoreapp2.0
+/test/VeeValidate.AspNetCore.FluentValidation.Tests/obj

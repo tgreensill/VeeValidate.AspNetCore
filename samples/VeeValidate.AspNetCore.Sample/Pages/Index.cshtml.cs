@@ -10,7 +10,7 @@ namespace VeeValidate.AspNetCore.Sample.Pages
         public string Required { get; set; }
 
         [Url]
-        public new string Url { get; set; }
+        public string Url { get; set; }
 
         [RegularExpression("/^[A-Z0-9]*$/")]
         public string Regex { get; set; }

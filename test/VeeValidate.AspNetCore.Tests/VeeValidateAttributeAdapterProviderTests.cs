@@ -35,17 +35,17 @@ namespace VeeValidate.AspNetCore.Tests
         public static IEnumerable<object[]> GetAttributeAdapterCases =>
             new List<object[]>
             {
-                new object[] { new CompareAttribute("OtherProperty"), typeof(CompareClientValidator) },
-                new object[] { new CreditCardAttribute(), typeof(CreditCardClientValidator) },
-                new object[] { new EmailAddressAttribute(), typeof(EmailAddressClientValidator) },
-                new object[] { new FileExtensionsAttribute(), typeof(FileExtensionsClientValidator) },
-                new object[] { new MaxLengthAttribute(), typeof(MaxLengthClientValidator) },
-                new object[] { new MinLengthAttribute(2), typeof(MinLengthClientValidator) },
-                new object[] { new RangeAttribute(1, 2), typeof(RangeClientValidator) },
-                new object[] { new RegularExpressionAttribute("[a-zA-Z]"), typeof(RegularExpressionClientValidator) },
-                new object[] { new RequiredAttribute(), typeof(RequiredClientValidator) },
-                new object[] { new StringLengthAttribute(2), typeof(StringLengthClientValidator) },
-                new object[] { new UrlAttribute(), typeof(UrlClientValidator) }
+                new object[] { new CompareAttribute("OtherProperty"), typeof(CompareAttributeAdapter) },
+                new object[] { new CreditCardAttribute(), typeof(CreditCardAttributeAdapter) },
+                new object[] { new EmailAddressAttribute(), typeof(EmailAddressAttributeAdapter) },
+                new object[] { new FileExtensionsAttribute(), typeof(FileExtensionsAttributeAdapter) },
+                new object[] { new MaxLengthAttribute(), typeof(MaxLengthAttributeAdapter) },
+                new object[] { new MinLengthAttribute(2), typeof(MinLengthAttributeAdapter) },
+                new object[] { new RangeAttribute(1, 2), typeof(RangeAttributeAdapter) },
+                new object[] { new RegularExpressionAttribute("[a-zA-Z]"), typeof(RegularExpressionAttributeAdapter) },
+                new object[] { new RequiredAttribute(), typeof(RequiredAttributeAdapter) },
+                new object[] { new StringLengthAttribute(2), typeof(StringLengthAttributeAdapter) },
+                new object[] { new UrlAttribute(), typeof(UrlAttributeAdapter) }
             };
     }
 }

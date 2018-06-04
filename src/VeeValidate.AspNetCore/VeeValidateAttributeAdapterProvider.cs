@@ -32,47 +32,47 @@ namespace VeeValidate.AspNetCore
 
             if (attribute is CompareAttribute compareAttribute)
             {
-                adapter = new CompareClientValidator(compareAttribute);
+                adapter = new CompareAttributeAdapter(compareAttribute);
             }
             else if (attribute is CreditCardAttribute creditCardAttribute)
             {
-                adapter = new CreditCardClientValidator(creditCardAttribute);
+                adapter = new CreditCardAttributeAdapter(creditCardAttribute);
             }
             else if (attribute is EmailAddressAttribute emailAddressAttribute)
             {
-                adapter = new EmailAddressClientValidator(emailAddressAttribute);
+                adapter = new EmailAddressAttributeAdapter(emailAddressAttribute);
             }
             else if (attribute is FileExtensionsAttribute fileExtensionsAttribute)
             {
-                adapter = new FileExtensionsClientValidator(fileExtensionsAttribute);
+                adapter = new FileExtensionsAttributeAdapter(fileExtensionsAttribute);
             }
             else if (attribute is MaxLengthAttribute maxLengthAttribute)
             {
-                adapter = new MaxLengthClientValidator(maxLengthAttribute);
+                adapter = new MaxLengthAttributeAdapter(maxLengthAttribute);
             }
             else if (attribute is MinLengthAttribute minLengthAttribute)
             {
-                adapter = new MinLengthClientValidator(minLengthAttribute);
+                adapter = new MinLengthAttributeAdapter(minLengthAttribute);
             }
             else if (attribute is RangeAttribute rangeAttribute)
             {
-                adapter = new RangeClientValidator(rangeAttribute, _options);
+                adapter = new RangeAttributeAdapter(rangeAttribute, _options);
             }
             else if (attribute is RegularExpressionAttribute regularExpressionAttribute)
             {
-                adapter = new RegularExpressionClientValidator(regularExpressionAttribute);
+                adapter = new RegularExpressionAttributeAdapter(regularExpressionAttribute);
             }
             else if (attribute is RequiredAttribute requiredAttribute)
             {
-                adapter = new RequiredClientValidator(requiredAttribute);
+                adapter = new RequiredAttributeAdapter(requiredAttribute);
             }
             else if (attribute is StringLengthAttribute stringLengthAttribute)
             {
-                adapter = new StringLengthClientValidator(stringLengthAttribute);
+                adapter = new StringLengthAttributeAdapter(stringLengthAttribute);
             }
             else if (attribute is UrlAttribute urlAttribute)
             {
-                adapter = new UrlClientValidator(urlAttribute);
+                adapter = new UrlAttributeAdapter(urlAttribute);
             }
             else
             {

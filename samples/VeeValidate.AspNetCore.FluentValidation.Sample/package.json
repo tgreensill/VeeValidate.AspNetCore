@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "name": "vee-validate-aspnetcore",
+  "name": "vee-validate-aspnetcore-fluentvalidation",
   "private": true,
   "devDependencies": {
     "vue": "2.5.16",
