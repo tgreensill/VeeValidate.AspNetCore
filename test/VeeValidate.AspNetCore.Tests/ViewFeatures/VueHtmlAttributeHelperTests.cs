@@ -22,7 +22,7 @@ namespace VeeValidate.AspNetCore.Tests.ViewFeatures
             VueHtmlAttributeHelper.MergeClassAttribute(attributes, value);
 
             // Assert
-            attributes.Keys.FirstOrDefault().ShouldBe(":class");
+            attributes.Keys.FirstOrDefault().ShouldBe("v-bind:class");
             attributes.Values.FirstOrDefault().ShouldBe(value);
         }
 

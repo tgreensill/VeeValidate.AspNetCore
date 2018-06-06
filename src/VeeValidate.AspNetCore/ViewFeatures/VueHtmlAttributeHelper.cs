@@ -39,14 +39,15 @@ namespace VeeValidate.AspNetCore.ViewFeatures
         private static void MergeClassOrStylesAttribute(IDictionary<string, string> attributes, string attributeName, string attributeValue)
         {
             // Binding keys can come in two flavours: v-bind:{key} and :{key}.
-            if (attributes.ContainsKey($"v-bind:{attributeName}"))
+            if (attributes.ContainsKey($":{attributeName}"))
             {
-                MergeClassOrStylesAttributeImpl(attributes, $"v-bind:{attributeName}", attributeValue);
+                MergeClassOrStylesAttributeImpl(attributes, $":{attributeName}", attributeValue);
+                
                 return;
             }
 
-            // Default to short-hand notation unless already specified in the markup
-            MergeClassOrStylesAttributeImpl(attributes, $":{attributeName}", attributeValue);
+            // Default to v-bind: notation unless already specified in the markup
+            MergeClassOrStylesAttributeImpl(attributes, $"v-bind:{attributeName}", attributeValue);
         }
 
         private static void MergeClassOrStylesAttributeImpl(IDictionary<string, string> attributes, string attributeName, string attributeValue)

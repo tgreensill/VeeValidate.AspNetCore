@@ -5,8 +5,8 @@
 }
 <div class="center-align">
     <a asp-page="/Index">
-        <img width="200" alt="VeeValidate Logo" src="~/images/vee-validate.svg" />
-        <img width="200" alt="Dot Net Core Logo" src="~/images/net-core.png" />
+        <img height="160" alt="VeeValidate Logo" src="~/images/vee-validate.svg" />
+        <img height="150" alt="Dot Net Core Logo" src="~/images/net-core.png" />
     </a>
 </div>
 <h1>Validation Attributes</h1>
@@ -96,17 +96,27 @@
         </div>
         <div>
             <h2 id="range-attribute">[Range]</h2>
-            <p>Enter a number between 1 and 10:</p>
-            <div class="input-field">
-                <input asp-for="Range" />
-                <label asp-for="Range"></label>
-                <span asp-validation-for="Range"></span>
+            <div>
+                <p>Select a number between 1 and 10:</p>
+                <div>
+                    <p class="range-field">
+                        <input type="range" asp-for="Range" min="0" max="20" />
+                    </p>
+                    <span asp-validation-for="Range"></span>
+                </div>
             </div>
-            <p>Select a date in December 2018:</p>
-            <div class="input-field">
-                <input asp-for="DateRange" v-date />
-                <label asp-for="DateRange"></label>
-                <span asp-validation-for="DateRange"></span>
+            @*<div class="input-field">
+                    <input asp-for="Range" />
+                    <label asp-for="Range"></label>
+                    <span asp-validation-for="Range"></span>
+                </div>*@
+            <div>
+                <p>Select a date in December 2018:</p>
+                <div class="input-field">
+                    <input asp-for="DateRange" v-date />
+                    <label asp-for="DateRange"></label>
+                    <span asp-validation-for="DateRange"></span>
+                </div>
             </div>
         </div>
         <div>
@@ -182,6 +192,6 @@
                         });
                 }
             }
-        })
+        });
     </script>
 }

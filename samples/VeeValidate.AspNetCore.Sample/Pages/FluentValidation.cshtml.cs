@@ -7,6 +7,7 @@ namespace VeeValidate.AspNetCore.Sample.Pages
 {
     public class FluentValidationModel : PageModel
     {
+        [Display(Name = "Not Empty")]
         public string NotEmpty { get; set; }
 
         public string Matches { get; set; }

@@ -26,13 +26,6 @@
       "node_modules/vee-validate/dist/vee-validate.js"
     ]
   },
-  // Axios
-  {
-    "outputFileName": "wwwroot/libs/axios/axios.js",
-    "inputFiles": [
-      "node_modules/axios/dist/axios.js"
-    ]
-  },
   // ES6 Promise
   {
     "outputFileName": "wwwroot/libs/es6-promise/es6-promise.auto.js",
