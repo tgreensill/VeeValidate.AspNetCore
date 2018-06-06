@@ -2,6 +2,7 @@
 using Shouldly;
 using Xunit;
 using System.ComponentModel.DataAnnotations;
+using System.Globalization;
 using VeeValidate.AspNetCore.Adapters;
 using VeeValidate.AspNetCore.Tests.Builders;
 
@@ -59,6 +60,8 @@ namespace VeeValidate.AspNetCore.Tests.Adapters
         public void AddValidation_adds_after_and_before_rules(string minDate, string maxDate)
         {
             // Arrange
+            CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("en-GB"); // Set culture for date string conversion
+
             var attribute = new RangeAttribute(typeof(DateTime), minDate, maxDate);
             var adapter = new RangeAttributeAdapter(attribute, _options);
             
