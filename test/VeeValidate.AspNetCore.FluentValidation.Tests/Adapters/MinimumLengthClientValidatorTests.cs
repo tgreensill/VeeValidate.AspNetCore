@@ -7,19 +7,19 @@ using Xunit;
 
 namespace VeeValidate.AspNetCore.FluentValidation.Tests.Adapters
 {
-    public class EmailClientValidatorTests
+    public class MinimumLengthClientValidatorTests
     {
         private class TestObject
         {
-            public string EmailAddress { get; set; }
+            public string MinLength { get; set; }
         }
 
         [Fact]
-        public void AddValidation_adds_email_rule()
+        public void AddValidation_adds_min_rule()
         {
             // Arrange
-            var property = PropertyRule.Create<TestObject, string>(x => x.EmailAddress);
-            var adapter = new EmailClientValidator(property, new EmailValidator());
+            var property = PropertyRule.Create<TestObject, string>(x => x.MinLength);
+            var adapter = new MinimumLengthClientValidator(property, new MinimumLengthValidator(2));
 
             var context = new ClientModelValidationContextBuilder()
                 .WithModelType<string>()
@@ -30,7 +30,7 @@ namespace VeeValidate.AspNetCore.FluentValidation.Tests.Adapters
 
             // Assert
             context.Attributes.Keys.ShouldContain("v-validate");
-            context.Attributes["v-validate"].ShouldBe("{email:true}");
+            context.Attributes["v-validate"].ShouldBe("{min:2}");
         }
     }
 }

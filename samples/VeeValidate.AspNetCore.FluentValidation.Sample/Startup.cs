@@ -28,7 +28,7 @@ namespace VeeValidate.AspNetCore.FluentValidation.Sample
                 .AddFluentValidation(config =>
                 {
                     config.RegisterValidatorsFromAssembly(typeof(Startup).Assembly);
-                    config.ConfigureClientsideValidation(options =>
+                    config.ConfigureClientsideValidation(options => 
                         options.UseVeeValidate(new VeeValidateOptions
                         {
                             Dates = new DateValidationOptions {Format = "DD/MM/YYYY"}

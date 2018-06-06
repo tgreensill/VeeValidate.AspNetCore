@@ -16,7 +16,7 @@ namespace VeeValidate.AspNetCore.Tests.Adapters
             var adapter = new EmailAddressAttributeAdapter(attribute);
             
             var context = new ClientModelValidationContextBuilder()
-                .WithModel(attribute)
+                .WithModelType<string>()
                 .Build();
 
             // Act

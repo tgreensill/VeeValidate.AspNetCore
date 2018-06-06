@@ -1,9 +1,9 @@
-﻿using FluentValidation.AspNetCore;
-using FluentValidation.Validators;
+﻿using FluentValidation.Validators;
+using VeeValidate.AspNetCore;
 using VeeValidate.AspNetCore.FluentValidation.Adapters;
 
 // ReSharper disable CheckNamespace
-namespace VeeValidate.AspNetCore.FluentValidation
+namespace FluentValidation.AspNetCore
 {
     public static class FluentValidationExtensions
     {

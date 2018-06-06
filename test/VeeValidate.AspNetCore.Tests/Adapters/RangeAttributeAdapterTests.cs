@@ -11,10 +11,7 @@ namespace VeeValidate.AspNetCore.Tests.Adapters
     {
         private readonly VeeValidateOptions _options = new VeeValidateOptions
         {
-            Dates = new DateValidationOptions
-            {
-                Format = "DD/MM/YYYY"
-            }
+            DateFormatProvider = ctx => "DD/MM/YYYY"
         };
 
         [Fact]
@@ -25,7 +22,7 @@ namespace VeeValidate.AspNetCore.Tests.Adapters
             var adapter = new RangeAttributeAdapter(attribute, _options);
             
             var context = new ClientModelValidationContextBuilder()
-                .WithModel(attribute)
+                .WithModelType<int>()
                 .Build();
 
             // Act
@@ -44,7 +41,7 @@ namespace VeeValidate.AspNetCore.Tests.Adapters
             var adapter = new RangeAttributeAdapter(attribute, _options);
 
             var context = new ClientModelValidationContextBuilder()
-                .WithModel(attribute)
+                .WithModelType<DateTime?>()
                 .Build();
 
             // Act
@@ -66,7 +63,7 @@ namespace VeeValidate.AspNetCore.Tests.Adapters
             var adapter = new RangeAttributeAdapter(attribute, _options);
             
             var context = new ClientModelValidationContextBuilder()
-                .WithModel(attribute)
+                .WithModelType<DateTime>()
                 .Build();
 
             // Act

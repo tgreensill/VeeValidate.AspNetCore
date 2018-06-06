@@ -29,17 +29,17 @@ Setup VeeValidate:
 ```
 ### Options
 
-| Name                          | Description                                   | Default Value |
-|:------------------------------|:----------------------------------------------|:--------------|
-| ErrorBagName                  | Vee Validate ErrorBag Name.                   | "errors"      |
-| FieldBagName                  | Vee Validate FieldBag Name.                   | "fields"      |
-| ValidationMessageCssClassName | Css class added to field validation messages. | HtmlHelper.ValidationMessageCssClassName ("field-validation-error") |
-| ValidationSummaryCssClassName | Css class added to the validation summary.    | HtmlHelper.ValidationSummaryCssClassName ("validation-summary-errors") |
-| ValidationInputCssClassName   | Css class added to invalid fields.            | HtmlHelper.ValidationInputCssClassName ("input-validation-error") |
-| OverrideValidationTagHelpers  | If true, overrides the behaviour of the asp-validation-for and asp-validation-summary tag helpers to work with VeeValidate | true |
-| Dates.Format                  | Expected date format in [date-fns](https://date-fns.org/v2.0.0-alpha.7/docs/format) format. | CurrentCulture.DateTimeFormat.ShortDatePattern.ToUpper() |
+| Name                          | Type                      | Description                                   | Default Value |
+|:------------------------------|:--------------------------|:----------------------------------------------|:--------------|
+| ErrorBagName                  | String                    | Vee Validate ErrorBag Name.                   | "errors"      |
+| FieldBagName                  | String                    | Vee Validate FieldBag Name.                   | "fields"      |
+| ValidationMessageCssClassName | String                    | Css class added to field validation messages. | HtmlHelper.ValidationMessageCssClassName ("field-validation-error") |
+| ValidationSummaryCssClassName | String                    | Css class added to the validation summary.    | HtmlHelper.ValidationSummaryCssClassName ("validation-summary-errors") |
+| ValidationInputCssClassName   | String                    | Css class added to invalid fields.            | HtmlHelper.ValidationInputCssClassName ("input-validation-error") |
+| OverrideValidationTagHelpers  | Boolean                   | If true, overrides the behaviour of the asp-validation-for and asp-validation-summary tag helpers to work with VeeValidate | true |
+| DatesFormatProvider           | Func<HttpContext, string> | Function returning the expected date format in [date-fns](https://date-fns.org/v2.0.0-alpha.7/docs/format) format. | ctx => CurrentCulture.DateTimeFormat.ShortDatePattern.ToUpper() |
 
-### Validation Attributes
+### .NET Data Annotation Validation
 The table below shows the VeeValidate rules generated for each of the .NET validation attributes:
 
 | Validation Attribute  | VeeValidate Rules         |
@@ -59,6 +59,43 @@ The table below shows the VeeValidate rules generated for each of the .NET valid
 | [Url]                 | url                       |
 
 > NOTE: VeeValidate does not have a rule for phone numbers so there is no client validation implemented for this yet.
+
+### Fluent Validation
+To use VeeValidate in place of JQuery validation, use the UseVeeValidate() extension on the FluentValidationMvcConfiguration class in the ConfigureServices method of your startup.cs file.
+```csharp
+public void ConfigureServices(IServiceCollection services)
+{
+    services.AddVeeValidation();
+    services.AddMvc()
+            .AddFluentValidation(config =>
+            {
+                config.RegisterValidatorsFromAssembly(typeof(Startup).Assembly);
+                config.ConfigureClientsideValidation(options =>
+                    options.UseVeeValidate(new VeeValidateOptions())
+                );
+            });
+}
+```
+
+### Fluent Validation Rules
+The table below shows the VeeValidate rules generated for each of the FluentValidation rules:
+
+| Validation Rule               | VeeValidate Rules         |
+|:------------------------------|:--------------------------|
+| EmailAddress                  | email                     |
+| Equal                         | confirmed                 |
+| GreaterThanOrEqualTo          | min_value                 |
+| GreaterThanOrEqualTo (DateTime) | date_format, after      |
+| InclusiveBetween              | min_value, max_value      |
+| InclusiveBetween (DateTime)   | date_format, after, before |
+| Length                        | min, max                  |
+| LessThanOrEqualTo             | max_value                 |
+| LessThanOrEqualTo (DateTime)  | date_format, before       |
+| Matches                       | regex                     |
+| MaximumLength                 | max                       |
+| MinimumLength                 | min                       |
+| NotEmpty                      | confirmed                 |
+| NotNull                       | credit_card               |
 
 ### Overriding the generated rules
 #### Html Attributes

@@ -18,7 +18,7 @@ namespace VeeValidate.AspNetCore.Tests.Adapters
             var adapter = new RegularExpressionAttributeAdapter(attribute);
             
             var context = new ClientModelValidationContextBuilder()
-                .WithModel(attribute)
+                .WithModelType<string>()
                 .Build();
 
             // Act

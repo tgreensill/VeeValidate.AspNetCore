@@ -16,7 +16,7 @@ namespace VeeValidate.AspNetCore.Tests.Adapters
             var adapter = new StringLengthAttributeAdapter(attribute);
             
             var context = new ClientModelValidationContextBuilder()
-                .WithModel(attribute)
+                .WithModelType<string>()
                 .Build();
 
             // Act
@@ -35,7 +35,7 @@ namespace VeeValidate.AspNetCore.Tests.Adapters
             var adapter = new StringLengthAttributeAdapter(attribute);
             
             var context = new ClientModelValidationContextBuilder()
-                .WithModel(attribute)
+                .WithModelType<string>()
                 .Build();
 
             // Act

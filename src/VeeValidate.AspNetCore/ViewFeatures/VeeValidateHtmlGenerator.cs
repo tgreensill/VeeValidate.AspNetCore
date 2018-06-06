@@ -92,7 +92,26 @@ namespace VeeValidate.AspNetCore.ViewFeatures
             
             return tagBuilder;
         }
-        
+
+        protected override void AddValidationAttributes(ViewContext viewContext, TagBuilder tagBuilder, ModelExplorer modelExplorer, string expression)
+        {
+            base.AddValidationAttributes(viewContext, tagBuilder, modelExplorer, expression);
+
+            // If the field has validation rules.
+            // Should they be added regardless, in case errors are manually added to the error bag?
+            if (tagBuilder.Attributes.ContainsKey("v-validate"))
+            {
+                // The data-vv-name attribute should be used instead of the field name if present.
+                if (!tagBuilder.Attributes.TryGetValue("data-vv-name", out string name))
+                {
+                    name = tagBuilder.Attributes["name"];
+                }
+                
+                // Add a class binding to toggle the input error class when the field is in an invalid state.
+                VueHtmlAttributeHelper.MergeClassAttribute(tagBuilder.Attributes, $"{{'{_options.ValidationInputCssClassName}': {_options.ErrorBagName}.has('{name}') }}");
+            }
+        }
+
         private static IDictionary<string, object> GetHtmlAttributeDictionaryOrNull(object htmlAttributes)
         {
             IDictionary<string, object> htmlAttributeDictionary = null;

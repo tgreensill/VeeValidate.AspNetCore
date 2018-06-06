@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc.ViewFeatures;
+﻿using System;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using System.Globalization;
+using Microsoft.AspNetCore.Http;
 
 namespace VeeValidate.AspNetCore
 {
@@ -39,7 +41,12 @@ namespace VeeValidate.AspNetCore
         /// </summary>
         public bool OverrideValidationTagHelpers { get; set; }
 
-        public DateValidationOptions Dates { get; set; } 
+        /// <summary>
+        /// Function that returns the expected client side date format.
+        /// The result must be in <see href="https://date-fns.org/v2.0.0-alpha.7/docs/format">date-fns</see> format.  
+        /// Uses the ShortDatePattern from the CurrentCulture by default.
+        /// </summary>
+        public Func<HttpContext, string> DateFormatProvider { get; set; }
 
         public VeeValidateOptions()
         {
@@ -50,17 +57,7 @@ namespace VeeValidate.AspNetCore
             ValidationMessageCssClassName = HtmlHelper.ValidationMessageCssClassName;
             ValidationSummaryCssClassName = HtmlHelper.ValidationSummaryCssClassName;
             OverrideValidationTagHelpers = true;
-            Dates = new DateValidationOptions();
+            DateFormatProvider = ctx => CultureInfo.CurrentCulture.DateTimeFormat.ShortDatePattern.ToUpper();
         }
-    }
-
-    public class DateValidationOptions
-    {
-        /// <summary>
-        /// Expected client side date format.
-        /// Must be in <see href="https://date-fns.org/v2.0.0-alpha.7/docs/format">date-fns</see> format.  
-        /// Uses the  ShortDatePattern from the CurrentCulture by default.
-        /// </summary>
-        public string Format { get; set; } = CultureInfo.CurrentCulture.DateTimeFormat.ShortDatePattern.ToUpper();
     }
 }

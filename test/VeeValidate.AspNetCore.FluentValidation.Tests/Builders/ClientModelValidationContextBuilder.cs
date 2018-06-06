@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
-namespace VeeValidate.AspNetCore.Tests.Builders
+namespace VeeValidate.AspNetCore.FluentValidation.Tests.Builders
 {
     public class ClientModelValidationContextBuilder
     {
@@ -26,7 +26,7 @@ namespace VeeValidate.AspNetCore.Tests.Builders
             _actionContext = actionContext;
             return this;
         }
-
+  
         public ClientModelValidationContextBuilder WithModelType<T>()
         {
             return WithModelType(typeof(T));

@@ -24,9 +24,10 @@ namespace VeeValidate.AspNetCore.FluentValidation.Adapters
 
                 if (context.ModelMetadata.UnderlyingOrModelType == typeof(DateTime))
                 {
-                    var normalisedDateFormat = _options.Dates.Format.Replace('D', 'd').Replace('Y', 'y');
+                    var dateFormat = _options.DateFormatProvider(context.ActionContext.HttpContext);
+                    var normalisedDateFormat = dateFormat.Replace('D', 'd').Replace('Y', 'y');
 
-                    MergeValidationAttribute(context.Attributes, "date_format", $"'{_options.Dates.Format}'");
+                    MergeValidationAttribute(context.Attributes, "date_format", $"'{dateFormat}'");
                     
                     if (DateTime.TryParse(rangeValidator.ValueToCompare.ToString(), out var maxDate))
                     {

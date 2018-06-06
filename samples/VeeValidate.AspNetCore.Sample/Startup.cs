@@ -1,8 +1,10 @@
+using System.Runtime.InteropServices.ComTypes;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-
 
 namespace VeeValidate.AspNetCore.Sample
 {
@@ -17,14 +19,24 @@ namespace VeeValidate.AspNetCore.Sample
 
         public void ConfigureServices(IServiceCollection services)
         {
+            string DateFormatProvider(HttpContext ctx) => "DD/MM/YYYY";
+
             // Add Vee Validation before MVC
             services.AddVeeValidation(options =>
             {
-                options.Dates.Format = "DD/MM/YYYY";
                 options.ValidationInputCssClassName = "invalid";
                 options.ValidationMessageCssClassName = "red-text";
+                options.DateFormatProvider = DateFormatProvider;
             });
-            services.AddMvc();
+            services.AddMvc()
+                .AddFluentValidation(config =>
+                {
+                    config.RegisterValidatorsFromAssembly(typeof(Startup).Assembly);
+                    config.ConfigureClientsideValidation(options =>
+                        options.UseVeeValidate(new VeeValidateOptions { DateFormatProvider = DateFormatProvider })
+                    );
+                });
+
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
