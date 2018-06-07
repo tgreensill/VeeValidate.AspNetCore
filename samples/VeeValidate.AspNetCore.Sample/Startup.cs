@@ -32,7 +32,7 @@ namespace VeeValidate.AspNetCore.Sample
                 {
                     config.RegisterValidatorsFromAssembly(typeof(Startup).Assembly);
                     config.ConfigureClientsideValidation(options =>
-                        options.UseVeeValidate(new VeeValidateOptions { DateFormatProvider = DateFormatProvider })
+                        options.UseVeeValidate(DateFormatProvider)
                     );
                 });
 

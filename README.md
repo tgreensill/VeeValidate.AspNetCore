@@ -37,6 +37,7 @@ Setup VeeValidate:
 | ValidationSummaryCssClassName | String                    | Css class added to the validation summary.    | HtmlHelper.ValidationSummaryCssClassName ("validation-summary-errors") |
 | ValidationInputCssClassName   | String                    | Css class added to invalid fields.            | HtmlHelper.ValidationInputCssClassName ("input-validation-error") |
 | OverrideValidationTagHelpers  | Boolean                   | If true, overrides the behaviour of the asp-validation-for and asp-validation-summary tag helpers to work with VeeValidate | true |
+| AddValidationInputCssToFieldsWithoutValidation | Boolean  | If true, and OverrideValidationTagHelpers is true, the validation css binding will be added to a field that doesn't have validation. Set to true if you intend on manually adding errors to the error bag. | false |
 | DatesFormatProvider           | Func<HttpContext, string> | Function returning the expected date format in [date-fns](https://date-fns.org/v2.0.0-alpha.7/docs/format) format. | ctx => CurrentCulture.DateTimeFormat.ShortDatePattern.ToUpper() |
 
 ### .NET Data Annotation Validation
@@ -61,7 +62,8 @@ The table below shows the VeeValidate rules generated for each of the .NET valid
 > NOTE: VeeValidate does not have a rule for phone numbers so there is no client validation implemented for this yet.
 
 ### Fluent Validation
-To use VeeValidate in place of JQuery validation, use the UseVeeValidate() extension on the FluentValidationMvcConfiguration class in the ConfigureServices method of your startup.cs file.
+To use VeeValidate in place of JQuery validation, use the UseVeeValidate() extension on the FluentValidationMvcConfiguration class in the ConfigureServices method of your startup.cs file.\
+Example:
 ```csharp
 public void ConfigureServices(IServiceCollection services)
 {
@@ -71,9 +73,31 @@ public void ConfigureServices(IServiceCollection services)
             {
                 config.RegisterValidatorsFromAssembly(typeof(Startup).Assembly);
                 config.ConfigureClientsideValidation(options =>
-                    options.UseVeeValidate(new VeeValidateOptions())
+                    options.UseVeeValidate()
                 );
             });
+}
+```
+The date formatter needs to be passed into both extensions when specified.\
+Example:
+```csharp
+public void ConfigureServices(IServiceCollection services)
+{
+    string DateFormatProvider(HttpContext ctx) => "DD/MM/YYYY";
+
+    services.AddVeeValidation(options =>
+    {        
+        options.DateFormatProvider = DateFormatProvider;
+    });
+    services.AddMvc()
+        .AddFluentValidation(config =>
+        {
+            config.RegisterValidatorsFromAssembly(typeof(Startup).Assembly);
+            config.ConfigureClientsideValidation(options =>
+                options.UseVeeValidate(DateFormatProvider)
+            );
+        });
+
 }
 ```
 
@@ -100,7 +124,7 @@ The table below shows the VeeValidate rules generated for each of the FluentVali
 ### Overriding the generated rules
 #### Html Attributes
 Any rules specified in HTML will take priority over the generated rules. 
-Rules need to be declared in object format if there are any generated rules for the field.
+Rules need to be declared in object format if there are any generated rules for the field.\
 Example:
 ```html
 <input asp-for="RequiredField" v-validate="{required:isRequired}" />
@@ -108,7 +132,7 @@ Example:
 
 ### Tag Helpers
 By default, the asp-message-for and asp-validation-summary tag helpers will be overridden to only show VeeValidate errors.
-This can be disabled by setting the OverrideValidationTagHelpers option to false.
+This can be disabled by setting the OverrideValidationTagHelpers option to false.\
 Example:
 ```csharp
 public void ConfigureServices(IServiceCollection services)
@@ -121,7 +145,7 @@ public void ConfigureServices(IServiceCollection services)
 }
 ```
 
-If the asp-validation-summary value is set to "ModelOnly" (and OverrideValidationTagHelpers is true), you'll also need to include the VeeValidateSnippets.ValidationSummaryMixin (after vee-validate.js reference).
+If the asp-validation-summary value is set to "ModelOnly" (and OverrideValidationTagHelpers is true), you'll also need to include the VeeValidateSnippets.ValidationSummaryMixin (after vee-validate.js reference).\
 Example:
 ```html
 @inject VeeValidateSnippets VeeValidateSnippets

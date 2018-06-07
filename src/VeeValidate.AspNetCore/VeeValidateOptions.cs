@@ -42,6 +42,13 @@ namespace VeeValidate.AspNetCore
         public bool OverrideValidationTagHelpers { get; set; }
 
         /// <summary>
+        /// Whether to add the input css bindings to fields without client side validation.
+        /// Useful if manually adding errors to the errorbag.
+        /// Uses false by default.
+        /// </summary>
+        public bool AddValidationInputCssToFieldsWithoutValidation { get; set; }
+
+        /// <summary>
         /// Function that returns the expected client side date format.
         /// The result must be in <see href="https://date-fns.org/v2.0.0-alpha.7/docs/format">date-fns</see> format.  
         /// Uses the ShortDatePattern from the CurrentCulture by default.
@@ -57,6 +64,7 @@ namespace VeeValidate.AspNetCore
             ValidationMessageCssClassName = HtmlHelper.ValidationMessageCssClassName;
             ValidationSummaryCssClassName = HtmlHelper.ValidationSummaryCssClassName;
             OverrideValidationTagHelpers = true;
+            AddValidationInputCssToFieldsWithoutValidation = false;
             DateFormatProvider = ctx => CultureInfo.CurrentCulture.DateTimeFormat.ShortDatePattern.ToUpper();
         }
     }

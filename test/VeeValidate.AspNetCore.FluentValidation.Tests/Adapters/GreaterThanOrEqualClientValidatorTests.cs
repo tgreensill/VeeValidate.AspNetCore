@@ -21,7 +21,7 @@ namespace VeeValidate.AspNetCore.FluentValidation.Tests.Adapters
         {
             // Arrange
             var property = PropertyRule.Create<TestObject, string>(x => x.GreaterThanOrEqual);
-            var adapter = new GreaterThanOrEqualClientValidator(property, new GreaterThanOrEqualValidator(5), new VeeValidateOptions());
+            var adapter = new GreaterThanOrEqualClientValidator(property, new GreaterThanOrEqualValidator(5), null);
 
             var context = new ClientModelValidationContextBuilder()
                 .WithModelType<string>()
@@ -41,16 +41,11 @@ namespace VeeValidate.AspNetCore.FluentValidation.Tests.Adapters
         public void AddValidation_adds__before_rule(Type type)
         {
             // Arrange
-            var options = new VeeValidateOptions
-            {
-                DateFormatProvider = ctx => "DD/MM/YYYY"
-            };
-
             DateTime max = new DateTime(2016, 3, 1);
 
             var property = PropertyRule.Create<TestObject, DateTime>(x => x.GreaterThanOrEqualDate);
             var adapter = new GreaterThanOrEqualClientValidator(
-                property, new GreaterThanOrEqualValidator(max), options);
+                property, new GreaterThanOrEqualValidator(max), ctx => "DD/MM/YYYY");
 
             var context = new ClientModelValidationContextBuilder()
                 .WithModelType(type)

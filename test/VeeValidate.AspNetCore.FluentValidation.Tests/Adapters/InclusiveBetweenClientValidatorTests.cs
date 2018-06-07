@@ -22,7 +22,7 @@ namespace VeeValidate.AspNetCore.FluentValidation.Tests.Adapters
             // Arrange
             var property = PropertyRule.Create<TestObject, string>(x => x.InclusiveBetween);
             var adapter = new InclusiveBetweenClientValidator(
-                property, new InclusiveBetweenValidator(5, 50), new VeeValidateOptions());
+                property, new InclusiveBetweenValidator(5, 50), null);
 
             var context = new ClientModelValidationContextBuilder()
                 .WithModelType<string>()
@@ -42,17 +42,12 @@ namespace VeeValidate.AspNetCore.FluentValidation.Tests.Adapters
         public void AddValidation_adds_after_and_before_rules(Type type)
         {
             // Arrange
-            var options = new VeeValidateOptions
-            {
-                DateFormatProvider = ctx => "DD/MM/YYYY"
-            };
-
             DateTime from = new DateTime(2016, 3, 1);
             DateTime to = new DateTime(2016, 3, 31);
 
             var property = PropertyRule.Create<TestObject, DateTime>(x => x.InclusiveBetweenDate);
             var adapter = new InclusiveBetweenClientValidator(
-                property, new InclusiveBetweenValidator(from, to), options);
+                property, new InclusiveBetweenValidator(from, to), ctx => "DD/MM/YYYY");
 
             var context = new ClientModelValidationContextBuilder()
                 .WithModelType(type)
