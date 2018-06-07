@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
-namespace VeeValidate.AspNetCore.Tests.Builders
+namespace VeeValidate.AspNetCore.Builders
 {
     public class ClientModelValidationContextBuilder
     {

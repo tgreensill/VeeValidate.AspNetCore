@@ -2,7 +2,7 @@
 using FluentValidation.Validators;
 using Shouldly;
 using VeeValidate.AspNetCore.FluentValidation.Adapters;
-using VeeValidate.AspNetCore.FluentValidation.Tests.Builders;
+using VeeValidate.AspNetCore.Builders;
 using Xunit;
 
 namespace VeeValidate.AspNetCore.FluentValidation.Tests.Adapters

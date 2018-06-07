@@ -1,7 +1,7 @@
 ﻿using Shouldly;
 using System.ComponentModel.DataAnnotations;
 using VeeValidate.AspNetCore.Adapters;
-using VeeValidate.AspNetCore.Tests.Builders;
+using VeeValidate.AspNetCore.Builders;
 using Xunit;
 
 namespace VeeValidate.AspNetCore.Tests.Adapters

@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\VeeValidate.AspNetCore.FluentValidation\VeeValidate.AspNetCore.FluentValidation.csproj" />
+    <ProjectReference Include="..\VeeValidate.AspNetCore.Builders\VeeValidate.AspNetCore.Builders.csproj" />
   </ItemGroup>
 
 </Project>

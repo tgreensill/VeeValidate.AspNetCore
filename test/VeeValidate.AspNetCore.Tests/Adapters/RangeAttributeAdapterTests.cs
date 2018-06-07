@@ -4,7 +4,7 @@ using Xunit;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using VeeValidate.AspNetCore.Adapters;
-using VeeValidate.AspNetCore.Tests.Builders;
+using VeeValidate.AspNetCore.Builders;
 
 namespace VeeValidate.AspNetCore.Tests.Adapters
 {
