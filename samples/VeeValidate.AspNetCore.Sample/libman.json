@@ -1,0 +1,33 @@
+{
+  "version": "1.0",
+  "defaultProvider": "cdnjs",
+  "libraries": [
+    {
+      "library": "vue@2.6.10",
+      "destination": "wwwroot/lib/vue/"
+    },
+    {
+      "library": "vee-validate@2.2.15",
+      "destination": "wwwroot/lib/vee-validate/"
+    },
+    {
+      "library": "axios@0.19.0",
+      "destination": "wwwroot/lib/axios/"
+    },
+    {
+      "library": "es6-promise@4.1.1",
+      "destination": "wwwroot/lib/es6-promise/"
+    },
+    {
+      "provider": "unpkg",
+      "library": "materialize-css@1.0.0",
+      "destination": "wwwroot/lib/materialize-css/",      
+      "files": [
+        "dist/css/materialize.css",
+        "dist/css/materialize.min.css",        
+        "dist/js/materialize.js",
+        "dist/js/materialize.min.js"
+      ]
+    }
+  ]
+}

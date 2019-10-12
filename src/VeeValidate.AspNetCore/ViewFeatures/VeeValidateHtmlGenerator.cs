@@ -39,10 +39,6 @@ namespace VeeValidate.AspNetCore.ViewFeatures
             tagBuilder.MergeAttributes(GetHtmlAttributeDictionaryOrNull(htmlAttributes));
             tagBuilder.AddCssClass(_options.ValidationSummaryCssClassName);
 
-            // The v-cloak attribute is removed once the vue instance has been initialized on the page.
-            // It's useful for hiding elements whose visibility is controller by the vue instance until it's ready. 
-            tagBuilder.MergeAttribute("v-cloak", null);
-
             if (excludePropertyErrors)
             {
                 tagBuilder.MergeAttribute("v-show", "validationSummaryErrors && validationSummaryErrors.length > 0");
@@ -83,9 +79,6 @@ namespace VeeValidate.AspNetCore.ViewFeatures
             tagBuilder.MergeAttributes(htmlAttributeDictionary);
             tagBuilder.AddCssClass(_options.ValidationMessageCssClassName);
 
-            // The v-cloak attribute is removed once the vue instance has been initialized on the page.
-            // It's useful for hiding elements whose visibility is controller by the vue instance until it's ready. 
-            tagBuilder.MergeAttribute("v-cloak", null);
             // The span will only appear when there's an error in the error bag for the field .           
             tagBuilder.MergeAttribute("v-show",  $"{_options.ErrorBagName}.has('{fullName}')");
             tagBuilder.InnerHtml.SetHtmlContent(new HtmlString($"{{{{{_options.ErrorBagName}.first('{fullName}')}}}}"));
@@ -96,8 +89,8 @@ namespace VeeValidate.AspNetCore.ViewFeatures
         protected override void AddValidationAttributes(ViewContext viewContext, TagBuilder tagBuilder, ModelExplorer modelExplorer, string expression)
         {
             base.AddValidationAttributes(viewContext, tagBuilder, modelExplorer, expression);
-
-            // If the field has validation rules  or css should be added to all fields.
+            
+            // If the field has validation rules or css should be added to all fields.
             if (tagBuilder.Attributes.ContainsKey("v-validate") || _options.AddValidationInputCssToFieldsWithoutValidation)
             {
                 // The data-vv-name attribute should be used instead of the field name if present.

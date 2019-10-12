@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27428.2037
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29318.209
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{FFE26567-BD8C-4707-923E-5D8532C4DC5C}"
 EndProject
@@ -17,6 +17,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VeeValidate.AspNetCore.Samp
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{3C55F708-121E-45ED-BD3C-ED1EB9ECB0EC}"
 	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
 		README.md = README.md
 	EndProjectSection
 EndProject
@@ -24,7 +25,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VeeValidate.AspNetCore.Flue
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VeeValidate.AspNetCore.FluentValidation.Tests", "test\VeeValidate.AspNetCore.FluentValidation.Tests\VeeValidate.AspNetCore.FluentValidation.Tests.csproj", "{3C6D88B2-ADF2-4DE3-9CEB-082B5BDF3EBA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VeeValidate.AspNetCore.Builders", "test\VeeValidate.AspNetCore.Builders\VeeValidate.AspNetCore.Builders.csproj", "{AADB4EE9-DFF4-4999-929B-0E72FCD45442}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VeeValidate.AspNetCore.Builders", "test\VeeValidate.AspNetCore.Builders\VeeValidate.AspNetCore.Builders.csproj", "{AADB4EE9-DFF4-4999-929B-0E72FCD45442}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VeeValidate.AspNetCore.FluentValidation.Sample", "samples\VeeValidate.AspNetCore.FluentValidation.Sample\VeeValidate.AspNetCore.FluentValidation.Sample.csproj", "{C62F8740-E202-41CC-8447-FC860E214427}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -56,6 +59,10 @@ Global
 		{AADB4EE9-DFF4-4999-929B-0E72FCD45442}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AADB4EE9-DFF4-4999-929B-0E72FCD45442}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AADB4EE9-DFF4-4999-929B-0E72FCD45442}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C62F8740-E202-41CC-8447-FC860E214427}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C62F8740-E202-41CC-8447-FC860E214427}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C62F8740-E202-41CC-8447-FC860E214427}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C62F8740-E202-41CC-8447-FC860E214427}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -67,6 +74,7 @@ Global
 		{EE9A41F3-CCB4-4681-92E7-8294786A398D} = {FFE26567-BD8C-4707-923E-5D8532C4DC5C}
 		{3C6D88B2-ADF2-4DE3-9CEB-082B5BDF3EBA} = {DC863194-AAA2-44C3-B3A0-5E69ACB99BEF}
 		{AADB4EE9-DFF4-4999-929B-0E72FCD45442} = {DC863194-AAA2-44C3-B3A0-5E69ACB99BEF}
+		{C62F8740-E202-41CC-8447-FC860E214427} = {5B4D3E71-3C14-4980-9E7D-C614F1C4280C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E761CCEA-19A5-4609-98CC-46B9085E1670}

@@ -6,20 +6,26 @@
     <title>@ViewData["Title"] - Vee Validate with Asp Net Core</title>
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />    
-    <link rel="stylesheet" href="~/libs/materialize-css/materialize.css" />
+    <link rel="stylesheet" href="~/lib/materialize-css/dist/css/materialize.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
+    <div class="center-align">
+        <a asp-page="/Index">
+            <img width="200" alt="VeeValidate Logo" src="~/images/vee-validate.svg" />
+            <img width="200" alt="Dot Net Core Logo" src="~/images/net-core.png" />
+        </a>
+    </div>
+
     <div class="container">
         @RenderBody()
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
-    <script src="~/libs/materialize-css/materialize.js"></script>
-    <script src="~/libs/vue/vue.js"></script>
-    <script src="~/libs/vee-validate/vee-validate.js"></script>
+    <script src="~/lib/materialize-css/dist/js/materialize.min.js"></script>
+    <script src="~/lib/vue/vue.min.js"></script>
+    <script src="~/lib/vee-validate/vee-validate.min.js"></script>
     <script asp-fallback-test="window.Promise"
-            asp-fallback-src="~/libs/es6-promise/es6-promise.auto.js">
+            asp-fallback-src="~/lib/es6-promise/es6-promise.auto.min.js">
     </script>
     <script>
         Vue.use(VeeValidate);

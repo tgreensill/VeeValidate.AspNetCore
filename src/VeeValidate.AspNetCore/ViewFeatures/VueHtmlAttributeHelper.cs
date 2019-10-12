@@ -41,8 +41,7 @@ namespace VeeValidate.AspNetCore.ViewFeatures
             // Binding keys can come in two flavours: v-bind:{key} and :{key}.
             if (attributes.ContainsKey($":{attributeName}"))
             {
-                MergeClassOrStylesAttributeImpl(attributes, $":{attributeName}", attributeValue);
-                
+                MergeClassOrStylesAttributeImpl(attributes, $":{attributeName}", attributeValue);                
                 return;
             }
 
