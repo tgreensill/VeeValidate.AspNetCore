@@ -17,10 +17,11 @@ namespace VeeValidate.AspNetCore.Adapters
                 // Convert to Vee-Validate format, i.e. "jpg,gif" to 'jpg','gif'
                 var extensions = Attribute.Extensions.Replace('|', ',') 
                     .Split(',')
-                    .Select(x => $"'{x}'"); 
-                
-                MergeAttribute(context.Attributes, "data-vv-as", context.ModelMetadata.GetDisplayName());
-                MergeValidationAttribute(context.Attributes, "ext", $"[{string.Join(",", extensions)}]");
+                    .Select(x => $"'{x}'");
+
+                context
+                    .AddValidationDisplayName()
+                    .AddValidationRule("ext", $"[{string.Join(",", extensions)}]");
             }
         }
     }

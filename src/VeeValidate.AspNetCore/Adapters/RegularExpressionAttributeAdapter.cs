@@ -11,9 +11,10 @@ namespace VeeValidate.AspNetCore.Adapters
         
         public override void AddValidation(ClientModelValidationContext context)
         {
-            MergeAttribute(context.Attributes, "data-vv-as", context.ModelMetadata.GetDisplayName());
-            // Ensure the pattern starts and ends with '/'
-            MergeValidationAttribute(context.Attributes, "regex", $"/{Attribute.Pattern.Trim('/')}/");
+            context
+                .AddValidationDisplayName()
+                // Ensure the pattern starts and ends with '/'
+                .AddValidationRule("regex", $"/{Attribute.Pattern.Trim('/')}/");
         }
     }
 }

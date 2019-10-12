@@ -11,16 +11,16 @@ namespace VeeValidate.AspNetCore.Adapters
 
         public override void AddValidation(ClientModelValidationContext context)
         {
-            MergeAttribute(context.Attributes, "data-vv-as", context.ModelMetadata.GetDisplayName());
+            context.AddValidationDisplayName();
 
             if (Attribute.MaximumLength != int.MaxValue)
             {
-                MergeValidationAttribute(context.Attributes, "max", Attribute.MaximumLength);
+                context.AddValidationRule("max", Attribute.MaximumLength);
             }
 
             if (Attribute.MinimumLength != 0)
             {
-                MergeValidationAttribute(context.Attributes, "min", Attribute.MinimumLength);
+                context.AddValidationRule("min", Attribute.MinimumLength);
             }
         }
     }

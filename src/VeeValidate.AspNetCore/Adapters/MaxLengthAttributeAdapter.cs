@@ -11,8 +11,9 @@ namespace VeeValidate.AspNetCore.Adapters
         
         public override void AddValidation(ClientModelValidationContext context)
         {
-            MergeAttribute(context.Attributes, "data-vv-as", context.ModelMetadata.GetDisplayName());
-            MergeValidationAttribute(context.Attributes, "max", Attribute.Length);
+            context
+                .AddValidationDisplayName()
+                .AddValidationRule("max", Attribute.Length);
         }
     }
 }

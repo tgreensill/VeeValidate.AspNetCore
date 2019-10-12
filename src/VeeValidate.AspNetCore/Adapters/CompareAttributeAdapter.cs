@@ -11,8 +11,9 @@ namespace VeeValidate.AspNetCore.Adapters
         
         public override void AddValidation(ClientModelValidationContext context)
         {
-            MergeAttribute(context.Attributes, "data-vv-as", context.ModelMetadata.GetDisplayName());
-            MergeValidationAttribute(context.Attributes, "confirmed", $"'{Attribute.OtherProperty}'");
+            context
+                .AddValidationDisplayName()
+                .AddValidationRule("confirmed", $"'{Attribute.OtherProperty}'");
         }
     }
 }

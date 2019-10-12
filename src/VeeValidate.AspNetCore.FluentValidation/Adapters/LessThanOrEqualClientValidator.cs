@@ -1,4 +1,5 @@
 ﻿using System;
+using FluentValidation.AspNetCore;
 using FluentValidation.Internal;
 using FluentValidation.Validators;
 using Microsoft.AspNetCore.Http;
@@ -6,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace VeeValidate.AspNetCore.FluentValidation.Adapters
 {
-    public class LessThanOrEqualClientValidator : VeeValidateClientValidatorBase
+    public class LessThanOrEqualClientValidator : ClientValidatorBase
     {
         private readonly Func<HttpContext, string> _dateFormatProvider;
         
@@ -21,23 +22,23 @@ namespace VeeValidate.AspNetCore.FluentValidation.Adapters
 
             if (rangeValidator.ValueToCompare != null)
             {
-                MergeAttribute(context.Attributes, "data-vv-as", context.ModelMetadata.GetDisplayName());
+                context.AddValidationDisplayName();
 
                 if (context.ModelMetadata.UnderlyingOrModelType == typeof(DateTime))
                 {
                     var dateFormat = _dateFormatProvider(context.ActionContext.HttpContext);
                     var normalisedDateFormat = dateFormat.Replace('D', 'd').Replace('Y', 'y');
 
-                    MergeValidationAttribute(context.Attributes, "date_format", $"'{dateFormat}'");
+                    context.AddValidationRule("date_format", $"'{dateFormat}'");
                     
                     if (DateTime.TryParse(rangeValidator.ValueToCompare.ToString(), out var maxDate))
                     {
-                        MergeValidationAttribute(context.Attributes, "before", $"['{maxDate.ToString(normalisedDateFormat)}',true]");
+                        context.AddValidationRule("before", $"['{maxDate.ToString(normalisedDateFormat)}',true]");
                     }
                 }
                 else
                 {
-                    MergeValidationAttribute(context.Attributes, "max_value", rangeValidator.ValueToCompare);
+                    context.AddValidationRule("max_value", rangeValidator.ValueToCompare);
                 }
             }
         }

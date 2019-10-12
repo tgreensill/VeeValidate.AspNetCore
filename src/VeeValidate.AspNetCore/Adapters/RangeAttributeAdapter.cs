@@ -16,7 +16,7 @@ namespace VeeValidate.AspNetCore.Adapters
 
         public override void AddValidation(ClientModelValidationContext context)
         {
-            MergeAttribute(context.Attributes, "data-vv-as", context.ModelMetadata.GetDisplayName());
+            context.AddValidationDisplayName();
 
             // This will trigger the conversion of Attribute.Minimum and Attribute.Maximum.
             // This is needed, because the attribute is stateful and will convert from a string like
@@ -29,22 +29,23 @@ namespace VeeValidate.AspNetCore.Adapters
                 var dateFormat = _options.DateFormatProvider(context.ActionContext.HttpContext);
                 var normalisedDateFormat = dateFormat.Replace('D', 'd').Replace('Y', 'y');
 
-                MergeValidationAttribute(context.Attributes, "date_format", $"'{dateFormat}'");
+                context.AddValidationRule("date_format", $"'{dateFormat}'");
 
                 if (DateTime.TryParse(min, out var minDate))
                 {
-                    MergeValidationAttribute(context.Attributes, "after", $"['{minDate.ToString(normalisedDateFormat)}',true]");
+                    context.AddValidationRule("after", $"['{minDate.ToString(normalisedDateFormat)}',true]");
                 }
 
                 if (DateTime.TryParse(max, out var maxDate))
                 {
-                    MergeValidationAttribute(context.Attributes, "before", $"['{maxDate.ToString(normalisedDateFormat)}',true]");
+                    context.AddValidationRule("before", $"['{maxDate.ToString(normalisedDateFormat)}',true]");
                 }
             }
             else
             {
-                MergeValidationAttribute(context.Attributes, "max_value", max);
-                MergeValidationAttribute(context.Attributes, "min_value", min);
+                context
+                    .AddValidationRule("max_value", max)
+                    .AddValidationRule("min_value", min);
             }
         }
     }

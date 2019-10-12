@@ -1,10 +1,11 @@
-﻿using FluentValidation.Internal;
+﻿using FluentValidation.AspNetCore;
+using FluentValidation.Internal;
 using FluentValidation.Validators;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace VeeValidate.AspNetCore.FluentValidation.Adapters
 {
-    public class LengthClientValidator : VeeValidateClientValidatorBase
+    public class LengthClientValidator : ClientValidatorBase
     {
         public LengthClientValidator(PropertyRule rule, IPropertyValidator validator)
             : base(rule, validator)
@@ -15,9 +16,10 @@ namespace VeeValidate.AspNetCore.FluentValidation.Adapters
         {
             var lengthVal = (LengthValidator)Validator;
 
-            MergeAttribute(context.Attributes, "data-vv-as", context.ModelMetadata.GetDisplayName());
-            MergeValidationAttribute(context.Attributes, "max", lengthVal.Max.ToString());
-            MergeValidationAttribute(context.Attributes, "min", lengthVal.Min.ToString());
+            context
+                .AddValidationDisplayName()
+                .AddValidationRule("max", lengthVal.Max.ToString())
+                .AddValidationRule("min", lengthVal.Min.ToString());
         }
     }
 }

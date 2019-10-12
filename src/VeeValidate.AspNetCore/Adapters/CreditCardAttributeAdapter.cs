@@ -11,8 +11,9 @@ namespace VeeValidate.AspNetCore.Adapters
 
         public override void AddValidation(ClientModelValidationContext context)
         {
-            MergeAttribute(context.Attributes, "data-vv-as", context.ModelMetadata.GetDisplayName());
-            MergeValidationAttribute(context.Attributes, "credit_card", "true");
+            context
+                .AddValidationDisplayName()
+                .AddValidationRule("credit_card", "true");
         }
     }
 }

@@ -1,10 +1,11 @@
-﻿using FluentValidation.Internal;
+﻿using FluentValidation.AspNetCore;
+using FluentValidation.Internal;
 using FluentValidation.Validators;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace VeeValidate.AspNetCore.FluentValidation.Adapters
 {
-    public class MaximumLengthClientValidator : VeeValidateClientValidatorBase
+    public class MaximumLengthClientValidator : ClientValidatorBase
     {
         public MaximumLengthClientValidator(PropertyRule rule, IPropertyValidator validator)
             : base(rule, validator)
@@ -15,8 +16,9 @@ namespace VeeValidate.AspNetCore.FluentValidation.Adapters
         {
             var maxLengthValidator = (MaximumLengthValidator)Validator;
             
-            MergeAttribute(context.Attributes, "data-vv-as", context.ModelMetadata.GetDisplayName());
-            MergeValidationAttribute(context.Attributes, "max", maxLengthValidator.Max.ToString());
+            context
+                .AddValidationDisplayName()
+                .AddValidationRule("max", maxLengthValidator.Max.ToString());
         }
     }
 }
