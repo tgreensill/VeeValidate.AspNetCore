@@ -12,7 +12,7 @@ namespace VeeValidate.AspNetCore.Tests.Adapters
     {
         private readonly VeeValidateOptions _options = new VeeValidateOptions
         {
-            DateFormatProvider = ctx => "DD/MM/YYYY"
+            DateFormatProvider = ctx => "dd/MM/yyyy"
         };
 
         [Fact]
@@ -50,7 +50,7 @@ namespace VeeValidate.AspNetCore.Tests.Adapters
 
             // Assert
             context.Attributes.Keys.ShouldContain("v-validate");
-            context.Attributes["v-validate"].ShouldBe("{date_format:'DD/MM/YYYY',after:['01/03/2016',true],before:['31/03/2016',true]}");
+            context.Attributes["v-validate"].ShouldBe("{date_format:'dd/MM/yyyy',date_between:['01/03/2016','31/03/2016',true]}");
         }
 
         [Theory]
@@ -74,7 +74,7 @@ namespace VeeValidate.AspNetCore.Tests.Adapters
 
             // Assert
             context.Attributes.Keys.ShouldContain("v-validate");
-            context.Attributes["v-validate"].ShouldBe("{date_format:'DD/MM/YYYY',after:['01/03/2016',true],before:['31/03/2016',true]}");
+            context.Attributes["v-validate"].ShouldBe("{date_format:'dd/MM/yyyy',date_between:['01/03/2016','31/03/2016',true]}");
         }
     }
 }

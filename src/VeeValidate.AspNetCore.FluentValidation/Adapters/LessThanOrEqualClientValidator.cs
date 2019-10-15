@@ -22,19 +22,18 @@ namespace VeeValidate.AspNetCore.FluentValidation.Adapters
 
             if (rangeValidator.ValueToCompare != null)
             {
-                context.AddValidationDisplayName();
-
                 if (context.ModelMetadata.UnderlyingOrModelType == typeof(DateTime))
                 {
                     var dateFormat = _dateFormatProvider(context.ActionContext.HttpContext);
-                    var normalisedDateFormat = dateFormat.Replace('D', 'd').Replace('Y', 'y');
 
-                    context.AddValidationRule("date_format", $"'{dateFormat}'");
-                    
-                    if (DateTime.TryParse(rangeValidator.ValueToCompare.ToString(), out var maxDate))
+                    if (!DateTime.TryParse(rangeValidator.ValueToCompare.ToString(), out var maxDate))
                     {
-                        context.AddValidationRule("before", $"['{maxDate.ToString(normalisedDateFormat)}',true]");
+                        throw new ArgumentException(nameof(rangeValidator.ValueToCompare));                        
                     }
+
+                    context
+                        .AddValidationRule("date_format", $"'{dateFormat}'")
+                        .AddValidationRule("date_between", $"['{DateTime.MinValue.ToString(dateFormat)}','{maxDate.ToString(dateFormat)}',true]");                                        
                 }
                 else
                 {

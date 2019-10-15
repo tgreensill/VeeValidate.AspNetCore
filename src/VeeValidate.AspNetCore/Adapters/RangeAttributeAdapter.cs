@@ -16,8 +16,6 @@ namespace VeeValidate.AspNetCore.Adapters
 
         public override void AddValidation(ClientModelValidationContext context)
         {
-            context.AddValidationDisplayName();
-
             // This will trigger the conversion of Attribute.Minimum and Attribute.Maximum.
             // This is needed, because the attribute is stateful and will convert from a string like
             // "100m" to the decimal value 100.
@@ -27,19 +25,20 @@ namespace VeeValidate.AspNetCore.Adapters
             if (context.ModelMetadata.UnderlyingOrModelType == typeof(DateTime) || (Nullable.GetUnderlyingType(Attribute.OperandType) ?? Attribute.OperandType) == typeof(DateTime))
             {
                 var dateFormat = _options.DateFormatProvider(context.ActionContext.HttpContext);
-                var normalisedDateFormat = dateFormat.Replace('D', 'd').Replace('Y', 'y');
 
-                context.AddValidationRule("date_format", $"'{dateFormat}'");
-
-                if (DateTime.TryParse(min, out var minDate))
+                if (!DateTime.TryParse(min, out var minDate))
                 {
-                    context.AddValidationRule("after", $"['{minDate.ToString(normalisedDateFormat)}',true]");
+                    throw new ArgumentException(nameof(Attribute.Minimum));
                 }
 
-                if (DateTime.TryParse(max, out var maxDate))
+                if (!DateTime.TryParse(max, out var maxDate))
                 {
-                    context.AddValidationRule("before", $"['{maxDate.ToString(normalisedDateFormat)}',true]");
+                    throw new ArgumentException(nameof(Attribute.Maximum));                    
                 }
+
+                context
+                    .AddValidationRule("date_format", $"'{dateFormat}'")
+                    .AddValidationRule("date_between", $"['{minDate.ToString(dateFormat)}','{maxDate.ToString(dateFormat)}',true]");
             }
             else
             {

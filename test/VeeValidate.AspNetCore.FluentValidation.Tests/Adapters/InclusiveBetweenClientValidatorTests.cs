@@ -39,15 +39,16 @@ namespace VeeValidate.AspNetCore.FluentValidation.Tests.Adapters
         [Theory]
         [InlineData(typeof(DateTime?))]
         [InlineData(typeof(DateTime))]
-        public void AddValidation_adds_after_and_before_rules(Type type)
+        public void AddValidation_adds_date_between_rule(Type type)
         {
             // Arrange
+            const string DATE_FORMAT = "dd/MM/yyyy";
             DateTime from = new DateTime(2016, 3, 1);
             DateTime to = new DateTime(2016, 3, 31);
 
             var property = PropertyRule.Create<TestObject, DateTime>(x => x.InclusiveBetweenDate);
             var adapter = new InclusiveBetweenClientValidator(
-                property, new InclusiveBetweenValidator(from, to), ctx => "DD/MM/YYYY");
+                property, new InclusiveBetweenValidator(from, to), ctx => DATE_FORMAT);
 
             var context = new ClientModelValidationContextBuilder()
                 .WithModelType(type)
@@ -58,7 +59,7 @@ namespace VeeValidate.AspNetCore.FluentValidation.Tests.Adapters
 
             // Assert
             context.Attributes.Keys.ShouldContain("v-validate");
-            context.Attributes["v-validate"].ShouldBe("{date_format:'DD/MM/YYYY',after:['01/03/2016',true],before:['31/03/2016',true]}");
+            context.Attributes["v-validate"].ShouldBe($"{{date_format:'{DATE_FORMAT}',date_between:['01/03/2016','31/03/2016',true]}}");
         }
     }
 }

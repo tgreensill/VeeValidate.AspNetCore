@@ -11,9 +11,7 @@ namespace VeeValidate.AspNetCore.Adapters
 
         public override void AddValidation(ClientModelValidationContext context)
         {
-            context
-                .AddValidationDisplayName()
-                .AddValidationRule("url", "[true,true]");
+            context.AddValidationRule("url", "[true,true]");
         }
     }
 }

@@ -11,8 +11,6 @@ namespace VeeValidate.AspNetCore.Adapters
 
         public override void AddValidation(ClientModelValidationContext context)
         {
-            context.AddValidationDisplayName();
-
             if (Attribute.MaximumLength != int.MaxValue)
             {
                 context.AddValidationRule("max", Attribute.MaximumLength);

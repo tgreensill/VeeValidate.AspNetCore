@@ -16,10 +16,8 @@ namespace VeeValidate.AspNetCore.FluentValidation.Adapters
         {
             var regexVal = (RegularExpressionValidator)Validator;
 
-            context
-                .AddValidationDisplayName()
-                // Ensure the pattern starts and ends with '/'
-                .AddValidationRule("regex", $"/{regexVal.Expression.Trim('/')}/");
+            // Ensure the pattern starts and ends with '/'
+            context.AddValidationRule("regex", $"/{regexVal.Expression.Trim('/')}/");
         }
     }
 }

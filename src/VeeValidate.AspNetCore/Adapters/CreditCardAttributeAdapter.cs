@@ -11,9 +11,7 @@ namespace VeeValidate.AspNetCore.Adapters
 
         public override void AddValidation(ClientModelValidationContext context)
         {
-            context
-                .AddValidationDisplayName()
-                .AddValidationRule("credit_card", "true");
+            context.AddValidationRule("credit_card", "true");
         }
     }
 }

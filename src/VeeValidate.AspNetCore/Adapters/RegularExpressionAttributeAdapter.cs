@@ -11,10 +11,8 @@ namespace VeeValidate.AspNetCore.Adapters
         
         public override void AddValidation(ClientModelValidationContext context)
         {
-            context
-                .AddValidationDisplayName()
-                // Ensure the pattern starts and ends with '/'
-                .AddValidationRule("regex", $"/{Attribute.Pattern.Trim('/')}/");
+            // Ensure the pattern starts and ends with '/'
+            context.AddValidationRule("regex", $"/{Attribute.Pattern.Trim('/')}/");
         }
     }
 }

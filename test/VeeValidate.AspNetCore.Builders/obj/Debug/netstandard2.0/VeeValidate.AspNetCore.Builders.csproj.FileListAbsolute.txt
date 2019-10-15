@@ -1,9 +1,0 @@
-C:\TFS\VeeValidate.AspNetCore\test\VeeValidate.AspNetCore.Builders\bin\Debug\netstandard2.0\VeeValidate.AspNetCore.Builders.deps.json
-C:\TFS\VeeValidate.AspNetCore\test\VeeValidate.AspNetCore.Builders\bin\Debug\netstandard2.0\VeeValidate.AspNetCore.Builders.dll
-C:\TFS\VeeValidate.AspNetCore\test\VeeValidate.AspNetCore.Builders\bin\Debug\netstandard2.0\VeeValidate.AspNetCore.Builders.pdb
-C:\TFS\VeeValidate.AspNetCore\test\VeeValidate.AspNetCore.Builders\obj\Debug\netstandard2.0\VeeValidate.AspNetCore.Builders.csprojAssemblyReference.cache
-C:\TFS\VeeValidate.AspNetCore\test\VeeValidate.AspNetCore.Builders\obj\Debug\netstandard2.0\VeeValidate.AspNetCore.Builders.csproj.CoreCompileInputs.cache
-C:\TFS\VeeValidate.AspNetCore\test\VeeValidate.AspNetCore.Builders\obj\Debug\netstandard2.0\VeeValidate.AspNetCore.Builders.AssemblyInfoInputs.cache
-C:\TFS\VeeValidate.AspNetCore\test\VeeValidate.AspNetCore.Builders\obj\Debug\netstandard2.0\VeeValidate.AspNetCore.Builders.AssemblyInfo.cs
-C:\TFS\VeeValidate.AspNetCore\test\VeeValidate.AspNetCore.Builders\obj\Debug\netstandard2.0\VeeValidate.AspNetCore.Builders.dll
-C:\TFS\VeeValidate.AspNetCore\test\VeeValidate.AspNetCore.Builders\obj\Debug\netstandard2.0\VeeValidate.AspNetCore.Builders.pdb

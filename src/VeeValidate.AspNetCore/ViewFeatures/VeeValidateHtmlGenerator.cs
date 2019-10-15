@@ -93,12 +93,20 @@ namespace VeeValidate.AspNetCore.ViewFeatures
             // If the field has validation rules or css should be added to all fields.
             if (tagBuilder.Attributes.ContainsKey("v-validate") || _options.AddValidationInputCssToFieldsWithoutValidation)
             {
-                // The data-vv-name attribute should be used instead of the field name if present.
-                if (!tagBuilder.Attributes.TryGetValue("data-vv-name", out string name))
+                var name = tagBuilder.Attributes["name"];
+
+                // Add the data-vv-as attribute to give better error messages when the field
+                // has a custom display name.
+                if (!tagBuilder.Attributes.ContainsKey("data-vv-as"))
                 {
-                    name = tagBuilder.Attributes["name"];
+                    var displayName = modelExplorer.Metadata.GetDisplayName();
+
+                    if (!displayName.Equals(name))
+                    {
+                        tagBuilder.Attributes.Add("data-vv-as", displayName);
+                    }
                 }
-                
+
                 // Add a class binding to toggle the input error class when the field is in an invalid state.
                 VueHtmlAttributeHelper.MergeClassAttribute(tagBuilder.Attributes, $"{{'{_options.ValidationInputCssClassName}': {_options.ErrorBagName}.has('{name}') }}");
             }

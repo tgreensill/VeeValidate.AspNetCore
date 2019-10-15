@@ -112,5 +112,23 @@ namespace VeeValidate.AspNetCore.Tests.ViewFeatures
             Should.Throw<Exception>(() =>
                 VueHtmlAttributeHelper.MergeVeeValidateAttribute(attributes, "credit_card", "true"));
         }
+
+        [Fact]
+        public static void MergeVeeValidateAttributes_preserves_any_modifiers()
+        {
+            // Arrange
+            var attributes = new Dictionary<string, string>
+            {
+                { "v-validate.continue", "" }
+            };
+
+            // Act
+            VueHtmlAttributeHelper.MergeVeeValidateAttribute(attributes, "email", "true");
+            VueHtmlAttributeHelper.MergeVeeValidateAttribute(attributes, "required", "true");
+
+            // Assert
+            attributes.Keys.FirstOrDefault().ShouldBe("v-validate.continue");
+            attributes.Values.FirstOrDefault().ShouldBe("{email:true,required:true}");
+        }
     }
 }

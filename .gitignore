@@ -8,5 +8,3 @@ obj/
 bin/
 node_modules/
 wwwroot/
-test/VeeValidate.AspNetCore.Builders/obj
-test/VeeValidate.AspNetCore.Builders/bin

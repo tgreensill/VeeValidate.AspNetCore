@@ -16,9 +16,7 @@ namespace VeeValidate.AspNetCore.FluentValidation.Adapters
         {
             var maxLengthValidator = (MaximumLengthValidator)Validator;
             
-            context
-                .AddValidationDisplayName()
-                .AddValidationRule("max", maxLengthValidator.Max.ToString());
+            context.AddValidationRule("max", maxLengthValidator.Max.ToString());
         }
     }
 }

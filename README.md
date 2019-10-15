@@ -53,7 +53,7 @@ The table below shows the VeeValidate rules generated for each of the .NET valid
 | [MinLength]           | min                       |
 | [Phone]               | -                         |
 | [Range]               | min_value, max_value      |
-| [Range] (DateTime)    | date_format, after, before |
+| [Range] (DateTime)    | date_format, date_between |
 | [RegularExpression]   | regex                     |
 | [Required]            | required                  |
 | [StringLength]        | min, max                  |
@@ -83,7 +83,7 @@ Example:
 ```csharp
 public void ConfigureServices(IServiceCollection services)
 {
-    string DateFormatProvider(HttpContext ctx) => "DD/MM/YYYY";
+    string DateFormatProvider(HttpContext ctx) => "dd/MM/yyyy";
 
     services.AddVeeValidation(options =>
     {        
@@ -109,12 +109,12 @@ The table below shows the VeeValidate rules generated for each of the FluentVali
 | EmailAddress                  | email                     |
 | Equal                         | confirmed                 |
 | GreaterThanOrEqualTo          | min_value                 |
-| GreaterThanOrEqualTo (DateTime) | date_format, after      |
+| GreaterThanOrEqualTo (DateTime) | date_format, date_between |
 | InclusiveBetween              | min_value, max_value      |
-| InclusiveBetween (DateTime)   | date_format, after, before |
+| InclusiveBetween (DateTime)   | date_format, date_between |
 | Length                        | min, max                  |
 | LessThanOrEqualTo             | max_value                 |
-| LessThanOrEqualTo (DateTime)  | date_format, before       |
+| LessThanOrEqualTo (DateTime)  | date_format, date_between |
 | Matches                       | regex                     |
 | MaximumLength                 | max                       |
 | MinimumLength                 | min                       |
@@ -145,7 +145,8 @@ public void ConfigureServices(IServiceCollection services)
 }
 ```
 
-If the asp-validation-summary value is set to "ModelOnly" (and OverrideValidationTagHelpers is true), you'll also need to include the VeeValidateSnippets.ValidationSummaryMixin (after vee-validate.js reference).\
+Caveat: The asp-validation-summary with "ModelOnly" (and OverrideValidationTagHelpers is true) will not work correctly out of the box. 
+To get this working you can include the VeeValidateSnippets.ValidationSummaryMixin (after vee-validate.js reference).\
 Example:
 ```html
 @inject VeeValidateSnippets VeeValidateSnippets
@@ -155,4 +156,4 @@ Example:
 
 ### Useful Resources
 Vue JS - https://vuejs.org/ \
-VeeValidate - https://baianat.github.io/vee-validate/
+VeeValidate - http://vee-validate.logaretm.com/v2/

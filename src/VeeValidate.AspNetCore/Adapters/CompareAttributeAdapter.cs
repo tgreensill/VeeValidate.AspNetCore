@@ -11,9 +11,7 @@ namespace VeeValidate.AspNetCore.Adapters
         
         public override void AddValidation(ClientModelValidationContext context)
         {
-            context
-                .AddValidationDisplayName()
-                .AddValidationRule("confirmed", $"'{Attribute.OtherProperty}'");
+            context.AddValidationRule("confirmed", $"'{Attribute.OtherProperty}'");
         }
     }
 }

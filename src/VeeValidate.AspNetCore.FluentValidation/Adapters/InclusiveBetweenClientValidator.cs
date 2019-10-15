@@ -25,24 +25,23 @@ namespace VeeValidate.AspNetCore.FluentValidation.Adapters
 				var from = rangeValidator.From.ToString();
 				var to = rangeValidator.To.ToString();
 
-				context.AddValidationDisplayName();
-
 				if (context.ModelMetadata.UnderlyingOrModelType == typeof(DateTime))
 				{
 					var dateFormat = _dateFormatProvider(context.ActionContext.HttpContext);
-					var normalisedDateFormat = dateFormat.Replace('D', 'd').Replace('Y', 'y');
 
-					context.AddValidationRule("date_format", $"'{dateFormat}'");
-
-					if (DateTime.TryParse(from, out var minDate))
+					if (!DateTime.TryParse(from, out var minDate))
 					{
-						context.AddValidationRule("after", $"['{minDate.ToString(normalisedDateFormat)}',true]");
+						throw new ArgumentException(nameof(rangeValidator.From));
 					}
 
-					if (DateTime.TryParse(to, out var maxDate))
+					if (!DateTime.TryParse(to, out var maxDate))
 					{
-						context.AddValidationRule("before", $"['{maxDate.ToString(normalisedDateFormat)}',true]");
+						throw new ArgumentException(nameof(rangeValidator.To));
 					}
+
+					context
+						.AddValidationRule("date_format", $"'{dateFormat}'")
+						.AddValidationRule("date_between", $"['{minDate.ToString(dateFormat)}','{maxDate.ToString(dateFormat)}',true]");
 				}
 				else
 				{

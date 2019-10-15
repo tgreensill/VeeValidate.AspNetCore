@@ -7,6 +7,7 @@ namespace VeeValidate.AspNetCore.FluentValidation.Sample.Pages
 {
     public class IndexModel : PageModel
     {
+        [Display(Name = "Not Empty")]
         public string NotEmpty { get; set; }
 
         public string Matches { get; set; }
@@ -66,8 +67,8 @@ namespace VeeValidate.AspNetCore.FluentValidation.Sample.Pages
             RuleFor(x => x.MaxLength)
                 .MaximumLength(6);
 
-            RuleFor(x => x.Compare)
-                .Equal(x => x.Confirm);
+            RuleFor(x => x.Confirm)
+                .Equal(x => x.Compare);
         }
     }
 }

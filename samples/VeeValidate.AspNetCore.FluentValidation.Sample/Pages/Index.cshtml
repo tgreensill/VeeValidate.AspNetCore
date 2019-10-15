@@ -37,12 +37,15 @@
     </li>
 </ul>
 
-<div id="app">
+<div id="app">  
+    <div asp-validation-summary="All" v-cloak></div>
+
     <form v-on:submit.prevent="submit" novalidate>
         <div>
             <h2 id="compare-attribute">[Compare]</h2>
+            <p>Caveat: Tou need to add the ref attribute to the field you're comparing against.</p>
             <div class="input-field">
-                <input asp-for="Compare" />
+                <input asp-for="Compare" ref="Compare" />
                 <label asp-for="Compare"></label>
                 <span asp-validation-for="Compare"></span>
             </div>
@@ -78,7 +81,7 @@
             </div>
             <p>Select a date in December 2018:</p>
             <div class="input-field">
-                <input asp-for="DateRange" v-date />
+                <input asp-for="DateRange" v-date data-vv-validate-on="change" />
                 <label asp-for="DateRange"></label>
                 <span asp-validation-for="DateRange"></span>
             </div>

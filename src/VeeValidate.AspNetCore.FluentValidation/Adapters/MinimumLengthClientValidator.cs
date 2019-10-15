@@ -16,9 +16,7 @@ namespace VeeValidate.AspNetCore.FluentValidation.Adapters
         {
             var minLengthValidator = (MinimumLengthValidator)Validator;
 
-            context
-                .AddValidationDisplayName()
-                .AddValidationRule("min", minLengthValidator.Min.ToString());
+            context.AddValidationRule("min", minLengthValidator.Min.ToString());
         }
     }
 }

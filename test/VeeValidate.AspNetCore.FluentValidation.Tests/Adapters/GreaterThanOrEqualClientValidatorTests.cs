@@ -38,14 +38,15 @@ namespace VeeValidate.AspNetCore.FluentValidation.Tests.Adapters
         [Theory]
         [InlineData(typeof(DateTime?))]
         [InlineData(typeof(DateTime))]
-        public void AddValidation_adds__before_rule(Type type)
+        public void AddValidation_adds_date_between_rule(Type type)
         {
             // Arrange
+            const string DATE_FORMAT = "dd/MM/yyyy";
             DateTime max = new DateTime(2016, 3, 1);
 
             var property = PropertyRule.Create<TestObject, DateTime>(x => x.GreaterThanOrEqualDate);
             var adapter = new GreaterThanOrEqualClientValidator(
-                property, new GreaterThanOrEqualValidator(max), ctx => "DD/MM/YYYY");
+                property, new GreaterThanOrEqualValidator(max), ctx => DATE_FORMAT);
 
             var context = new ClientModelValidationContextBuilder()
                 .WithModelType(type)
@@ -56,7 +57,7 @@ namespace VeeValidate.AspNetCore.FluentValidation.Tests.Adapters
 
             // Assert
             context.Attributes.Keys.ShouldContain("v-validate");
-            context.Attributes["v-validate"].ShouldBe("{date_format:'DD/MM/YYYY',after:['01/03/2016',true]}");
+            context.Attributes["v-validate"].ShouldBe($"{{date_format:'{DATE_FORMAT}',date_between:['01/03/2016','{DateTime.MaxValue.ToString(DATE_FORMAT)}',true]}}");
         }
     }
 }

@@ -17,7 +17,6 @@ namespace VeeValidate.AspNetCore.FluentValidation.Adapters
             var lengthVal = (LengthValidator)Validator;
 
             context
-                .AddValidationDisplayName()
                 .AddValidationRule("max", lengthVal.Max.ToString())
                 .AddValidationRule("min", lengthVal.Min.ToString());
         }

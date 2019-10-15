@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace VeeValidate.AspNetCore.ViewFeatures
 {
@@ -19,15 +20,20 @@ namespace VeeValidate.AspNetCore.ViewFeatures
 
         public static void MergeVeeValidateAttribute(IDictionary<string, string> attributes, string ruleName, string ruleValue)
         {
-            // Merge on v-validate field.
-            if (attributes.TryGetValue(VeeValidateAttributeName, out var rules))
+            // Merge on v-validate field. Use starts with in case a modifier is used on the 
+            // attribute, i.e. v-validate.continues, etc.
+            var validationAttribute = attributes.FirstOrDefault(attr => attr.Key.StartsWith(VeeValidateAttributeName));
+            if (!string.IsNullOrEmpty(validationAttribute.Key))
             {
+                var rules = validationAttribute.Value;
                 if (rules.TrimStart().StartsWith("'"))
                 {
                     throw new Exception("VeeValidate rules cannot be merged because v-validate rules are not in object format, i.e. '{}'.");
-                }
+                }                
 
-                attributes[VeeValidateAttributeName] = $"{{{rules.TrimStart('{').TrimEnd('}')},{ruleName}:{ruleValue}}}";
+                attributes[validationAttribute.Key] = 
+                    $"{{{string.Join(",", new[] { rules.TrimStart('{').TrimEnd('}'), $"{ruleName}:{ruleValue}" }.Where(rule => !string.IsNullOrEmpty(rule))) }}}";
+
                 return;
             }
 

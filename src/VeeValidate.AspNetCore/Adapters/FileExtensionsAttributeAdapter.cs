@@ -19,9 +19,7 @@ namespace VeeValidate.AspNetCore.Adapters
                     .Split(',')
                     .Select(x => $"'{x}'");
 
-                context
-                    .AddValidationDisplayName()
-                    .AddValidationRule("ext", $"[{string.Join(",", extensions)}]");
+                context.AddValidationRule("ext", $"[{string.Join(",", extensions)}]");
             }
         }
     }

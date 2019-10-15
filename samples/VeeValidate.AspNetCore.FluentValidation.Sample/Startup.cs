@@ -10,7 +10,7 @@ namespace VeeValidate.AspNetCore.FluentValidation.Sample
     {
         public void ConfigureServices(IServiceCollection services)
         {
-            string VeeValidateDateFormatProvider(HttpContext ctx) => "DD/MM/YYYY";
+            string VeeValidateDateFormatProvider(HttpContext ctx) => "dd/MM/yyyy";
 
             // Add Vee Validation before AddMvc.
             services.AddVeeValidation(options =>
@@ -25,7 +25,7 @@ namespace VeeValidate.AspNetCore.FluentValidation.Sample
                 .AddFluentValidation(config =>
                 {
                     config.RegisterValidatorsFromAssembly(typeof(Startup).Assembly);
-                    config.ConfigureClientsideValidation(options =>
+                    config.ConfigureClientsideValidation(options =>                    
                         options.UseVeeValidate(VeeValidateDateFormatProvider)
                     );
                 });

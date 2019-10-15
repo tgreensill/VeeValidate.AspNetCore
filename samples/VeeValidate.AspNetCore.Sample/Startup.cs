@@ -17,7 +17,7 @@ namespace VeeValidate.AspNetCore.Sample
 
         public void ConfigureServices(IServiceCollection services)
         {
-            string VeeValidateDateFormatProvider(HttpContext ctx) => "DD/MM/YYYY";
+            string VeeValidateDateFormatProvider(HttpContext ctx) => "dd/MM/yyyy";
             
             // Add Vee Validation before AddMvc.
             services.AddVeeValidation(options =>

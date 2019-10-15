@@ -4,19 +4,12 @@ namespace Microsoft.AspNetCore.Mvc.ModelBinding.Validation
 {
     public static class ClientModelValidationContextExtensions
     {
-        private const string VeeValidationDisplayAsAttribute = "data-vv-as";
-
-        public static ClientModelValidationContext AddValidationDisplayName(this ClientModelValidationContext context)
+        public static ClientModelValidationContext AddValidationRule(this ClientModelValidationContext context, string ruleName, object value)
         {
-            if (!context.Attributes.ContainsKey(VeeValidationDisplayAsAttribute))
-            {
-                context.Attributes.Add(VeeValidationDisplayAsAttribute, context.ModelMetadata.GetDisplayName());
-            }
-
-            return context;
+            return AddValidationRule(context, ruleName, value.ToString());
         }
 
-        public static ClientModelValidationContext AddValidationRule(this ClientModelValidationContext context, string ruleName, object value)
+        public static ClientModelValidationContext AddValidationRule(this ClientModelValidationContext context, string ruleName, string value)
         {
             VueHtmlAttributeHelper.MergeVeeValidateAttribute(context.Attributes, ruleName, value.ToString());
             return context;
